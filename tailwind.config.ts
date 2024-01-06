@@ -13,9 +13,13 @@ const config: Config = {
 				'purple-gradient': 'radial-gradient(40% 100% at 50% 0%, #15082B 0%, #000 100%)',
 			},
 			dropShadow: {
-				// 'text': '0 2px 16px rgba(174,207,242, 0.25)',
-				// 'text': '0 2px 16px rgba(196, 174, 242, 0.4)',
 				'text': '0 2px 16px rgba(169, 151, 200, 0.45)',
+			},
+			colors: {
+				'dark': '#0A0A0A',
+				'dark-accent': '#101010',
+				'brand': '#561ee3',
+				'brand-accent': '#6c47ff',
 			}
 		},
 	},
