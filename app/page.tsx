@@ -1,3 +1,4 @@
+import { LandingGrid } from "@/components/landing-grid"
 import { LandingNavbar } from "@/components/landing-navbar"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
@@ -14,6 +15,9 @@ export default function Home() {
             <p className="mt-7 md:mt-10 text-center text-xl mx-auto max-w-xs">
                 A collection of algorithms for solving the Rubik&apos;s cube
             </p>
+
+            <LandingGrid />
+
         </MaxWidthWrapper>
     )
 }

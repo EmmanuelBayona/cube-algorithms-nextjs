@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "./ui/button"
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
 
 export const LandingNavbar = () => {
 
@@ -14,8 +15,9 @@ export const LandingNavbar = () => {
             </a>
 
             <a href="https://github.com/EmmanuelBayona/cube-algorithms-nextjs" target="_blank"
-                className={cn(buttonVariants({ variant: 'primary' }), 'rounded-full')}
+                className={cn(buttonVariants({ variant: 'primary' }), 'rounded-full flex gap-2 pl-1')}
             >
+                <GitHubLogoIcon width={24} height={24} />
                 View on GitHub
             </a>
 

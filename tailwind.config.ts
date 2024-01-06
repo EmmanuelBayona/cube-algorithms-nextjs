@@ -20,7 +20,7 @@ const config: Config = {
 				'dark-accent': '#101010',
 				'brand': '#561ee3',
 				'brand-accent': '#6c47ff',
-			}
+			},
 		},
 	},
 	plugins: [],
