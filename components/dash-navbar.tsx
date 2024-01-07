@@ -8,32 +8,32 @@ import { cn } from "@/lib/utils";
 const components: { title: string; href: string; description: string }[] = [
     {
         title: "2X2",
-        href: "/docs/primitives/alert-dialog",
+        href: "/",
         description: 'Notation, and how to read and write algorithms.',
     },
     {
         title: "3x3",
-        href: "/docs/primitives/hover-card",
+        href: "/",
         description: 'Notation, and how to read and write algorithms.',
     },
     {
         title: "4x4",
-        href: "/docs/primitives/progress",
+        href: "/",
         description: 'Notation, and how to read and write algorithms.',
     },
         {
         title: "5x5",
-        href: "/docs/primitives/scroll-area",
+        href: "/",
         description: 'Notation, and how to read and write algorithms.',
     },
     {
         title: "6x6",
-        href: "/docs/primitives/tabs",
+        href: "/",
         description: 'Notation, and how to read and write algorithms.',
     },
     {
         title: "Square-1",
-        href: "/docs/primitives/tooltip",
+        href: "/",
         description: 'Notation, and how to read and write algorithms.',
     },
 ]
@@ -72,13 +72,13 @@ export const DashNavbar = () => {
                                     </a>
                                 </NavigationMenuLink>
                             </li>
-                                <ListItem href="/docs" title="2X2">
+                                <ListItem href="/" title="2X2">
                                     Beginner&apos;s method, Ortega, CLL, EG, and more.
                                 </ListItem>
-                                <ListItem href="/docs/installation" title="4X4">
+                                <ListItem href="/" title="4X4">
                                     Beginner&apos;s method, Yau, Hoya, Yau, and more.
                                 </ListItem>
-                                <ListItem href="/docs/primitives/typography" title="Square-1">
+                                <ListItem href="/" title="Square-1">
                                     Beginner&apos;s method, WCA, and more.
                                 </ListItem>
                         </ul>
@@ -105,7 +105,7 @@ export const DashNavbar = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem className="hidden lg:block">
-                    <Link href="/dash/statics" legacyBehavior passHref>
+                    <Link href="/" legacyBehavior passHref>
                         <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
                             Statistics
                         </NavigationMenuLink>
