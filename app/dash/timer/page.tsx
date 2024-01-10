@@ -11,28 +11,29 @@ const CARDS_DATA = [
 
 export default function Timer() {
     return (
-        <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
+        <></>
+        // <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
 
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
-                {
-                    CARDS_DATA.map((item, index) => (
-                        <Card key={index}>
-                            <CardHeader>
-                                <CardTitle>{item.title}</CardTitle>
-                            </CardHeader>
+        //     <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
+        //         {
+        //             CARDS_DATA.map((item, index) => (
+        //                 <Card key={index}>
+        //                     <CardHeader>
+        //                         <CardTitle>{item.title}</CardTitle>
+        //                     </CardHeader>
 
-                            <CardContent>
-                                <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">{item.value}</span>
-                            </CardContent>
-                        </Card>
-                    ))
-                }
-            </section>
+        //                     <CardContent>
+        //                         <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">{item.value}</span>
+        //                     </CardContent>
+        //                 </Card>
+        //             ))
+        //         }
+        //     </section>
 
-            <Scramble />
+        //     <Scramble />
 
-            <TimerClock />
+        //     <TimerClock />
 
-        </MaxWidthWrapper>
+        // </MaxWidthWrapper>
     )
 }
