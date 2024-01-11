@@ -6,7 +6,6 @@ import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 export const MethodsGrid = ({ cube, className }: { cube: Cubes, className?: string }) => {
 
     const cubeMethods = METHODS[cube];
-    console.log(cubeMethods);
 
     return (
         <section
