@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { notFound } from "next/navigation";
+import { MethodsGrid } from "@/components/methods-grid";
+import { Cubes } from "@/types";
 
 const validCubes = [
     '2x2',
@@ -25,9 +27,10 @@ export default function PuzzlesPage({ params }: { params: { cube: string } }) {
 
     return (
         <MaxWidthWrapper>
-            <h1 className="mt-10 text-4xl font-medium">
-                {params.cube} Methods
-            </h1>
+            <h1 className="text-xl md:text-2xl lg:text-4xl text-center md:text-start font-medium mt-10">{params.cube} Methods</h1>
+            <MethodsGrid cube={params.cube as Cubes} 
+                className="mt-5 md:mt-10"
+            />
         </MaxWidthWrapper>
     )
 
