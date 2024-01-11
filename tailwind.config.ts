@@ -10,9 +10,6 @@ const config: Config = {
 	darkMode: 'class',
 	theme: {
 		extend: {
-			backgroundImage: {
-				'purple-gradient': 'radial-gradient(40% 100% at 50% 0%, #15082B 0%, #000 100%)',
-			},
 			dropShadow: {
 				'text': '0 2px 16px rgba(169, 151, 200, 0.45)',
 			},

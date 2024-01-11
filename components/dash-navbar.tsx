@@ -44,13 +44,13 @@ export const DashNavbar = () => {
         <NavigationMenu className="mx-auto">
             <NavigationMenuList>
 
-                <NavigationMenuItem>
+                {/* <NavigationMenuItem>
                     <Link href="/dash/timer" legacyBehavior passHref>
                         <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
                             Timer
                         </NavigationMenuLink>
                     </Link>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
 
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Algorithms</NavigationMenuTrigger>
@@ -60,7 +60,7 @@ export const DashNavbar = () => {
                                 <NavigationMenuLink asChild>
                                     <a
                                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                        href="/"
+                                        href="/dash/puzzles/3x3"
                                     >
                                         <CubeIcon width={24} height={24}/>
                                         <div className="mb-2 mt-4 text-lg font-medium">
@@ -72,20 +72,20 @@ export const DashNavbar = () => {
                                     </a>
                                 </NavigationMenuLink>
                             </li>
-                                <ListItem href="/" title="2X2">
+                                <ListItem href="/dash/puzzles/2x2" title="2X2">
                                     Beginner&apos;s method, Ortega, CLL, EG, and more.
                                 </ListItem>
-                                <ListItem href="/" title="4X4">
+                                <ListItem href="/dash/puzzles/4x4" title="4X4">
                                     Beginner&apos;s method, Yau, Hoya, Yau, and more.
                                 </ListItem>
-                                <ListItem href="/" title="Square-1">
+                                <ListItem href="/dash/puzzles/square-1" title="Square-1">
                                     Beginner&apos;s method, WCA, and more.
                                 </ListItem>
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
+                {/* <NavigationMenuItem>
                     <NavigationMenuTrigger>Notation</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
@@ -102,15 +102,15 @@ export const DashNavbar = () => {
                             }
                         </ul>
                     </NavigationMenuContent>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
 
-                <NavigationMenuItem className="hidden lg:block">
+                {/* <NavigationMenuItem className="hidden lg:block">
                     <Link href="/" legacyBehavior passHref>
                         <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
                             Statistics
                         </NavigationMenuLink>
                     </Link>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
 
             </NavigationMenuList>
         </NavigationMenu>
