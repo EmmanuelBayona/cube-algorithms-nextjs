@@ -13,7 +13,7 @@ export default function Home() {
             <MaxWidthWrapper className="text-violet-100 pt-5 relative z-10">
                 <LandingNavbar />
                 <h1
-                    className="mt-16 md:mt-20 text-center text-6xl md:text-8xl lg:text-9xl font-semibold drop-shadow-text tracking-tight"
+                    className="mt-10 text-center text-6xl md:text-8xl lg:text-9xl font-semibold drop-shadow-text tracking-tight"
                 >
                     Cube <br /> algorithms
                 </h1>

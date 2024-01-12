@@ -1,11 +1,22 @@
-import { METHODS } from "@/lib/cubes-data"
 import { cn } from "@/lib/utils"
 import { Cubes } from "@/types"
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import prisma from "@/lib/prisma";
 
-export const MethodsGrid = ({ cube, className }: { cube: Cubes, className?: string }) => {
+const CUBES_ID = {
+    '2x2': 2,
+    '3x3': 1,
+}
 
-    const cubeMethods = METHODS[cube];
+export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?: string }) => {
+
+    const cubeId = CUBES_ID[cube as keyof typeof CUBES_ID];
+    const methods = await prisma.method.findMany({
+        where: {
+            cubeId
+        },
+    })
+
 
     return (
         <section
@@ -13,11 +24,11 @@ export const MethodsGrid = ({ cube, className }: { cube: Cubes, className?: stri
         >
 
             {
-                cubeMethods.map((method, index) =>  (
-                    <Card key={index}>
+                methods.map((method, index) =>  (
+                    <Card key={method.id}>
                         <CardHeader>
                             <CardTitle>{method.name}</CardTitle>
-                            <CardDescription>{method.description}</CardDescription> 
+                            <CardDescription>Description</CardDescription> 
                         </CardHeader>
                     </Card>
                 ))
