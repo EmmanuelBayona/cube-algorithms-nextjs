@@ -1,33 +1,22 @@
-"use client";
-// import { METHODS } from "@/lib/cubes-data"
 import { cn } from "@/lib/utils"
 import { Cubes } from "@/types"
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
-// import { serverClient } from "@/app/_trpc/serverClient";
-import { trpc } from "@/app/_trpc/client";
-
-interface MethodsGridProps {
-    cube: Cubes,
-    className?: string,
-    // methods: Awaited<ReturnType<(typeof serverClient)["getMethods"]>>
-    // cubeId: number,
-}
+import prisma from "@/lib/prisma";
 
 const CUBES_ID = {
     '2x2': 2,
     '3x3': 1,
 }
 
-export const MethodsGrid = ({ cube, className }: MethodsGridProps) => {
+export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?: string }) => {
 
-    // const cubeMethods = METHODS[cube];
     const cubeId = CUBES_ID[cube as keyof typeof CUBES_ID];
-    const getMethods = trpc.getMethods.useQuery({ cubeId }, {
-        // initialData: methods,
-        // refetchOnMount: false,
-        // refetchOnReconnect: false,
+    const methods = await prisma.method.findMany({
+        where: {
+            cubeId
+        },
     })
-    // console.log(getMethods.data)
+
 
     return (
         <section
@@ -35,8 +24,8 @@ export const MethodsGrid = ({ cube, className }: MethodsGridProps) => {
         >
 
             {
-                getMethods?.data?.map((method, index) =>  (
-                    <Card key={index}>
+                methods.map((method, index) =>  (
+                    <Card key={method.id}>
                         <CardHeader>
                             <CardTitle>{method.name}</CardTitle>
                             <CardDescription>Description</CardDescription> 

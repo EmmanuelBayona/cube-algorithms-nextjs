@@ -1,4 +1,5 @@
 const plugin = require('tailwindcss/plugin');
+import { transform } from 'next/dist/build/swc';
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -14,8 +15,8 @@ const config: Config = {
 				'text': '0 2px 16px rgba(169, 151, 200, 0.45)',
 			},
 			colors: {
-				'dark': '#0A0A0A',
-				'dark-accent': '#101010',
+				'dark': '#101010',
+				'dark-accent': '#1e1e1e',
 				'brand': '#561ee3',
 				'brand-accent': '#6c47ff',
 			},
@@ -62,6 +63,11 @@ const config: Config = {
 					from: { opacity: '1' },
 					to: { opacity: '0' },
 				},
+				shimmer: {
+					'100%': {
+						transform: 'translateX(100%)',
+					}
+				}
 			},
 		},
 	},

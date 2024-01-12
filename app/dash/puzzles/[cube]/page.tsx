@@ -3,7 +3,8 @@ import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { notFound } from "next/navigation";
 import { MethodsGrid } from "@/components/methods-grid";
 import { Cubes } from "@/types";
-import { serverClient } from "@/app/_trpc/serverClient";
+import { Suspense } from "react";
+import { SkeletonGrid } from "@/components/skeleton-grid";
 
 const validCubes = [
     '2x2',
@@ -28,11 +29,14 @@ export default async function PuzzlesPage({ params }: { params: { cube: string }
 
     return (
         <MaxWidthWrapper>
-            <h1 className="text-xl md:text-2xl lg:text-4xl text-center md:text-start font-medium mt-10">{params.cube} Methods</h1>
-            <MethodsGrid 
-                cube={params.cube as Cubes} 
-                className="mt-5 md:mt-10"
-            />
+            <h1 className="text-2xl lg:text-4xl text-center md:text-start font-medium mt-10">{params.cube} Methods</h1>
+            <Suspense key={params.cube} fallback={<SkeletonGrid className="mt-5 md:mt-10"/>}>
+                <MethodsGrid 
+                    cube={params.cube as Cubes} 
+                    className="mt-5 md:mt-10"
+                />
+            </Suspense>
+            
         </MaxWidthWrapper>
     )
 
