@@ -1,11 +1,33 @@
-import { METHODS } from "@/lib/cubes-data"
+"use client";
+// import { METHODS } from "@/lib/cubes-data"
 import { cn } from "@/lib/utils"
 import { Cubes } from "@/types"
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+// import { serverClient } from "@/app/_trpc/serverClient";
+import { trpc } from "@/app/_trpc/client";
 
-export const MethodsGrid = ({ cube, className }: { cube: Cubes, className?: string }) => {
+interface MethodsGridProps {
+    cube: Cubes,
+    className?: string,
+    // methods: Awaited<ReturnType<(typeof serverClient)["getMethods"]>>
+    // cubeId: number,
+}
 
-    const cubeMethods = METHODS[cube];
+const CUBES_ID = {
+    '2x2': 2,
+    '3x3': 1,
+}
+
+export const MethodsGrid = ({ cube, className }: MethodsGridProps) => {
+
+    // const cubeMethods = METHODS[cube];
+    const cubeId = CUBES_ID[cube as keyof typeof CUBES_ID];
+    const getMethods = trpc.getMethods.useQuery({ cubeId }, {
+        // initialData: methods,
+        // refetchOnMount: false,
+        // refetchOnReconnect: false,
+    })
+    // console.log(getMethods.data)
 
     return (
         <section
@@ -13,11 +35,11 @@ export const MethodsGrid = ({ cube, className }: { cube: Cubes, className?: stri
         >
 
             {
-                cubeMethods.map((method, index) =>  (
+                getMethods?.data?.map((method, index) =>  (
                     <Card key={index}>
                         <CardHeader>
                             <CardTitle>{method.name}</CardTitle>
-                            <CardDescription>{method.description}</CardDescription> 
+                            <CardDescription>Description</CardDescription> 
                         </CardHeader>
                     </Card>
                 ))
