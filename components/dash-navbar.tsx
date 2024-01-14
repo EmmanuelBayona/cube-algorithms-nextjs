@@ -12,13 +12,13 @@ export const DashNavbar = () => {
         <NavigationMenu className="mx-auto">
             <NavigationMenuList>
 
-                {/* <NavigationMenuItem>
+                <NavigationMenuItem>
                     <Link href="/dash/timer" legacyBehavior passHref>
                         <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
                             Timer
                         </NavigationMenuLink>
                     </Link>
-                </NavigationMenuItem> */}
+                </NavigationMenuItem>
 
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Algorithms</NavigationMenuTrigger>
