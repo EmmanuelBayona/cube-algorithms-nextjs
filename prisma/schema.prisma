@@ -16,19 +16,21 @@ model User {
 }
 
 model Cube {
-    id      Int      @id @default(autoincrement())
-    name    String
-    methods Method[]
+    id          Int      @id @default(autoincrement())
+    name        String
+    description String   @default("")
+    methods     Method[]
 
     @@map("cubes")
 }
 
 model Method {
-    id     Int    @id @default(autoincrement())
-    name   String
-    cube   Cube   @relation(fields: [cubeId], references: [id])
-    cubeId Int
-    cases  Case[]
+    id          Int    @id @default(autoincrement())
+    name        String
+    description String @default("")
+    cube        Cube   @relation(fields: [cubeId], references: [id])
+    cubeId      Int
+    cases       Case[]
 
     @@map("methods")
 }

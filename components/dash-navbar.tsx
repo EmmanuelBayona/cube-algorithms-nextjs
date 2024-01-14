@@ -5,38 +5,6 @@ import { CubeIcon } from "@radix-ui/react-icons";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-const components: { title: string; href: string; description: string }[] = [
-    {
-        title: "2X2",
-        href: "/",
-        description: 'Notation, and how to read and write algorithms.',
-    },
-    {
-        title: "3x3",
-        href: "/",
-        description: 'Notation, and how to read and write algorithms.',
-    },
-    {
-        title: "4x4",
-        href: "/",
-        description: 'Notation, and how to read and write algorithms.',
-    },
-        {
-        title: "5x5",
-        href: "/",
-        description: 'Notation, and how to read and write algorithms.',
-    },
-    {
-        title: "6x6",
-        href: "/",
-        description: 'Notation, and how to read and write algorithms.',
-    },
-    {
-        title: "Square-1",
-        href: "/",
-        description: 'Notation, and how to read and write algorithms.',
-    },
-]
 
 export const DashNavbar = () => {
 
@@ -67,20 +35,20 @@ export const DashNavbar = () => {
                                             3X3
                                         </div>
                                         <p className="text-sm leading-tight text-muted-foreground">
-                                            Beginner&apos;s method, CFOP, Roux, ZZ, Petrus, and more.
+                                            F2L, OLL, PLL, and more.
                                         </p>
                                     </Link>
                                 </NavigationMenuLink>
                             </li>
-                                <ListItem href="/dash/puzzles/2x2" title="2X2">
+                                {/* <ListItem href="/dash/puzzles/2x2" title="2X2">
                                     Beginner&apos;s method, Ortega, CLL, EG, and more.
-                                </ListItem>
-                                <ListItem href="/dash/puzzles/4x4" title="4X4">
+                                </ListItem> */}
+                                {/* <ListItem href="/dash/puzzles/4x4" title="4X4">
                                     Beginner&apos;s method, Yau, Hoya, Yau, and more.
                                 </ListItem>
                                 <ListItem href="/dash/puzzles/square-1" title="Square-1">
                                     Beginner&apos;s method, WCA, and more.
-                                </ListItem>
+                                </ListItem> */}
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>

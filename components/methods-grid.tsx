@@ -24,11 +24,11 @@ export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?
         >
 
             {
-                methods.map((method, index) =>  (
+                methods.map((method) =>  (
                     <Card key={method.id}>
                         <CardHeader>
                             <CardTitle>{method.name}</CardTitle>
-                            <CardDescription>Description</CardDescription> 
+                            <CardDescription>{ method.description }</CardDescription> 
                         </CardHeader>
                     </Card>
                 ))
