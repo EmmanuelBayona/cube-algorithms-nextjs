@@ -58,7 +58,7 @@ export const DashNavbar = () => {
                         <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
                             <li className='row-span-3 bg-dark-accent rounded-lg'>
                                 <NavigationMenuLink asChild>
-                                    <a
+                                    <Link
                                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                                         href="/dash/puzzles/3x3"
                                     >
@@ -69,7 +69,7 @@ export const DashNavbar = () => {
                                         <p className="text-sm leading-tight text-muted-foreground">
                                             Beginner&apos;s method, CFOP, Roux, ZZ, Petrus, and more.
                                         </p>
-                                    </a>
+                                    </Link>
                                 </NavigationMenuLink>
                             </li>
                                 <ListItem href="/dash/puzzles/2x2" title="2X2">
@@ -119,13 +119,13 @@ export const DashNavbar = () => {
 }
 
 const ListItem = forwardRef<
-    ElementRef<"a">,
-    ComponentPropsWithoutRef<"a">
+    ElementRef<typeof Link>,
+    ComponentPropsWithoutRef<typeof Link>
 >(({ className, title, children, ...props }, ref) => {
     return (
         <li>
             <NavigationMenuLink asChild>
-                <a
+                <Link
                     ref={ref}
                     className={cn(
                         "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-dark-accent focus:bg-dark-accent",
@@ -137,7 +137,7 @@ const ListItem = forwardRef<
                     <p className="line-clamp-2 text-sm leading-snug text-violet-100/70">
                         {children}
                     </p>
-                </a>
+                </Link>
             </NavigationMenuLink>
         </li>
     )
