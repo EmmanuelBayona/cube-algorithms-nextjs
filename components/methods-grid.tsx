@@ -2,18 +2,15 @@ import { cn } from "@/lib/utils"
 import { Cubes } from "@/types"
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import prisma from "@/lib/prisma";
-
-const CUBES_ID = {
-    '2x2': 2,
-    '3x3': 1,
-}
+import Link from "next/link";
 
 export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?: string }) => {
 
-    const cubeId = CUBES_ID[cube as keyof typeof CUBES_ID];
     const methods = await prisma.method.findMany({
         where: {
-            cubeId
+            cube: {
+                name: cube,
+            }
         },
     })
 
@@ -25,12 +22,16 @@ export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?
 
             {
                 methods.map((method) =>  (
-                    <Card key={method.id}>
-                        <CardHeader>
-                            <CardTitle>{method.name}</CardTitle>
-                            <CardDescription>{ method.description }</CardDescription> 
-                        </CardHeader>
-                    </Card>
+                    <Link key={method.id}
+                        href={`/dash/puzzles/${cube}/${method.name}`}
+                    >
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>{method.name}</CardTitle>
+                                <CardDescription>{ method.description }</CardDescription> 
+                            </CardHeader>
+                        </Card>
+                    </Link>
                 ))
             }
 
