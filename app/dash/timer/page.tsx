@@ -13,7 +13,7 @@ export default function Timer() {
     return (
         <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
 
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
+            <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 pb-5">
                 {
                     CARDS_DATA.map((item, index) => (
                         <Card key={index}>

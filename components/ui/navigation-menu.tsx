@@ -25,7 +25,7 @@ export const NavigationMenuList = forwardRef<
 >(({ className, ...props }, ref) => (
     <NavigationMenuPrimitive.List
         ref={ref}
-        className={cn('group flex flex-1 list-none items-center justify-center space-x-1', className)}
+        className={cn('group flex flex-1 list-none items-center justify-center gap-1 md:gap-2', className)}
         {...props}
     />
 ))

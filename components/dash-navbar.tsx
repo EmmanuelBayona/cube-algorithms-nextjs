@@ -4,9 +4,14 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { CubeIcon } from "@radix-ui/react-icons";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { SignInButton, SignedIn, SignedOut, UserButton, useClerk, useUser } from "@clerk/nextjs";
+import { Button } from "./ui/button";
+import Image from "next/image";
 
 
 export const DashNavbar = () => {
+
+    const { user } = useUser();
 
     return (
         <NavigationMenu className="mx-auto">
@@ -40,37 +45,62 @@ export const DashNavbar = () => {
                                     </Link>
                                 </NavigationMenuLink>
                             </li>
-                                {/* <ListItem href="/dash/puzzles/2x2" title="2X2">
+                                <ListItem href="/" title="2X2">
                                     Beginner&apos;s method, Ortega, CLL, EG, and more.
-                                </ListItem> */}
-                                {/* <ListItem href="/dash/puzzles/4x4" title="4X4">
+                                </ListItem>
+                                <ListItem href="/" title="4X4">
                                     Beginner&apos;s method, Yau, Hoya, Yau, and more.
                                 </ListItem>
-                                <ListItem href="/dash/puzzles/square-1" title="Square-1">
+                                <ListItem href="/" title="Square-1">
                                     Beginner&apos;s method, WCA, and more.
-                                </ListItem> */}
+                                </ListItem>
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
+                
+                <SignedIn>
+                    <NavigationMenuItem>
+                        <NavigationMenuTrigger>Actions</NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                            <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                <ListItem href='/' title="Upload an algorithm">
+                                    Share and showcase your own algorithms with the community.
+                                </ListItem>
 
-                {/* <NavigationMenuItem>
-                    <NavigationMenuTrigger>Notation</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                            {
-                                components.map((component) => (
-                                    <ListItem
-                                        key={component.title}
-                                        title={component.title}
-                                        href={component.href}
-                                    >
-                                        {component.description}
-                                    </ListItem>
-                                ))
-                            }
-                        </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem> */}
+                                <ListItem href='/' title="My algorithms">
+                                    Manage and view the algorithms you&apos;ve uploaded to the platform.
+                                </ListItem>
+
+                                <ListItem href='/' title="My favorites">
+                                    Explore your favorite algorithms.
+                                </ListItem>
+
+                                <ListItem href='/' title="My statistics">
+                                    View your statistics.
+                                </ListItem>
+                            </ul>
+                        </NavigationMenuContent>
+                    </NavigationMenuItem>
+                </SignedIn>
+
+                <NavigationMenuItem>
+                    <SignedIn>
+                        <div className="mr-2">
+                            <UserButton afterSignOutUrl="/" />
+                        </div>
+                    </SignedIn>
+
+                    <SignedOut>
+                        <SignInButton mode="modal" afterSignInUrl="/dash/timer" afterSignUpUrl="/dash/timer">
+                            <Button variant='primary' className="h-10">
+                                Sign in
+                            </Button>
+                        </SignInButton>
+                    </SignedOut>
+
+                </NavigationMenuItem>
+
+
 
                 {/* <NavigationMenuItem className="hidden lg:block">
                     <Link href="/" legacyBehavior passHref>
