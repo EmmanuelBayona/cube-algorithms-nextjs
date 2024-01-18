@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons';
+import { CaretSortIcon, CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { ComponentPropsWithRef, ElementRef, forwardRef } from 'react';
 
@@ -19,7 +19,7 @@ export const SelectTrigger = forwardRef<
     >
         { children }
         <SelectPrimitive.Icon asChild>
-            <ChevronDownIcon className='h-4 w-4' />
+            <CaretSortIcon className='h-4 w-4' />
         </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
 ))
