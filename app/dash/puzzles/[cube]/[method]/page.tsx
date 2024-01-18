@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { notFound } from "next/navigation";
-import { MethodsGrid } from "@/components/methods-grid";
-import { Cubes } from "@/types";
-import { Suspense } from "react";
-import { SkeletonGrid } from "@/components/skeleton-grid";
 import { CasesList } from "@/components/cases-list";
 
 const validCubes = [

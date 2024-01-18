@@ -1,27 +1,27 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { PlusIcon } from "@radix-ui/react-icons"
+import { LayersIcon  } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 
-export const NewAlgorithmForm = () => {
+export const NewCaseForm = () => {
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant='primary'>
-                    New Algorithm
-                    <PlusIcon className="h-4 w-4" />
+                <Button>
+                    New Case
+                    <LayersIcon className="h-4 w-4" />
                 </Button>
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
 
                 <DialogHeader>
-                    <DialogTitle>Add a new algorithm</DialogTitle>
+                    <DialogTitle>Add a new case</DialogTitle>
                     <DialogDescription>
-                        Select a cube, method, and case to add a new algorithm.
+                        Select a cube, method, and enter a case to add a new one.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -57,35 +57,14 @@ export const NewAlgorithmForm = () => {
                     </div>
 
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Case</Label>
-                        <Select>
-                            <SelectTrigger className="col-span-3">
-                                <SelectValue placeholder='Select a case' />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value='F2L-1'> F2L-1 </SelectItem>
-                                <SelectItem value='F2L-2'> F2L-2 </SelectItem>
-                                <SelectItem value='F2L-3'> F2L-3 </SelectItem>
-                                <SelectItem value='F2L-4'> F2L-4 </SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="algorithm" className="text-right">Cube</Label>
+                        <Label htmlFor="case" className="text-right">Case</Label>
                         <Input
                             className="col-span-3"
-                            id="algorithm"
-                            name="algorithm"
+                            id="case"
+                            name="case"
                             type='text'
                             placeholder='Enter a cube'
                         />
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center -mt-3">
-                        <small className="text-xs col-start-2 col-span-3 text-pretty text-violet-100/70 pl-2">
-                            Please separate moves with a space. For example: R U R&apos; U&apos;
-                        </small>
                     </div>
 
                     <Button variant='primary' className="mt-5">

@@ -7,7 +7,7 @@ interface ButtonProps
         VariantProps<typeof buttonVariants> {}
 
 export const buttonVariants = cva(
-    'text-violet-100 text-base rounded-lg px-4 py-1 flex items-center gap-2',
+    'text-violet-100 text-base rounded-lg px-4 py-1 flex items-center justify-center gap-2',
     {
         variants: {
             variant: {

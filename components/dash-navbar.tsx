@@ -7,13 +7,6 @@ import { cn } from "@/lib/utils";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 
-const ACTIONS_MENU_ITEMS = [
-    { href: "/dash/new-algorithm", title: "Upload an algorithm", description: "Share and showcase your own algorithms with the community." },
-    { href: "/", title: "My algorithms", description: "Manage and view the algorithms you've uploaded to the platform." },
-    { href: "/", title: "My favorites", description: "Explore your favorite algorithms." },
-    { href: "/", title: "My statistics", description: "View your statistics." },
-]
-
 
 export const DashNavbar = () => {
 
@@ -64,20 +57,11 @@ export const DashNavbar = () => {
                 
                 <SignedIn>
                     <NavigationMenuItem>
-                        <NavigationMenuTrigger>Actions</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                {
-                                    ACTIONS_MENU_ITEMS.map(({ href, title, description }) => {
-                                        return (
-                                            <ListItem key={href} href={href} title={title}>
-                                                {description}
-                                            </ListItem>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </NavigationMenuContent>
+                        <Link href="profile" legacyBehavior passHref>
+                            <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
+                                Profile
+                            </NavigationMenuLink>
+                        </Link>
                     </NavigationMenuItem>
                 </SignedIn>
 
@@ -129,7 +113,7 @@ const ListItem = forwardRef<
                     )}
                     {...props}
                 >
-                <div className="text-sm font-medium leading-none">{title}</div>
+                    <div className="text-sm font-medium leading-none">{title}</div>
                     <p className="line-clamp-2 text-sm leading-snug text-violet-100/70">
                         {children}
                     </p>
