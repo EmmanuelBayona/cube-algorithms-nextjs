@@ -57,7 +57,7 @@ export const DashNavbar = () => {
                 
                 <SignedIn>
                     <NavigationMenuItem>
-                        <Link href="profile" legacyBehavior passHref>
+                        <Link href="/dash/profile" legacyBehavior passHref>
                             <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
                                 Profile
                             </NavigationMenuLink>

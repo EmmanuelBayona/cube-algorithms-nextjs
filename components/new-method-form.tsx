@@ -10,7 +10,7 @@ export const NewMethodForm = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>
+                <Button className="flex-shrink-0">
                     New Method
                     <StackIcon className="h-4 w-4" />
                 </Button>

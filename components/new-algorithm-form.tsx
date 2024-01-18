@@ -10,7 +10,7 @@ export const NewAlgorithmForm = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant='primary'>
+                <Button variant='primary' className="flex-shrink-0">
                     New Algorithm
                     <PlusIcon className="h-4 w-4" />
                 </Button>
@@ -72,7 +72,7 @@ export const NewAlgorithmForm = () => {
                     </div>
 
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="algorithm" className="text-right">Cube</Label>
+                        <Label htmlFor="algorithm" className="text-right">Alg.</Label>
                         <Input
                             className="col-span-3"
                             id="algorithm"

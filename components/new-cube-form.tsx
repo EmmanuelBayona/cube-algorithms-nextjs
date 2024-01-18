@@ -9,7 +9,7 @@ export const NewCubeForm = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>
+                <Button className="flex-shrink-0">
                     New Cube
                     <CubeIcon className="h-4 w-4" />
                 </Button>

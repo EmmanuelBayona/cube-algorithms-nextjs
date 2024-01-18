@@ -1,5 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
-// rgba(108,71,255,.8)
+import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card"
 
 export const LandingGrid = () => {
 

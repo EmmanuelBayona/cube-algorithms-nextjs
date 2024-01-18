@@ -10,7 +10,7 @@ export const NewCaseForm = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>
+                <Button className="flex-shrink-0">
                     New Case
                     <LayersIcon className="h-4 w-4" />
                 </Button>

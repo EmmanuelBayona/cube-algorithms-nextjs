@@ -6,15 +6,14 @@ import { NewMethodForm } from "./new-method-form"
 export const UserActionsList = () => {
 
     return (
-        <>
-            <div className="mt-10 flex justify-end items-center gap-3">
+        <div className="overflow-hidden mt-5 md:mt-10 w-full">
+            <div className="w-full flex md:justify-end items-center gap-3 overflow-x-auto">
                 <NewCubeForm />
                 <NewMethodForm />
                 <NewCaseForm />
                 <NewAlgorithmForm />
             </div>
-            <hr className="border-dark-accent border-opacity-50 mt-3 mb-10" />
-        </>
+        </div>
     )
 
 }
