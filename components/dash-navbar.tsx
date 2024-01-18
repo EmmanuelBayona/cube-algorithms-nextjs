@@ -4,14 +4,18 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { CubeIcon } from "@radix-ui/react-icons";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import { cn } from "@/lib/utils";
-import { SignInButton, SignedIn, SignedOut, UserButton, useClerk, useUser } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
-import Image from "next/image";
+
+const ACTIONS_MENU_ITEMS = [
+    { href: "/dash/new-algorithm", title: "Upload an algorithm", description: "Share and showcase your own algorithms with the community." },
+    { href: "/", title: "My algorithms", description: "Manage and view the algorithms you've uploaded to the platform." },
+    { href: "/", title: "My favorites", description: "Explore your favorite algorithms." },
+    { href: "/", title: "My statistics", description: "View your statistics." },
+]
 
 
 export const DashNavbar = () => {
-
-    const { user } = useUser();
 
     return (
         <NavigationMenu className="mx-auto">
@@ -63,21 +67,15 @@ export const DashNavbar = () => {
                         <NavigationMenuTrigger>Actions</NavigationMenuTrigger>
                         <NavigationMenuContent>
                             <ul className="grid w-full gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                                <ListItem href='/' title="Upload an algorithm">
-                                    Share and showcase your own algorithms with the community.
-                                </ListItem>
-
-                                <ListItem href='/' title="My algorithms">
-                                    Manage and view the algorithms you&apos;ve uploaded to the platform.
-                                </ListItem>
-
-                                <ListItem href='/' title="My favorites">
-                                    Explore your favorite algorithms.
-                                </ListItem>
-
-                                <ListItem href='/' title="My statistics">
-                                    View your statistics.
-                                </ListItem>
+                                {
+                                    ACTIONS_MENU_ITEMS.map(({ href, title, description }) => {
+                                        return (
+                                            <ListItem key={href} href={href} title={title}>
+                                                {description}
+                                            </ListItem>
+                                        )
+                                    })
+                                }
                             </ul>
                         </NavigationMenuContent>
                     </NavigationMenuItem>

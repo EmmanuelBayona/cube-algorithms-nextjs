@@ -72,13 +72,7 @@ const config: Config = {
 		},
 	},
 	plugins: [
-		// plugin(({ matchUtilities }) => {
-		// 	matchUtilities({
-		// 		perspective: (value) => ({
-		// 			perspective: value,
-		// 		}),
-		// 	});
-		// }),
+		require('tailwindcss-animate')
 	],
 }
 export default config

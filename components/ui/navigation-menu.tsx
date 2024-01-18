@@ -1,3 +1,4 @@
+'use client';
 import { cn } from "@/lib/utils";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
