@@ -7,3 +7,9 @@ export interface Method {
     name: string;
     description: string;
 }
+
+export interface DBCubes {
+    id: number;
+    name: string;
+    description: string;
+}[]

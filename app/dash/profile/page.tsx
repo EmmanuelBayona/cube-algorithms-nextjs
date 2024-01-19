@@ -1,7 +1,7 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserActionsList } from "@/components/user-actions-list";
 import { UserAlgorithmsTable } from "@/components/user-algorithms-table";
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 
 export default async function ProfilePage() {
 

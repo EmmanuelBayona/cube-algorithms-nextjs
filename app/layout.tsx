@@ -4,6 +4,7 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,6 +27,7 @@ export default function RootLayout({
 			<html lang="en" className='dark'>
 				<body className={inter.className}>
 					{children}
+					<Toaster richColors />
 					<Analytics />
 				</body>
 			</html>

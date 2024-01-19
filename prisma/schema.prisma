@@ -17,7 +17,7 @@ model User {
 
 model Cube {
     id          Int      @id @default(autoincrement())
-    name        String
+    name        String   @unique
     description String   @default("")
     methods     Method[]
 
@@ -26,7 +26,7 @@ model Cube {
 
 model Method {
     id          Int    @id @default(autoincrement())
-    name        String
+    name        String @unique
     description String @default("")
     cube        Cube   @relation(fields: [cubeId], references: [id])
     cubeId      Int
@@ -37,7 +37,7 @@ model Method {
 
 model Case {
     id         Int         @id @default(autoincrement())
-    name       String
+    name       String      @unique
     method     Method      @relation(fields: [methodId], references: [id])
     methodId   Int
     algorithms Algorithm[]
@@ -47,7 +47,7 @@ model Case {
 
 model Algorithm {
     id        Int      @id @default(autoincrement())
-    algorithm String
+    algorithm String   @unique
     createdAt DateTime @default(now())
     case      Case     @relation(fields: [caseId], references: [id])
     caseId    Int
