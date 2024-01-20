@@ -87,8 +87,9 @@ export const NewCubeForm = ({ cubes }: { cubes: DBCubes[] }) => {
                         />
                     </div>
 
-                    <Button variant='primary' className="mt-5" type="submit"
+                    <Button variant='primary' className="mt-5"
                         disabled={status === 'loading'}
+                        type="submit"
                     >
                         Add Algorithm
                     </Button>

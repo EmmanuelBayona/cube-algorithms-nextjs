@@ -7,19 +7,24 @@ import { StackIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { DBCubes } from "@/types"
+import { showToastError } from "@/lib/toaster";
 
 export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
 
     const [cube, setCube] = useState<string>('');
-    // const [description, setDescription] = useState<string>('');
-    // const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
-    //
+    const [method, setMethod] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
+
     const onAddNewMethod = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(cube)
-        //
-        //     if (!cube) return showToastError('Cube name is required');
-        //     if (!description) return showToastError('Cube description is required');
+        console.log({ cube, method, description });
+
+        if (!cube) return showToastError('Cube is required');
+        if (!method) return showToastError('Method name is required');
+        if (!description) return showToastError('Method description is required');
+
+        setStatus('loading')
         //
         //     // if the cube already exists, return an error
         //     if (cubes.find(c => c.name === cube)) return showToastError('Cube already exists')
@@ -37,7 +42,7 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
         //     setCube('');
         //     setDescription('');
         //     showToastSuccess('Cube added successfully');
-        //     setStatus('success');
+        setStatus('success');
     }
 
 
@@ -90,6 +95,8 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
                             name="method"
                             type='text'
                             placeholder='Enter a cube'
+                            value={method}
+                            onChange={(e) => setMethod(e.target.value)}
                         />
                     </div>
 
@@ -101,10 +108,15 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
                             name="description"
                             type='text'
                             placeholder='Enter a cube'
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
 
-                    <Button variant='primary' className="mt-5">
+                    <Button variant='primary' className="mt-5"
+                        disabled={status === 'loading'}
+                        type="submit"
+                    >
                         Add Algorithm
                     </Button>
 
