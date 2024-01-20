@@ -7,14 +7,13 @@ import { NewMethodForm } from "./new-method-form"
 export const UserActionsList = async () => {
 
     const cubes = await prisma.cube.findMany();
-    console.log(cubes)
-
+    const methods = await prisma.method.findMany();
 
     return (
         <div className="overflow-hidden mt-5 md:mt-10 w-full">
             <div className="w-full flex md:justify-end items-center gap-3 overflow-x-auto">
-                <NewCubeForm />
-                <NewMethodForm cubes={cubes}/>
+                <NewCubeForm cubes={cubes} />
+                <NewMethodForm cubes={cubes} />
                 <NewCaseForm />
                 <NewAlgorithmForm />
             </div>

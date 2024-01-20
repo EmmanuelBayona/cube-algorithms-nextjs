@@ -13,3 +13,10 @@ export interface DBCubes {
     name: string;
     description: string;
 }[]
+
+export interface DBMethods {
+    id: number;
+    name: string;
+    description: string;
+    cubeId: number;
+}[]

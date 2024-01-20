@@ -1,3 +1,5 @@
+'use client';
+import { FormEvent, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
@@ -7,6 +9,37 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { DBCubes } from "@/types"
 
 export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
+
+    const [cube, setCube] = useState<string>('');
+    // const [description, setDescription] = useState<string>('');
+    // const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
+    //
+    const onAddNewMethod = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(cube)
+        //
+        //     if (!cube) return showToastError('Cube name is required');
+        //     if (!description) return showToastError('Cube description is required');
+        //
+        //     // if the cube already exists, return an error
+        //     if (cubes.find(c => c.name === cube)) return showToastError('Cube already exists')
+        //
+        //     setStatus('loading');
+        //
+        //     const { success } = await addNewCube(cube, description);
+        //
+        //     if (!success) {
+        //         showToastError('Something went wrong');
+        //         setStatus('error');
+        //         return;
+        //     }
+        //
+        //     setCube('');
+        //     setDescription('');
+        //     showToastSuccess('Cube added successfully');
+        //     setStatus('success');
+    }
+
 
     return (
         <Dialog>
@@ -26,11 +59,14 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
                     </DialogDescription>
                 </DialogHeader>
 
-                <form className="grid gap-4 py-5">
+                <form className="grid gap-4 py-5" onSubmit={onAddNewMethod} >
 
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label className="text-right">Cube</Label>
-                        <Select disabled={ cubes.length === 0 }>
+                        <Select disabled={cubes.length === 0}
+                            value={cube}
+                            onValueChange={setCube}
+                        >
                             <SelectTrigger className="col-span-3">
                                 <SelectValue placeholder='Select a cube' />
                             </SelectTrigger>

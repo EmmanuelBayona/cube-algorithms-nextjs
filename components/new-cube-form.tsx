@@ -7,23 +7,28 @@ import { CubeIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { addNewCube } from "@/actions"
 import { showToastError, showToastSuccess } from "@/lib/toaster"
+import { DBCubes } from "@/types";
 
-export const NewCubeForm = () => {
+export const NewCubeForm = ({ cubes }: { cubes: DBCubes[] }) => {
 
-    const [ cube, setCube ] = useState<string>('');
-    const [ description, setDescription ] = useState<string>('');
-    const [ status, setStatus ] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
+    const [cube, setCube] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
 
-    const onAddNewCube = async(e: FormEvent<HTMLFormElement>) => {
+    const onAddNewCube = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!cube) return showToastError('Cube name is required');
         if (!description) return showToastError('Cube description is required');
+
+        // if the cube already exists, return an error
+        if (cubes.find(c => c.name === cube)) return showToastError('Cube already exists')
+
         setStatus('loading');
 
         const { success } = await addNewCube(cube, description);
 
-        if ( !success ) {
+        if (!success) {
             showToastError('Something went wrong');
             setStatus('error');
             return;
@@ -68,7 +73,7 @@ export const NewCubeForm = () => {
                         />
                     </div>
 
-                    
+
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="description" className="text-right">Description</Label>
                         <Input
