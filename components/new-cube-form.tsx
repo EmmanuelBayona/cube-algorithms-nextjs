@@ -81,7 +81,7 @@ export const NewCubeForm = ({ cubes }: { cubes: DBCubes[] }) => {
                             id="description"
                             name="description"
                             type='text'
-                            placeholder='Enter a cube'
+                            placeholder='Enter a description'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />

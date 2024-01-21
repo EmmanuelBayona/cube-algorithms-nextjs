@@ -20,3 +20,9 @@ export interface DBMethods {
     description: string;
     cubeId: number;
 }[]
+
+export interface DBCases {
+    id: number;
+    name: string;
+    methodId: number;
+}
