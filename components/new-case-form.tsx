@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
@@ -7,50 +7,57 @@ import { LayersIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { DBCases, DBCubes, DBMethods } from "@/types"
+import { showToastError, showToastSuccess } from "@/lib/toaster";
+import { addNewCase } from "@/actions";
 
 export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
 
     const [cube, setCube] = useState<string>('');
     const [method, setMethod] = useState<string>('');
-    // const [case, setCase] = useState<string>('');
+    const [caseName, setCaseName] = useState<string>('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
 
     const cubeId = cube ? cubes.find(c => c.name === cube)?.id : null;
     const filteredMethods = cubeId ? methods.filter(m => m.cubeId === cubeId) : [];
-    // const onAddNewMethod = async (e: FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
-    //
-    //     if (!cube) return showToastError('Cube is required');
-    //     if (!method) return showToastError('Method name is required');
-    //     if (!description) return showToastError('Method description is required');
-    //
-    //     // if the method already exists, return an error 
-    //     if (methods.find(m => m.name === method)) return showToastError('Method already exists');
-    //
-    //     setStatus('loading')
-    //
-    //     const cubeId = cubes.find(c => c.name === cube)?.id;
-    //     if (!cubeId) {
-    //         showToastError('Something went wrong');
-    //         setStatus('error');
-    //         return;
-    //     }
-    //
-    //     const { success } = await addNewMethod(method, description, cubeId);
-    //
-    //     if (!success) {
-    //         showToastError('Something went wrong');
-    //         setStatus('error');
-    //         return;
-    //     }
-    //
-    //     setCube('');
-    //     setMethod('');
-    //     setDescription('');
-    //     showToastSuccess('Cube added successfully');
-    //     setStatus('success');
-    // }
-    //
+
+    const onAddNewCase = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!cube) return showToastError('Cube is required');
+        if (!method) return showToastError('Method is required');
+        if (!caseName) return showToastError('Case is required');
+
+        // if the case already exists, return an error
+        if (cases.find(c => c.name === caseName)) return showToastError('Case already exists');
+
+        // bug: if you select a cube, then select a method, then change the cube, the method is shown empty, but
+        // you can still submit the form, even when the method is not valid for the cube
+        if (!filteredMethods.find(m => m.name === method)) return showToastError('Method is not valid for this cube');
+
+        setStatus('loading')
+
+        const methodId = method ? methods.find(m => m.name === method)?.id : null;
+        if (!methodId) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        const { success } = await addNewCase(caseName, methodId);
+
+        if (!success) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        setCube('');
+        setMethod('');
+        setCaseName('');
+        showToastSuccess('Cube added successfully');
+        setStatus('success');
+    }
+
 
 
     return (
@@ -71,7 +78,7 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
                     </DialogDescription>
                 </DialogHeader>
 
-                <form className="grid gap-4 py-5">
+                <form className="grid gap-4 py-5" onSubmit={onAddNewCase}>
 
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label className="text-right">Cube</Label>
@@ -123,10 +130,15 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
                             name="case"
                             type='text'
                             placeholder='Enter a cube'
+                            value={caseName}
+                            onChange={e => setCaseName(e.target.value)}
                         />
                     </div>
 
-                    <Button variant='primary' className="mt-5">
+                    <Button variant='primary' className="mt-5"
+                        disabled={status === 'loading'}
+                        type="submit"
+                    >
                         Add Algorithm
                     </Button>
 

@@ -36,3 +36,19 @@ export const addNewMethod = async (method: string, description: string, cubeId: 
         return { success: false, error }
     }
 }
+
+export const addNewCase = async (caseName: string, methodId: number) => {
+    try {
+        const res = await prisma.case.create({
+            data: {
+                name: caseName,
+                methodId: methodId
+            }
+        })
+
+        revalidatePath('/dash/profile')
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
