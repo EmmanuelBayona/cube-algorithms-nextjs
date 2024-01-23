@@ -34,14 +34,14 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
         // you can still submit the form, even when the method is not valid for the cube
         if (!filteredMethods.find(m => m.name === method)) return showToastError('Method is not valid for this cube');
 
-        setStatus('loading')
-
         const methodId = method ? methods.find(m => m.name === method)?.id : null;
         if (!methodId) {
             showToastError('Something went wrong');
             setStatus('error');
             return;
         }
+
+        setStatus('loading')
 
         const { success } = await addNewCase(caseName, methodId);
 
@@ -103,7 +103,7 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
 
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label className="text-right">Method</Label>
-                        <Select disabled={cubes.length === 0 || filteredMethods.length === 0}
+                        <Select disabled={filteredMethods.length === 0}
                             value={method}
                             onValueChange={setMethod}
                         >

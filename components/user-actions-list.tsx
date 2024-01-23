@@ -9,6 +9,7 @@ export const UserActionsList = async () => {
     const cubes = await prisma.cube.findMany();
     const methods = await prisma.method.findMany();
     const cases = await prisma.case.findMany();
+    const algorithms = await prisma.algorithm.findMany();
 
     return (
         <div className="overflow-hidden mt-5 md:mt-10 w-full">
@@ -23,7 +24,12 @@ export const UserActionsList = async () => {
                     methods={methods}
                     cases={cases}
                 />
-                <NewAlgorithmForm />
+                <NewAlgorithmForm
+                    cubes={cubes}
+                    methods={methods}
+                    cases={cases}
+                    algorithms={algorithms}
+                />
             </div>
         </div>
     )
