@@ -3,6 +3,7 @@ import { NewAlgorithmForm } from "./new-algorithm-form"
 import { NewCaseForm } from "./new-case-form"
 import { NewCubeForm } from "./new-cube-form"
 import { NewMethodForm } from "./new-method-form"
+import { auth, currentUser } from "@clerk/nextjs"
 
 export const UserActionsList = async () => {
 
@@ -10,6 +11,8 @@ export const UserActionsList = async () => {
     const methods = await prisma.method.findMany();
     const cases = await prisma.case.findMany();
     const algorithms = await prisma.algorithm.findMany();
+
+    const { orgSlug } = auth()
 
     return (
         <div className="overflow-hidden mt-5 md:mt-10 w-full">

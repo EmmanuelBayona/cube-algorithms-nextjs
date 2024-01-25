@@ -6,8 +6,10 @@ import { Label } from "./ui/label"
 import { Button } from "./ui/button"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
-import { showToastError } from "@/lib/toaster";
+import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBAlgs, DBCases, DBCubes, DBMethods } from "@/types";
+import { addNewAlg } from "@/actions";
+import { useAuth } from "@clerk/nextjs";
 
 interface NewAlgorithmFormProps {
     cubes: DBCubes[];
@@ -29,7 +31,7 @@ export const NewAlgorithmForm = ({ cubes, methods, cases, algorithms }: NewAlgor
     const filteredMethods = cubeId ? methods.filter(m => m.cubeId === cubeId) : [];
     const filteredCases = methodId ? cases.filter(c => c.methodId === methodId) : [];
 
-    const onAddNewAlgorithm = (e: FormEvent<HTMLFormElement>) => {
+    const onAddNewAlgorithm = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!cube) return showToastError('Cube is required');
@@ -37,10 +39,36 @@ export const NewAlgorithmForm = ({ cubes, methods, cases, algorithms }: NewAlgor
         if (!caseName) return showToastError('Case is required');
         if (!algorithm) return showToastError('Algorithm is required');
 
+        // if the algorithm already exists, return an error
+        if (algorithms.find(a => a.algorithm === algorithm)) return showToastError('Algorithm already exists');
+
+        // bug: if you select a cube, then select a method, then change the cube, the method is shown empty, but
+        // you can still submit the form, even when the method is not valid for the cube, this also happens with cases
+        if (!filteredMethods.find(m => m.name === method)) return showToastError('Method is not valid for this cube');
+        if (!filteredCases.find(c => c.name === caseName)) return showToastError('Case is not valid for this method');
+
+        const caseId = caseName ? filteredCases.find(c => c.name === caseName)?.id : null;
+        if (!caseId) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        setStatus('loading');
+
+        const { success } = await addNewAlg(algorithm, caseId);
+
+        if (!success) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
         setCube('');
         setMethod('');
         setCaseName('');
         setAlgorithm('');
+        showToastSuccess('Algorithm added successfully');
         setStatus('success');
     }
 
