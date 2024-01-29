@@ -23,38 +23,14 @@ export const DashNavbar = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                    <NavigationMenuTrigger>Algorithms</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
-                            <li className='row-span-3 bg-dark-accent rounded-lg'>
-                                <NavigationMenuLink asChild>
-                                    <Link
-                                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                        href="/dash/puzzles/3x3"
-                                    >
-                                        <CubeIcon width={24} height={24}/>
-                                        <div className="mb-2 mt-4 text-lg font-medium">
-                                            3X3
-                                        </div>
-                                        <p className="text-sm leading-tight text-muted-foreground">
-                                            F2L, OLL, PLL, and more.
-                                        </p>
-                                    </Link>
-                                </NavigationMenuLink>
-                            </li>
-                                <ListItem href="/" title="2X2">
-                                    Beginner&apos;s method, Ortega, CLL, EG, and more.
-                                </ListItem>
-                                <ListItem href="/" title="4X4">
-                                    Beginner&apos;s method, Yau, Hoya, Yau, and more.
-                                </ListItem>
-                                <ListItem href="/" title="Square-1">
-                                    Beginner&apos;s method, WCA, and more.
-                                </ListItem>
-                        </ul>
-                    </NavigationMenuContent>
+                    <Link href="/dash/puzzles" legacyBehavior passHref>
+                        <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
+                            Algorithms
+                        </NavigationMenuLink>
+                    </Link>
                 </NavigationMenuItem>
-                
+
+
                 <SignedIn>
                     <NavigationMenuItem>
                         <Link href="/dash/profile" legacyBehavior passHref>
