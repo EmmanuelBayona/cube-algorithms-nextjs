@@ -7,14 +7,6 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model User {
-    id         Int         @id @default(autoincrement())
-    algorithms Algorithm[]
-    likes      Like[]
-
-    @@map("users")
-}
-
 model Cube {
     id          Int      @id @default(autoincrement())
     name        String   @unique
@@ -51,8 +43,7 @@ model Algorithm {
     createdAt DateTime @default(now())
     case      Case     @relation(fields: [caseId], references: [id])
     caseId    Int
-    user      User     @relation(fields: [userId], references: [id])
-    userId    Int
+    userId    String   @unique
     likes     Like[]
 
     @@map("algorithms")
@@ -63,8 +54,7 @@ model Like {
     createdAt   DateTime  @default(now())
     algorithm   Algorithm @relation(fields: [algorithmId], references: [id])
     algorithmId Int
-    user        User      @relation(fields: [userId], references: [id])
-    userId      Int
+    userId      String    @unique
 
     @@map("likes")
 }

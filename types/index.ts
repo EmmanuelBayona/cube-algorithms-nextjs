@@ -20,3 +20,17 @@ export interface DBMethods {
     description: string;
     cubeId: number;
 }[]
+
+export interface DBCases {
+    id: number;
+    name: string;
+    methodId: number;
+}[]
+
+export interface DBAlgs {
+    id: number;
+    algorithm: string;
+    createdAt: Date;
+    caseId: number;
+    userId: string;
+}[]

@@ -6,10 +6,11 @@ import { Button } from "./ui/button"
 import { StackIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import { DBCubes } from "@/types"
-import { showToastError } from "@/lib/toaster";
+import { DBCubes, DBMethods } from "@/types"
+import { showToastError, showToastSuccess } from "@/lib/toaster";
+import { addNewMethod } from "@/actions";
 
-export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
+export const NewMethodForm = ({ cubes, methods }: { cubes: DBCubes[], methods: DBMethods[] }) => {
 
     const [cube, setCube] = useState<string>('');
     const [method, setMethod] = useState<string>('');
@@ -18,30 +19,35 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
 
     const onAddNewMethod = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log({ cube, method, description });
 
         if (!cube) return showToastError('Cube is required');
         if (!method) return showToastError('Method name is required');
         if (!description) return showToastError('Method description is required');
 
+        // if the method already exists, return an error 
+        if (methods.find(m => m.name === method)) return showToastError('Method already exists');
+
         setStatus('loading')
-        //
-        //     // if the cube already exists, return an error
-        //     if (cubes.find(c => c.name === cube)) return showToastError('Cube already exists')
-        //
-        //     setStatus('loading');
-        //
-        //     const { success } = await addNewCube(cube, description);
-        //
-        //     if (!success) {
-        //         showToastError('Something went wrong');
-        //         setStatus('error');
-        //         return;
-        //     }
-        //
-        //     setCube('');
-        //     setDescription('');
-        //     showToastSuccess('Cube added successfully');
+
+        const cubeId = cubes.find(c => c.name === cube)?.id;
+        if (!cubeId) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        const { success } = await addNewMethod(method, description, cubeId);
+
+        if (!success) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        setCube('');
+        setMethod('');
+        setDescription('');
+        showToastSuccess('Cube added successfully');
         setStatus('success');
     }
 
@@ -94,7 +100,7 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
                             id="method"
                             name="method"
                             type='text'
-                            placeholder='Enter a cube'
+                            placeholder='Enter a method'
                             value={method}
                             onChange={(e) => setMethod(e.target.value)}
                         />
@@ -107,7 +113,7 @@ export const NewMethodForm = ({ cubes }: { cubes: DBCubes[] }) => {
                             id="description"
                             name="description"
                             type='text'
-                            placeholder='Enter a cube'
+                            placeholder='Enter a description'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
