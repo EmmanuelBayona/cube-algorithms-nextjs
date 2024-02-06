@@ -1,7 +1,6 @@
 'use client';
 import Link from "next/link";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuTriggerStyle } from "./ui/navigation-menu";
-import { CubeIcon } from "@radix-ui/react-icons";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTriggerStyle } from "./ui/navigation-menu";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
@@ -57,16 +56,6 @@ export const DashNavbar = () => {
                     </SignedOut>
 
                 </NavigationMenuItem>
-
-
-
-                {/* <NavigationMenuItem className="hidden lg:block">
-                    <Link href="/" legacyBehavior passHref>
-                        <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
-                            Statistics
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem> */}
 
             </NavigationMenuList>
         </NavigationMenu>

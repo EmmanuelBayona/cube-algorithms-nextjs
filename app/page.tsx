@@ -23,7 +23,7 @@ export default function Home() {
                 </p>
 
                 <div className="flex justify-center mt-20">
-                    <Link href="/dash/timer"
+                    <Link href="/dash/puzzles"
                         className={cn(buttonVariants({ variant: 'primary' }))}
                     >
                         Get started

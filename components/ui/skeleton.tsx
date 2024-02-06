@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 import { HTMLAttributes, forwardRef } from "react";
 
 export const Skeleton = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-    ({ className, ...props}, ref) => (
-        <div 
+    ({ className, ...props }, ref) => (
+        <div
             ref={ref}
             className={cn('relative isolate space-y-5 overflow-hidden rounded-2xl bg-dark border border-dark-accent p-4 shadow-xl shadow-black/5 before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:border-t before:border-violet-100/10 before:bg-gradient-to-r before:from-transparent before:via-violet-100/10 before:to-transparent', className)}
             {...props}

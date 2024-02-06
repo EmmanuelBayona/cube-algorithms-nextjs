@@ -14,5 +14,5 @@ export const SkeletonGrid = ({ className }: { className?: string }) => {
 
         </section>
     )
-    
+
 }
