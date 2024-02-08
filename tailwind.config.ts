@@ -19,6 +19,7 @@ const config: Config = {
 				'dark-accent': '#1e1e1e',
 				'brand': '#561ee3',
 				'brand-accent': '#6c47ff',
+				'secondary': '#141414'
 			},
 			animation: {
 				scaleIn: 'scaleIn 200ms ease',
