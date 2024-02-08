@@ -4,14 +4,14 @@ import { ButtonHTMLAttributes, forwardRef } from "react"
 
 interface ButtonProps
     extends ButtonHTMLAttributes<HTMLButtonElement>,
-        VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> { }
 
 export const buttonVariants = cva(
     'text-violet-100 text-base rounded-lg px-4 py-1 flex items-center justify-center gap-2',
     {
         variants: {
             variant: {
-                default: 'border border-dark-accent bg-dark',
+                default: 'border border-dark-accent bg-secondary',
                 primary: 'border border-brand-accent bg-brand',
             }
         },
@@ -24,7 +24,7 @@ export const buttonVariants = cva(
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant, ...props }, ref) => {
         return (
-            <button 
+            <button
                 ref={ref}
                 className={cn(buttonVariants({ className, variant }))}
                 {...props}
