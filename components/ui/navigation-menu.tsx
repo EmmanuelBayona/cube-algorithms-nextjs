@@ -11,10 +11,10 @@ export const NavigationMenu = forwardRef<
 >(({ className, children, ...props }, ref) => (
     <NavigationMenuPrimitive.Root
         ref={ref}
-        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-dark border border-dark-accent p-1', className)}
+        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-secondary border border-dark-accent p-1', className)}
         {...props}
     >
-        { children }
+        {children}
         <NavigationMenuViewport />
     </NavigationMenuPrimitive.Root>
 ))
@@ -68,8 +68,8 @@ export const NavigationMenuContent = forwardRef<
             'left-0 top-0 w-full data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight md:absolute md:w-auto',
             className
         )}
-    {...props}
-  />
+        {...props}
+    />
 ))
 NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
 
@@ -99,12 +99,12 @@ export const NavigationMenuIndicator = forwardRef<
     <NavigationMenuPrimitive.Indicator
         ref={ref}
         className={cn(
-        'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in',
-        className
+            'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in',
+            className
         )}
         {...props}
     >
         <div className='relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-dark-accent' />
-  </NavigationMenuPrimitive.Indicator>
+    </NavigationMenuPrimitive.Indicator>
 ))
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName
