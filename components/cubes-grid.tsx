@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import prisma from "@/lib/prisma"
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import Link from "next/link";
 
 export const CubesGrid = async ({ className }: { className?: string }) => {
 
@@ -11,12 +12,14 @@ export const CubesGrid = async ({ className }: { className?: string }) => {
 
             {
                 cubes.map((cube) => (
-                    <Card key={cube.id}>
-                        <CardHeader>
-                            <CardTitle>{cube.name}</CardTitle>
-                            <CardDescription>{cube.description}</CardDescription>
-                        </CardHeader>
-                    </Card>
+                    <Link key={cube.id} href={`/dash/puzzles/${cube.name}`}>
+                        <Card key={cube.id}>
+                            <CardHeader>
+                                <CardTitle>{cube.name}</CardTitle>
+                                <CardDescription>{cube.description}</CardDescription>
+                            </CardHeader>
+                        </Card>
+                    </Link>
                 ))
             }
 
