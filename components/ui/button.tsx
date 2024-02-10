@@ -11,7 +11,7 @@ export const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: 'border border-dark-accent bg-secondary',
+                default: 'bg-secondary shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)] drop-shadow-[0_0_0_1px_rgba(0,0,0,0.25)]',
                 primary: 'border border-brand-accent bg-brand',
             }
         },
