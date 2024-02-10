@@ -9,14 +9,14 @@ import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Cube algorithms',
-  description: 'Rubkis cube algorithms',
+	title: 'Cube algorithms',
+	description: 'Rubkis cube algorithms',
 }
 
 export default function RootLayout({
 	children,
 }: {
-    children: React.ReactNode
+	children: React.ReactNode
 }) {
 	return (
 		<ClerkProvider
@@ -24,7 +24,7 @@ export default function RootLayout({
 				baseTheme: dark,
 			}}
 		>
-			<html lang="en" className='dark'>
+			<html lang="en" className='dark bg-background'>
 				<body className={inter.className}>
 					{children}
 					<Toaster richColors />

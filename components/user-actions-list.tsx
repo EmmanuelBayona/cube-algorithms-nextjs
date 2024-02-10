@@ -16,7 +16,8 @@ export const UserActionsList = async () => {
 
     return (
         <div className="overflow-hidden mt-5 md:mt-10 w-full">
-            <div className="w-full flex md:justify-end items-center gap-3 overflow-x-auto">
+            <div className="w-full flex md:justify-end items-center gap-3 p-1 overflow-x-auto">
+
                 <NewCubeForm cubes={cubes} />
                 <NewMethodForm
                     cubes={cubes}
