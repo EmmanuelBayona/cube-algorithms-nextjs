@@ -11,7 +11,7 @@ export const NavigationMenu = forwardRef<
 >(({ className, children, ...props }, ref) => (
     <NavigationMenuPrimitive.Root
         ref={ref}
-        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-secondary border border-dark-accent p-1', className)}
+        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-dark border border-white/5 p-1', className)}
         {...props}
     >
         {children}
@@ -35,7 +35,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 export const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
 export const NavigationMenuTriggerStyle = cva(
-    'group inline-flex h-10 w-max items-center justify-center rounded-lg bg-background px-4 py-2 text-sm font-medium hover:bg-dark-accent focus:bg-dark-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-dark-accent data-[state=open]:bg-dark-accent'
+    'group inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium hover:bg-white/5 focus:bg-white/5 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-white/5 data-[state=open]:bg-white/5'
 )
 
 export const NavigationMenuTrigger = forwardRef<
@@ -104,7 +104,7 @@ export const NavigationMenuIndicator = forwardRef<
         )}
         {...props}
     >
-        <div className='relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-dark-accent' />
+        <div className='relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-white/5' />
     </NavigationMenuPrimitive.Indicator>
 ))
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName

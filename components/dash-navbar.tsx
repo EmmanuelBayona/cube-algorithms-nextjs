@@ -73,7 +73,7 @@ const ListItem = forwardRef<
                 <Link
                     ref={ref}
                     className={cn(
-                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-dark-accent focus:bg-dark-accent",
+                        "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-white/5 focus:bg-white/5",
                         className
                     )}
                     {...props}
