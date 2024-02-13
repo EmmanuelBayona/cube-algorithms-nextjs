@@ -12,7 +12,7 @@ export default async function ProfilePage() {
 
             <h1 className="text-2xl lg:text-4xl font-medium mt-10">Hi, {user?.firstName}</h1>
             <UserActionsList />
-            <hr className="border-dark-accent border-opacity-50 mt-3 mb-7 md:mb-10" />
+            <hr className="border-white/5 border-opacity-50 mt-3 mb-7 md:mb-10" />
             <UserAlgorithmsTable />
 
         </MaxWidthWrapper>

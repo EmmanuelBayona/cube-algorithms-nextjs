@@ -6,7 +6,7 @@ export const Table = forwardRef<
     HTMLTableElement,
     HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
+    <div className="relative w-full overflow-auto rounded-lg">
         <table
             ref={ref}
             className={cn("w-full caption-bottom text-sm", className)}
@@ -20,7 +20,7 @@ export const TableHeader = forwardRef<
     HTMLTableSectionElement,
     HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-    <thead ref={ref} className={cn("[&_tr]:border-b border-dark-accent", className)} {...props} />
+    <thead ref={ref} className={cn("[&_tr]:border-b border-white/5", className)} {...props} />
 ))
 TableHeader.displayName = "TableHeader"
 
@@ -43,7 +43,7 @@ export const TableFooter = forwardRef<
     <tfoot
         ref={ref}
         className={cn(
-            "border-t border-dark-accent bg-dark font-medium [&>tr]:last:border-b-0",
+            "border-t border-white/5 bg-dark font-medium [&>tr]:last:border-b-0",
             className
         )}
         {...props}
@@ -58,7 +58,7 @@ export const TableRow = forwardRef<
     <tr
         ref={ref}
         className={cn(
-            "border-b border-dark-accent transition-colors hover:bg-dark-accent data-[state=selected]:bg-dark-accent",
+            "border-b border-white/5 transition-colors hover:bg-white/5 data-[state=selected]:bg-white/5",
             className
         )}
         {...props}
