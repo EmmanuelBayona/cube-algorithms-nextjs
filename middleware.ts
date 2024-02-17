@@ -1,7 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-    publicRoutes: ["/", "/dash/puzzles/(.*)", "/dash/timer"]
+    publicRoutes: ["/", "/dash/puzzles/(.*)", "/dash/timer", "/api/cube-image"]
 });
 
 export const config = {
