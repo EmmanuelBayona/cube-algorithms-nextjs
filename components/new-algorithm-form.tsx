@@ -163,6 +163,8 @@ export const NewAlgorithmForm = ({ cubes, methods, cases, algorithms }: NewAlgor
                             name="algorithm"
                             type='text'
                             placeholder='Enter an algorithm'
+                            pattern="[UDLRFBudlrfbMESxyz'2 ]*"
+                            title="Only moves and rotations are allowed. For example: R U R' U'"
                             value={algorithm}
                             onChange={e => setAlgorithm(e.currentTarget.value)}
                         />

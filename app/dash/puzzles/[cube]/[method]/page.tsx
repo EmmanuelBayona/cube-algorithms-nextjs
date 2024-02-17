@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { notFound } from "next/navigation";
 import { CasesList } from "@/components/cases-list";
+import { Suspense } from "react";
+import { SkeletonGrid } from "@/components/skeleton-grid";
 
 const validCubes = [
     '2x2',
@@ -27,10 +29,12 @@ export default async function PuzzlesPage({ params }: { params: { cube: string, 
     return (
         <MaxWidthWrapper>
             <h1 className="text-2xl lg:text-4xl text-center md:text-start font-medium mt-10">{params.cube} Algorithms</h1>
-            <CasesList
-                className="mt-5 md:mt-10"
-                method={params.method}
-            />
+            <Suspense key={params.method} fallback={<SkeletonGrid className="mt-5 md:mt-10" />} >
+                <CasesList
+                    className="mt-5 md:mt-10"
+                    method={params.method}
+                />
+            </Suspense>
         </MaxWidthWrapper>
     )
 
