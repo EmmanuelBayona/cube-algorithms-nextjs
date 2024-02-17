@@ -7,12 +7,12 @@ interface ButtonProps
     VariantProps<typeof buttonVariants> { }
 
 export const buttonVariants = cva(
-    'text-violet-100 text-base rounded-lg px-4 py-1 flex items-center justify-center gap-2',
+    'text-font text-base rounded-lg px-4 py-2 flex items-center justify-center gap-2',
     {
         variants: {
             variant: {
-                default: 'bg-dark shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02),inset_0_0_0_1px_rgba(255,255,255,0.02),0_0_0_1px_rgba(0,0,0,0.25)]',
-                primary: 'border border-brand-accent bg-brand',
+                default: 'bg-dark shadow-dark-button',
+                primary: 'bg-gradient-to-b from-primary to-[#4417B6] shadow-primary-button [text-shadow:0_0_0.5px_rgb(255,255,255)]',
             }
         },
         defaultVariants: {

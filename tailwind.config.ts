@@ -12,13 +12,16 @@ const config: Config = {
 			dropShadow: {
 				'text': '0 2px 16px rgba(169, 151, 200, 0.45)',
 			},
+			boxShadow: {
+				'dark-button': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.02), inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 0 0 1px rgba(0, 0, 0, 0.25)',
+				'primary-button': '0 0 0 3px rgb(40, 18, 97), inset 0 1px 0 0 rgba(255, 255, 255, 0.2)'
+			},
 			colors: {
 				'background': '#181818',
 				'dark': '#232323',
-				// 'dark-accent': '#1e1e1e',
-				'brand': '#561ee3',
-				'brand-accent': '#6c47ff',
-				'secondary': '#141414'
+				'primary': '#5B20EF',
+
+				'font': '#F0F0F0'
 			},
 			animation: {
 				scaleIn: 'scaleIn 200ms ease',

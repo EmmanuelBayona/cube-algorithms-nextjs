@@ -22,7 +22,7 @@ export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         <div
             ref={ref}
             className={cn(
-                'rounded-3xl text-violet-100 bg-dark shadow-[inset_0_1px_0_0_rgba(255,255,255,0.02),inset_0_0_0_1px_rgba(255,255,255,0.02),0_0_0_1px_rgba(0,0,0,0.25)]',
+                'rounded-3xl text-violet-100 bg-dark shadow-dark-button',
                 className
             )}
             {...props}
