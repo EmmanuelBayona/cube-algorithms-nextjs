@@ -9,7 +9,6 @@ import { Input } from "./ui/input"
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBAlgs, DBCases, DBCubes, DBMethods } from "@/types";
 import { addNewAlg } from "@/actions";
-import { useAuth } from "@clerk/nextjs";
 
 interface NewAlgorithmFormProps {
     cubes: DBCubes[];

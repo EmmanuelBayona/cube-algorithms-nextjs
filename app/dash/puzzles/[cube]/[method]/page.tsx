@@ -10,7 +10,7 @@ const validCubes = [
     // 'square-1',
 ]
 
-export async function generateMetadata({ params }: { params: { cube: string, method: string } }): Promise<Metadata | undefined>{
+export async function generateMetadata({ params }: { params: { cube: string, method: string } }): Promise<Metadata | undefined> {
 
     if (!validCubes.includes(params.method)) return;
 
@@ -27,8 +27,9 @@ export default async function PuzzlesPage({ params }: { params: { cube: string, 
     return (
         <MaxWidthWrapper>
             <h1 className="text-2xl lg:text-4xl text-center md:text-start font-medium mt-10">{params.cube} Algorithms</h1>
-            <CasesList 
+            <CasesList
                 className="mt-5 md:mt-10"
+                method={params.method}
             />
         </MaxWidthWrapper>
     )

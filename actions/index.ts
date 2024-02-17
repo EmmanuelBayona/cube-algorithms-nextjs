@@ -58,7 +58,7 @@ export const addNewAlg = async (alg: string, caseId: number) => {
     try {
         const { userId } = auth();
         if (!userId) return { success: false, error: 'Not logged in' }
-        
+
         const res = await prisma.algorithm.create({
             data: {
                 algorithm: alg,

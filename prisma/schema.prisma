@@ -43,7 +43,7 @@ model Algorithm {
     createdAt DateTime @default(now())
     case      Case     @relation(fields: [caseId], references: [id])
     caseId    Int
-    userId    String   @unique
+    userId    String
     likes     Like[]
 
     @@map("algorithms")
