@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils"
 import prisma from "@/lib/prisma"
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import Link from "next/link";
+import { CubeSvg } from "./ui/cube-svg";
 
 export const CubesGrid = async ({ className }: { className?: string }) => {
 
@@ -18,6 +19,9 @@ export const CubesGrid = async ({ className }: { className?: string }) => {
                                 <CardTitle>{cube.name}</CardTitle>
                                 <CardDescription>{cube.description}</CardDescription>
                             </CardHeader>
+                            <CardContent>
+                                <CubeSvg/>
+                            </CardContent>
                         </Card>
                     </Link>
                 ))

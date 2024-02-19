@@ -12,7 +12,6 @@ export default function PuzzlesPage() {
             <Suspense fallback={<SkeletonGrid className="mt-5 md:mt-10" />}>
                 <CubesGrid className="mt-5 md:mt-10" />
             </Suspense>
-
         </MaxWidthWrapper>
     )
 

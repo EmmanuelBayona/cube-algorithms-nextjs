@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Card, CardContent } from "./ui/card"
 import prisma from "@/lib/prisma"
+import { CubeSvg } from "./ui/cube-svg"
 
 export const CasesList = async ({ className, method }: { className?: string, method: string }) => {
 
@@ -31,7 +32,9 @@ export const CasesList = async ({ className, method }: { className?: string, met
                 cases.map(caseItem => (
                     <Card key={caseItem.id}>
                         <CardContent className="pt-6 flex flex-col lg:flex-row lg:items-center gap-5">
-                            <div className="w-40 h-40 bg-white/5 mx-auto md:mx-0" />
+                            <div className="w-40 h-40 bg-white/5 mx-auto md:mx-0">
+                                <CubeSvg size={160}/>
+                            </div>
                             <div>
                                 <h2 className="text-xl md:text-2xl font-semibold">{caseItem.name}</h2>
                                 {
