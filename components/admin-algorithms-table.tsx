@@ -1,16 +1,13 @@
-import { auth } from "@clerk/nextjs"
+import { CheckIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { Button } from "./ui/button";
 import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
 import prisma from "@/lib/prisma"
 
-export const UserAlgorithmsTable = async ({ className }: { className?: string }) => {
+export const AdminAlgorithmsTable = async ({ className }: { className?: string }) => {
 
-    const { userId } = auth()
-    if (!userId) return null;
+    // TODO: JUST ADMIN WILL SEE THIS
 
     const uploadedAlgorithms = await prisma.algorithm.findMany({
-        where: {
-            userId: userId
-        },
         include: {
             case: {
                 include: {
@@ -29,8 +26,8 @@ export const UserAlgorithmsTable = async ({ className }: { className?: string })
     const dateTimeFormatUS = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
     return (
-        <Table>
-            <TableCaption>Your posted algorithms</TableCaption>
+        <Table className="mt-20">
+            <TableCaption>All algorithms</TableCaption>
             <TableHeader>
                 <TableRow>
                     <TableHead>Cube</TableHead>
@@ -38,7 +35,7 @@ export const UserAlgorithmsTable = async ({ className }: { className?: string })
                     <TableHead>Case</TableHead>
                     <TableHead>Algorithm</TableHead>
                     <TableHead>Date</TableHead>
-                    {/* <TableHead className="text-right">Likes</TableHead> */}
+                    <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -50,7 +47,14 @@ export const UserAlgorithmsTable = async ({ className }: { className?: string })
                             <TableCell>{algorithm.case.name}</TableCell>
                             <TableCell>{algorithm.algorithm}</TableCell>
                             <TableCell>{dateTimeFormatUS.format(algorithm.createdAt)}</TableCell>
-                            {/* <TableCell className="text-right">{algorithm.likes}</TableCell> */}
+                            <TableCell className="flex justify-start gap-2" >
+                                <Button variant='success' size='icon'>
+                                    <CheckIcon />
+                                </Button>
+                                <Button variant='danger' size='icon'>
+                                    <Cross1Icon />
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     ))
                 }
@@ -58,8 +62,7 @@ export const UserAlgorithmsTable = async ({ className }: { className?: string })
             <TableFooter>
                 <TableRow>
                     <TableCell colSpan={6}>Total algorithms: { uploadedAlgorithms.length }</TableCell>
-                    {/* <TableCell colSpan={2} className="text-right">Total likes: 0</TableCell> */}
-                    </TableRow>
+                </TableRow>
             </TableFooter>
         </Table>
     )

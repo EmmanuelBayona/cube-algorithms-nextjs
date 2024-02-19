@@ -7,26 +7,34 @@ interface ButtonProps
     VariantProps<typeof buttonVariants> { }
 
 export const buttonVariants = cva(
-    'text-font text-base rounded-lg px-4 py-2 flex items-center justify-center gap-2',
+    'text-font text-base rounded-lg flex items-center justify-center gap-2',
     {
         variants: {
             variant: {
                 default: 'bg-dark shadow-dark-button',
                 primary: 'bg-gradient-to-b from-primary to-[#4417B6] shadow-primary-button [text-shadow:0_0_0.5px_rgb(255,255,255)]',
+                success: 'bg-gradient-to-b from-green-400 to-green-500 border border-green-500',
+                danger: 'bg-gradient-to-b from-red-400 to-red-500 border border-red-500',
+                
+            },
+            size: {
+                default: 'px-4 py-2',
+                icon: 'w-8 h-8 p-2'
             }
         },
         defaultVariants: {
-            variant: 'default'
+            variant: 'default',
+            size: 'default'
         }
     }
 )
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, ...props }, ref) => {
+    ({ className, variant, size, ...props }, ref) => {
         return (
             <button
                 ref={ref}
-                className={cn(buttonVariants({ className, variant }))}
+                className={cn(buttonVariants({ className, variant, size }))}
                 {...props}
             />
         )

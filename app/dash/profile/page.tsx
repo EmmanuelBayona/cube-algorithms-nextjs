@@ -1,3 +1,4 @@
+import { AdminAlgorithmsTable } from "@/components/admin-algorithms-table";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserActionsList } from "@/components/user-actions-list";
 import { UserAlgorithmsTable } from "@/components/user-algorithms-table";
@@ -14,6 +15,7 @@ export default async function ProfilePage() {
             <UserActionsList />
             <hr className="border-white/5 border-opacity-50 mt-3 mb-7 md:mb-10" />
             <UserAlgorithmsTable />
+            <AdminAlgorithmsTable />
 
         </MaxWidthWrapper>
     )
