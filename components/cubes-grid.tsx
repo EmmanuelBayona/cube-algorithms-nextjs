@@ -19,8 +19,8 @@ export const CubesGrid = async ({ className }: { className?: string }) => {
                                 <CardTitle>{cube.name}</CardTitle>
                                 <CardDescription>{cube.description}</CardDescription>
                             </CardHeader>
-                            <CardContent>
-                                <CubeSvg/>
+                            <CardContent className="flex justify-center">
+                                <CubeSvg background="transparent" size={200}/>
                             </CardContent>
                         </Card>
                     </Link>
