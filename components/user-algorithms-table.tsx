@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs"
 import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
 import prisma from "@/lib/prisma"
 
-export const UserAlgorithmsTable = async ({ className }: { className?: string }) => {
+export const UserAlgorithmsTable = async () => {
 
     const { userId } = auth()
     if (!userId) return null;
