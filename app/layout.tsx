@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, auth } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Toaster } from 'sonner';
+import { SyncActiveOrganization } from './SyncActiveOrganization'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,12 +19,16 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
+
+	const { sessionClaims } = auth()
+
 	return (
 		<ClerkProvider
 			appearance={{
 				baseTheme: dark,
 			}}
 		>
+			<SyncActiveOrganization  membership={sessionClaims?.membership}/>
 			<html lang="en" className='dark bg-background'>
 				<body className={inter.className}>
 					{children}

@@ -2,10 +2,13 @@ import { CheckIcon, Cross1Icon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
 import prisma from "@/lib/prisma"
+import { auth } from "@clerk/nextjs";
 
-export const AdminAlgorithmsTable = async ({ className }: { className?: string }) => {
+export const AdminAlgorithmsTable = async () => {
 
-    // TODO: JUST ADMIN WILL SEE THIS
+    const { has } = auth()
+    const canAccessVerifyAlgorithms = has({ permission: 'org:algorithms:verify' });
+    if (!canAccessVerifyAlgorithms) return null;
 
     const uploadedAlgorithms = await prisma.algorithm.findMany({
         include: {
@@ -61,7 +64,7 @@ export const AdminAlgorithmsTable = async ({ className }: { className?: string }
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={6}>Total algorithms: { uploadedAlgorithms.length }</TableCell>
+                    <TableCell colSpan={6}>Total algorithms: {uploadedAlgorithms.length}</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>
