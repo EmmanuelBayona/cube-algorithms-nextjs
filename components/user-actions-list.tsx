@@ -3,7 +3,7 @@ import { NewAlgorithmForm } from "./new-algorithm-form"
 import { NewCaseForm } from "./new-case-form"
 import { NewCubeForm } from "./new-cube-form"
 import { NewMethodForm } from "./new-method-form"
-// import { auth } from "@clerk/nextjs"
+import { Protect } from "@clerk/nextjs"
 
 export const UserActionsList = async () => {
 
@@ -12,28 +12,36 @@ export const UserActionsList = async () => {
     const cases = await prisma.case.findMany();
     const algorithms = await prisma.algorithm.findMany();
 
-    // const { orgSlug } = auth()
-
     return (
         <div className="overflow-hidden mt-5 md:mt-10 w-full">
             <div className="w-full flex md:justify-end items-center gap-3 p-1 overflow-x-auto">
 
-                <NewCubeForm cubes={cubes} />
-                <NewMethodForm
-                    cubes={cubes}
-                    methods={methods}
-                />
-                <NewCaseForm
-                    cubes={cubes}
-                    methods={methods}
-                    cases={cases}
-                />
+                <Protect permission="org:cube:create">
+                    <NewCubeForm cubes={cubes} />
+                </Protect>
+
+                <Protect permission="org:method:create">
+                    <NewMethodForm
+                        cubes={cubes}
+                        methods={methods}
+                    />
+                </Protect>
+
+                <Protect permission="org:case:create">
+                    <NewCaseForm
+                        cubes={cubes}
+                        methods={methods}
+                        cases={cases}
+                    />
+                </Protect>
+
                 <NewAlgorithmForm
                     cubes={cubes}
                     methods={methods}
                     cases={cases}
                     algorithms={algorithms}
                 />
+                
             </div>
         </div>
     )
