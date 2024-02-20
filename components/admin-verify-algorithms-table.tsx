@@ -1,11 +1,13 @@
-import { CheckIcon, Cross1Icon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
 import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
 import prisma from "@/lib/prisma"
+import { AdminVerifyActions } from "./admin-verify-actions";
 
-export const AdminAlgorithmsTable = async () => {
+export const AdminVerifyAlgorithmsTable = async () => {
 
     const uploadedAlgorithms = await prisma.algorithm.findMany({
+        where: {
+            isApproved: false
+        },
         include: {
             case: {
                 include: {
@@ -16,9 +18,9 @@ export const AdminAlgorithmsTable = async () => {
                     }
                 }
             }
-        }
-    })
+        },
 
+    })
     if (uploadedAlgorithms.length === 0) return null;
 
     const dateTimeFormatUS = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -46,12 +48,7 @@ export const AdminAlgorithmsTable = async () => {
                             <TableCell>{algorithm.algorithm}</TableCell>
                             <TableCell>{dateTimeFormatUS.format(algorithm.createdAt)}</TableCell>
                             <TableCell className="flex justify-start gap-2" >
-                                <Button variant='success' size='icon'>
-                                    <CheckIcon />
-                                </Button>
-                                <Button variant='danger' size='icon'>
-                                    <Cross1Icon />
-                                </Button>
+                                <AdminVerifyActions />
                             </TableCell>
                         </TableRow>
                     ))

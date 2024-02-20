@@ -1,4 +1,4 @@
-import { AdminAlgorithmsTable } from "@/components/admin-algorithms-table";
+import { AdminVerifyAlgorithmsTable } from "@/components/admin-verify-algorithms-table";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserActionsList } from "@/components/user-actions-list";
 import { UserAlgorithmsTable } from "@/components/user-algorithms-table";
@@ -17,7 +17,7 @@ export default async function ProfilePage() {
             <UserAlgorithmsTable />
 
             <Protect permission="org:algorithms:verify">
-                <AdminAlgorithmsTable />
+                <AdminVerifyAlgorithmsTable />
             </Protect>
 
         </MaxWidthWrapper>

@@ -15,7 +15,7 @@ export const buttonVariants = cva(
                 primary: 'bg-gradient-to-b from-primary to-[#4417B6] shadow-primary-button [text-shadow:0_0_0.5px_rgb(255,255,255)]',
                 success: 'bg-gradient-to-b from-green-400 to-green-500 border border-green-500',
                 danger: 'bg-gradient-to-b from-red-400 to-red-500 border border-red-500',
-                
+                warning: 'bg-gradient-to-b from-amber-400 to-amber-500 border border-amber-500',
             },
             size: {
                 default: 'px-4 py-2',
