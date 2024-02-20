@@ -25,7 +25,7 @@ export const AdminAlgorithmsTable = async () => {
 
     return (
         <Table className="mt-20">
-            <TableCaption>All algorithms</TableCaption>
+            <TableCaption>Algorithms to verify</TableCaption>
             <TableHeader>
                 <TableRow>
                     <TableHead>Cube</TableHead>
