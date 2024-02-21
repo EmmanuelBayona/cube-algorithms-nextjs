@@ -113,3 +113,20 @@ export const rejectAlg = async (algId: number) => {
         return { success: false, error }
     }
 }
+
+export const deleteAlg = async (algId: number) => {
+    try {
+        const { has } = auth();
+        if (!algId) return { success: false, error: 'No algorithm id' }
+        if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
+
+        const res = await prisma.algorithm.delete({
+            where: { id: algId }
+        })
+
+        revalidatePath('/dash/profile')
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
