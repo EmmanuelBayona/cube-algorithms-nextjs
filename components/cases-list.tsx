@@ -10,7 +10,7 @@ export const CasesList = async ({ className, method }: { className?: string, met
         where: {
             method: {
                 name: method
-            }
+            },
         },
         include: {
             algorithms: {
@@ -18,6 +18,9 @@ export const CasesList = async ({ className, method }: { className?: string, met
                 select: {
                     id: true,
                     algorithm: true
+                },
+                where: {
+                    isApproved: true
                 }
             }
         }
@@ -38,7 +41,12 @@ export const CasesList = async ({ className, method }: { className?: string, met
                             <div>
                                 <h2 className="text-xl md:text-2xl font-semibold">{caseItem.name}</h2>
                                 {
-                                    caseItem.algorithms.map(algorithm => (
+                                    caseItem.algorithms.length === 0 && (
+                                        <p>No algorithms yet</p>
+                                    )
+                                }
+                                {
+                                    caseItem.algorithms.length > 0 && caseItem.algorithms.map(algorithm => (
                                         <p key={algorithm.id}>{algorithm.algorithm}</p>
                                     ))
                                 }

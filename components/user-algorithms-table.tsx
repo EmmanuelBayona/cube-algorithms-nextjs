@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs"
 import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
 import prisma from "@/lib/prisma"
+import { cn } from "@/lib/utils"
 
 export const UserAlgorithmsTable = async () => {
 
@@ -38,6 +39,7 @@ export const UserAlgorithmsTable = async () => {
                     <TableHead>Case</TableHead>
                     <TableHead>Algorithm</TableHead>
                     <TableHead>Date</TableHead>
+                    <TableHead>Status</TableHead>
                     {/* <TableHead className="text-right">Likes</TableHead> */}
                 </TableRow>
             </TableHeader>
@@ -50,6 +52,11 @@ export const UserAlgorithmsTable = async () => {
                             <TableCell>{algorithm.case.name}</TableCell>
                             <TableCell>{algorithm.algorithm}</TableCell>
                             <TableCell>{dateTimeFormatUS.format(algorithm.createdAt)}</TableCell>
+                            <TableCell
+                                className={cn({ 'text-green-500': algorithm.isApproved, 'text-amber-500': !algorithm.isApproved})}
+                            >
+                                {algorithm.isApproved ? 'Approved' : 'Pending'}
+                            </TableCell>
                             {/* <TableCell className="text-right">{algorithm.likes}</TableCell> */}
                         </TableRow>
                     ))

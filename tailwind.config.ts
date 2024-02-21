@@ -21,8 +21,6 @@ const config: Config = {
 				'dark': '#232323',
 				'primary': '#5B20EF',
 				'font': '#F0F0F0',
-				'success': '#00D800',
-				'danger': '#EE0000'
 			},
 			animation: {
 				scaleIn: 'scaleIn 200ms ease',
