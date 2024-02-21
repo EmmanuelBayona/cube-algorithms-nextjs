@@ -77,12 +77,33 @@ export const addNewAlg = async (alg: string, caseId: number) => {
 export const approveAlg = async (algId: number) => {
     try {
         const { has } = auth();
+        if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
         const res = await prisma.algorithm.update({
             where: { id: algId },
             data: {
                 isApproved: true
+            }
+        })
+
+        revalidatePath('/dash/profile')
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const rejectAlg = async (algId: number) => {
+    try {
+        const { has } = auth();
+        if (!algId) return { success: false, error: 'No algorithm id' }
+        if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
+
+        const res = await prisma.algorithm.update({
+            where: { id: algId },
+            data: {
+                isApproved: false
             }
         })
 

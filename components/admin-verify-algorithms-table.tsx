@@ -5,9 +5,6 @@ import { AdminVerifyActions } from "./admin-verify-actions";
 export const AdminVerifyAlgorithmsTable = async () => {
 
     const uploadedAlgorithms = await prisma.algorithm.findMany({
-        where: {
-            isApproved: false
-        },
         include: {
             case: {
                 include: {
@@ -21,6 +18,7 @@ export const AdminVerifyAlgorithmsTable = async () => {
         },
 
     })
+
     if (uploadedAlgorithms.length === 0) return null;
 
     const dateTimeFormatUS = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -48,7 +46,7 @@ export const AdminVerifyAlgorithmsTable = async () => {
                             <TableCell>{algorithm.algorithm}</TableCell>
                             <TableCell>{dateTimeFormatUS.format(algorithm.createdAt)}</TableCell>
                             <TableCell className="flex justify-start gap-2" >
-                                <AdminVerifyActions />
+                                <AdminVerifyActions algID={algorithm.id} isApproved={algorithm.isApproved} />
                             </TableCell>
                         </TableRow>
                     ))

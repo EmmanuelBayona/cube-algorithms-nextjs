@@ -41,7 +41,7 @@ model Algorithm {
     id         Int      @id @default(autoincrement())
     algorithm  String   @unique
     createdAt  DateTime @default(now())
-    isApproved Boolean @default(false)
+    isApproved Boolean  @default(false)
     case       Case     @relation(fields: [caseId], references: [id])
     caseId     Int
     userId     String
