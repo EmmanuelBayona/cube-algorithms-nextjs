@@ -30,6 +30,7 @@ model Method {
 model Case {
     id         Int         @id @default(autoincrement())
     name       String      @unique
+    colors     Json        @default("{}")
     method     Method      @relation(fields: [methodId], references: [id])
     methodId   Int
     algorithms Algorithm[]
