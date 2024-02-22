@@ -36,7 +36,23 @@ export const CasesList = async ({ className, method }: { className?: string, met
                     <Card key={caseItem.id}>
                         <CardContent className="pt-6 flex flex-col lg:flex-row lg:items-center gap-5">
                             <div className="w-40 h-40 bg-white/5 mx-auto md:mx-0">
-                                <CubeSvg size={160}/>
+                                <CubeSvg size={160}
+                                    colors={{
+                                        6: 'blue',
+                                        9: 'blue',
+                                        10: 'red',
+                                        11: 'red',
+                                        14: 'red',
+                                        15: 'red',
+                                        17: 'red',
+                                        18: 'red',
+                                        21: 'white',
+                                        22: 'blue',
+                                        23: 'blue',
+                                        25: 'blue',
+                                        26: 'blue',
+                                    }}
+                                />
                             </div>
                             <div>
                                 <h2 className="text-xl md:text-2xl font-semibold">{caseItem.name}</h2>

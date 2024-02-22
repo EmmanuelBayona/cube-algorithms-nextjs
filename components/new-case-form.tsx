@@ -2,13 +2,17 @@
 import { FormEvent, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
-import { Button } from "./ui/button"
-import { LayersIcon } from "@radix-ui/react-icons"
+import { Button, buttonVariants } from "./ui/button"
+import { EraserIcon, LayersIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { DBCases, DBCubes, DBMethods } from "@/types"
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { addNewCase } from "@/actions";
+import { CUBE_COLORS, CubeSvg } from "./ui/cube-svg";
+import { cn } from "@/lib/utils";
+
+
 
 export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
 
@@ -16,6 +20,8 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
     const [method, setMethod] = useState<string>('');
     const [caseName, setCaseName] = useState<string>('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
+    const [colorsFaces, setColorsFaces] = useState<Record<number, keyof typeof CUBE_COLORS>>({});
+    const [currentColor, setCurrentColor] = useState<keyof typeof CUBE_COLORS>('default');
 
     const cubeId = cube ? cubes.find(c => c.name === cube)?.id : null;
     const filteredMethods = cubeId ? methods.filter(m => m.cubeId === cubeId) : [];
@@ -23,6 +29,8 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
     const onAddNewCase = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        // delete all the default colors, as we use default color as eraser
+        const colorsToSave = Object.fromEntries(Object.entries(colorsFaces).filter(([key, value]) => value !== 'default'));
         if (!cube) return showToastError('Cube is required');
         if (!method) return showToastError('Method is required');
         if (!caseName) return showToastError('Case is required');
@@ -56,6 +64,13 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
         setCaseName('');
         showToastSuccess('Cube added successfully');
         setStatus('success');
+    }
+
+    const onSelectFace = (face: number) => {
+        setColorsFaces(prev => ({
+            ...prev,
+            [face]: currentColor
+        }));
     }
 
 
@@ -134,6 +149,39 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
                             onChange={e => setCaseName(e.target.value)}
                         />
                     </div>
+
+                    <div className="grid grid-cols-4 items-center justify-center gap-4">
+                        <div className="col-span-4 grid grid-cols-4 gap-4">
+                            <Label className="text-right">Color</Label>
+                            <div className="flex gap-2 col-span-3">
+                                {
+                                    Object.keys(CUBE_COLORS).map(color => (
+                                        <div key={color}
+                                            className={cn(buttonVariants({variant: 'default', size: 'icon'}),'w-7 h-7 cursor-pointer',{
+                                                'opacity-25': currentColor !== color,
+                                                'hidden': color === 'black' // hide black color button
+                                            })}
+                                            style={{ backgroundColor: CUBE_COLORS[color as keyof typeof CUBE_COLORS] }}
+                                            onClick={() => setCurrentColor(color as keyof typeof CUBE_COLORS)}
+                                        >
+                                            <EraserIcon className={cn({'hidden': color !== 'default' })} />
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        <div className="col-span-4 mx-auto">
+                            <CubeSvg 
+                                size={200} 
+                                background="transparent"
+                                clickableFaces={true}
+                                onClickFace={onSelectFace}
+                                colors={colorsFaces}
+                            />
+                        </div>
+                    </div>
+
+
 
                     <Button variant='primary' className="mt-5"
                         disabled={status === 'loading'}
