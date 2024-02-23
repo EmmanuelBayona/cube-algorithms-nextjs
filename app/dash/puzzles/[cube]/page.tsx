@@ -5,27 +5,24 @@ import { MethodsGrid } from "@/components/methods-grid";
 import { Cubes } from "@/types";
 import { Suspense } from "react";
 import { SkeletonGrid } from "@/components/skeleton-grid";
-
-const validCubes = [
-    '2x2',
-    '3x3',
-    // '4x4',
-    // 'square-1',
-]
+import prisma from "@/lib/prisma";
 
 export async function generateMetadata({ params }: { params: { cube: string } }): Promise<Metadata | undefined>{
 
-    if (!validCubes.includes(params.cube)) return;
+    // if (!validCubes.includes(params.cube)) return;
+    const cubes = await prisma.cube.findMany();
+    const cube = cubes.find(cube => cube.name === params.cube);
+
+    if (!cube) return notFound();
 
     return {
-        title: `${params.cube} Methods`,
-        description: `Discover the best ${params.cube} methods for speedsolving.`,
+        title: `${cube.name} Methods`,
+        description: `Discover the best ${cube.name} methods for speedsolving.`,
     }
 }
 
 export default async function PuzzlesPage({ params }: { params: { cube: string } }) {
 
-    if (!validCubes.includes(params.cube)) return notFound();
 
     return (
         <MaxWidthWrapper>
