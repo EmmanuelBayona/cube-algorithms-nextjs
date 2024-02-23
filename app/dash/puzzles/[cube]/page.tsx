@@ -36,7 +36,6 @@ export default async function PuzzlesPage({ params }: { params: { cube: string }
                     className="mt-5 md:mt-10"
                 />
             </Suspense>
-            
         </MaxWidthWrapper>
     )
 

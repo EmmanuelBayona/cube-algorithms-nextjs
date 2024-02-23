@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import { Card, CardContent } from "./ui/card"
 import prisma from "@/lib/prisma"
 import { CubeSvg } from "./ui/cube-svg"
+import { CUBE_COLORS } from "@/lib/cubes-constants"
 
 export const CasesList = async ({ className, method }: { className?: string, method: string }) => {
 
@@ -23,7 +24,20 @@ export const CasesList = async ({ className, method }: { className?: string, met
                     isApproved: true
                 }
             }
-        }
+        },
+    })
+
+    /**
+     * Sort the cases by the number at the end of the name, the prisma order function does not work quite well
+     * beccause if I have 'F2L 1', 'F2L 2', 'F2L 10', it will order them as 'F2L 1', 'F2L 10', 'F2L 2'.
+     * So we order them by the number at the end of the name just if they have one
+     */
+    cases.sort((a, b) => {
+        const aMatch = a.name.match(/\d+$/);
+        const bMatch = b.name.match(/\d+$/);
+        const aNumber = aMatch ? parseInt(aMatch[0]) : 0;
+        const bNumber = bMatch ? parseInt(bMatch[0]) : 0;
+        return aNumber - bNumber;
     })
 
 
@@ -37,21 +51,7 @@ export const CasesList = async ({ className, method }: { className?: string, met
                         <CardContent className="pt-6 flex flex-col lg:flex-row lg:items-center gap-5">
                             <div className="w-40 h-40 bg-white/5 mx-auto md:mx-0">
                                 <CubeSvg size={160}
-                                    colors={{
-                                        6: 'blue',
-                                        9: 'blue',
-                                        10: 'red',
-                                        11: 'red',
-                                        14: 'red',
-                                        15: 'red',
-                                        17: 'red',
-                                        18: 'red',
-                                        21: 'white',
-                                        22: 'blue',
-                                        23: 'blue',
-                                        25: 'blue',
-                                        26: 'blue',
-                                    }}
+                                    colors={caseItem.colors as Record<number, keyof typeof CUBE_COLORS>}
                                 />
                             </div>
                             <div>

@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import Link from "next/link";
 import { CubeSvg } from "./ui/cube-svg";
+import { SOLVE_CUBE_COLORS } from "@/lib/cubes-constants";
 
 export const CubesGrid = async ({ className }: { className?: string }) => {
 
@@ -20,7 +21,11 @@ export const CubesGrid = async ({ className }: { className?: string }) => {
                                 <CardDescription>{cube.description}</CardDescription>
                             </CardHeader>
                             <CardContent className="flex justify-center">
-                                <CubeSvg background="transparent" size={200}/>
+                                <CubeSvg 
+                                    background="transparent" 
+                                    size={200}
+                                    colors={SOLVE_CUBE_COLORS}
+                                />
                             </CardContent>
                         </Card>
                     </Link>

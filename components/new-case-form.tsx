@@ -1,5 +1,4 @@
 'use client';
-import { FormEvent, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button, buttonVariants } from "./ui/button"
@@ -7,73 +6,30 @@ import { EraserIcon, LayersIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { DBCases, DBCubes, DBMethods } from "@/types"
-import { showToastError, showToastSuccess } from "@/lib/toaster";
-import { addNewCase } from "@/actions";
-import { CUBE_COLORS, CubeSvg } from "./ui/cube-svg";
+import { CubeSvg } from "./ui/cube-svg";
 import { cn } from "@/lib/utils";
+import { CUBE_COLORS } from "@/lib/cubes-constants";
+import { useNewCase } from "@/hooks/use-new-case";
 
 
 
 export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
 
-    const [cube, setCube] = useState<string>('');
-    const [method, setMethod] = useState<string>('');
-    const [caseName, setCaseName] = useState<string>('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
-    const [colorsFaces, setColorsFaces] = useState<Record<number, keyof typeof CUBE_COLORS>>({});
-    const [currentColor, setCurrentColor] = useState<keyof typeof CUBE_COLORS>('default');
-
-    const cubeId = cube ? cubes.find(c => c.name === cube)?.id : null;
-    const filteredMethods = cubeId ? methods.filter(m => m.cubeId === cubeId) : [];
-
-    const onAddNewCase = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // delete all the default colors, as we use default color as eraser
-        const colorsToSave = Object.fromEntries(Object.entries(colorsFaces).filter(([key, value]) => value !== 'default'));
-        if (!cube) return showToastError('Cube is required');
-        if (!method) return showToastError('Method is required');
-        if (!caseName) return showToastError('Case is required');
-
-        // if the case already exists, return an error
-        if (cases.find(c => c.name === caseName)) return showToastError('Case already exists');
-
-        // bug: if you select a cube, then select a method, then change the cube, the method is shown empty, but
-        // you can still submit the form, even when the method is not valid for the cube
-        if (!filteredMethods.find(m => m.name === method)) return showToastError('Method is not valid for this cube');
-
-        const methodId = method ? methods.find(m => m.name === method)?.id : null;
-        if (!methodId) {
-            showToastError('Something went wrong');
-            setStatus('error');
-            return;
-        }
-
-        setStatus('loading')
-
-        const { success } = await addNewCase(caseName, methodId);
-
-        if (!success) {
-            showToastError('Something went wrong');
-            setStatus('error');
-            return;
-        }
-
-        setCube('');
-        setMethod('');
-        setCaseName('');
-        showToastSuccess('Cube added successfully');
-        setStatus('success');
-    }
-
-    const onSelectFace = (face: number) => {
-        setColorsFaces(prev => ({
-            ...prev,
-            [face]: currentColor
-        }));
-    }
-
-
+    const { 
+        cube, 
+        setCube, 
+        method, 
+        setMethod,
+        caseName, 
+        setCaseName, 
+        currentColor, 
+        setCurrentColor, 
+        onSelectFace, 
+        colorsFaces,
+        onAddNewCase,
+        filteredMethods,
+        status
+    } = useNewCase({ cubes, methods, cases });
 
     return (
         <Dialog>
@@ -183,7 +139,10 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
 
 
 
-                    <Button variant='primary' className="mt-5"
+                    <Button variant='primary'
+                        className={cn('mt-5', 
+                            { 'opacity-50 cursor-not-allowed': status === 'loading'}
+                        )}
                         disabled={status === 'loading'}
                         type="submit"
                     >

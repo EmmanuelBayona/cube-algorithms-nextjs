@@ -9,10 +9,10 @@ export const Skeleton = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement
             {...props}
         >
             <div className="space-y-3">
-                <div className="h-5 w-4/5 rounded-lg bg-violet-100/20"></div>
-                <div className="h-3 w-3/5 rounded-lg bg-violet-100/10"></div>
+                <div className="h-5 w-4/5 rounded-lg bg-white/20"></div>
+                <div className="h-3 w-3/5 rounded-lg bg-white/10"></div>
             </div>
-            <div className="h-28 rounded-lg bg-violet-100/10" />
+            <div className="h-40 rounded-lg bg-white/10" />
         </div>
     )
 )

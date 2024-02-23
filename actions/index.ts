@@ -1,4 +1,5 @@
 'use server'
+import { CUBE_COLORS } from "@/lib/cubes-constants"
 import prisma from "@/lib/prisma"
 import { auth } from "@clerk/nextjs"
 import { revalidatePath } from "next/cache"
@@ -38,12 +39,13 @@ export const addNewMethod = async (method: string, description: string, cubeId: 
     }
 }
 
-export const addNewCase = async (caseName: string, methodId: number) => {
+export const addNewCase = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
     try {
         const res = await prisma.case.create({
             data: {
                 name: caseName,
-                methodId: methodId
+                methodId: methodId,
+                colors: cubePattern
             }
         })
 
