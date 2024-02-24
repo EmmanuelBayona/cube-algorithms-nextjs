@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button, buttonVariants } from "./ui/button"
-import { EraserIcon, LayersIcon } from "@radix-ui/react-icons"
+import { CubeIcon, EraserIcon, LayersIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { DBCases, DBCubes, DBMethods } from "@/types"
@@ -138,15 +138,19 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
                     </div>
 
 
-
                     <Button variant='primary'
-                        className={cn('mt-5', 
-                            { 'opacity-50 cursor-not-allowed': status === 'loading'}
+                        className={cn('mt-5 group', 
+                        { 'opacity-50 cursor-not-allowed': status === 'loading'}
                         )}
                         disabled={status === 'loading'}
                         type="submit"
                     >
-                        Add Algorithm
+                        { status === 'loading' ? 'Adding...' : 'Add Algorithm' }
+                        <CubeIcon  
+                            className={cn('w-5 h-5 hidden',
+                                { 'animate-spin block': status === 'loading'}
+                            )}
+                        />
                     </Button>
 
                 </form>
