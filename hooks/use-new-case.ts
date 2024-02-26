@@ -4,7 +4,7 @@ import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBCases, DBCubes, DBMethods } from "@/types";
 import { FormEvent, useState } from "react";
 
-export const useNewCase = ({cubes, methods, cases}: {cubes: DBCubes[], methods: DBMethods[], cases: DBCases[]}) => {
+export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
 
     const [cube, setCube] = useState<string>('');
     const [method, setMethod] = useState<string>('');
@@ -18,6 +18,7 @@ export const useNewCase = ({cubes, methods, cases}: {cubes: DBCubes[], methods: 
 
     const onAddNewCase = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (status === 'loading') return;
 
         // delete all the default colors, as we use default color as eraser
         const cubePattern = Object.fromEntries(Object.entries(colorsFaces).filter(([key, value]) => value !== 'default'));
@@ -59,7 +60,7 @@ export const useNewCase = ({cubes, methods, cases}: {cubes: DBCubes[], methods: 
         setColorsFaces({});
     }
 
-    const onSelectFace = (face: number) => setColorsFaces(prev => ({...prev, [face]: currentColor}));
+    const onSelectFace = (face: number) => setColorsFaces(prev => ({ ...prev, [face]: currentColor }));
 
     return {
         cube,

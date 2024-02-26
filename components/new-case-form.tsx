@@ -15,16 +15,16 @@ import { useNewCase } from "@/hooks/use-new-case";
 
 export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
 
-    const { 
-        cube, 
-        setCube, 
-        method, 
+    const {
+        cube,
+        setCube,
+        method,
         setMethod,
-        caseName, 
-        setCaseName, 
-        currentColor, 
-        setCurrentColor, 
-        onSelectFace, 
+        caseName,
+        setCaseName,
+        currentColor,
+        setCurrentColor,
+        onSelectFace,
         colorsFaces,
         onAddNewCase,
         filteredMethods,
@@ -113,22 +113,22 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
                                 {
                                     Object.keys(CUBE_COLORS).map(color => (
                                         <div key={color}
-                                            className={cn(buttonVariants({variant: 'default', size: 'icon'}),'w-7 h-7 cursor-pointer',{
+                                            className={cn(buttonVariants({ variant: 'default', size: 'icon' }), 'w-7 h-7 cursor-pointer', {
                                                 'opacity-25': currentColor !== color,
                                                 'hidden': color === 'black' // hide black color button
                                             })}
                                             style={{ backgroundColor: CUBE_COLORS[color as keyof typeof CUBE_COLORS] }}
                                             onClick={() => setCurrentColor(color as keyof typeof CUBE_COLORS)}
                                         >
-                                            <EraserIcon className={cn({'hidden': color !== 'default' })} />
+                                            <EraserIcon className={cn({ 'hidden': color !== 'default' })} />
                                         </div>
                                     ))
                                 }
                             </div>
                         </div>
                         <div className="col-span-4 mx-auto">
-                            <CubeSvg 
-                                size={200} 
+                            <CubeSvg
+                                size={200}
                                 background="transparent"
                                 clickableFaces={true}
                                 onClickFace={onSelectFace}
@@ -139,16 +139,16 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
 
 
                     <Button variant='primary'
-                        className={cn('mt-5 group', 
-                        { 'opacity-50 cursor-not-allowed': status === 'loading'}
+                        className={cn('mt-5 group',
+                            { 'opacity-50 cursor-not-allowed': status === 'loading' }
                         )}
-                        disabled={status === 'loading'}
                         type="submit"
+                        aria-disabled={status === 'loading'}
                     >
-                        { status === 'loading' ? 'Adding...' : 'Add Algorithm' }
-                        <CubeIcon  
+                        {status === 'loading' ? 'Adding...' : 'Add Algorithm'}
+                        <CubeIcon
                             className={cn('w-5 h-5 hidden',
-                                { 'animate-spin block': status === 'loading'}
+                                { 'animate-spin block': status === 'loading' }
                             )}
                         />
                     </Button>
