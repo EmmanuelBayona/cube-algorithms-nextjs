@@ -1,6 +1,8 @@
 import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
 import prisma from "@/lib/prisma"
 import { AdminVerifyActions } from "./admin-verify-actions";
+import { CubeSvg } from "./ui/cube-svg";
+import { CUBE_COLORS } from "@/lib/cubes-constants";
 
 export const AdminVerifyAlgorithmsTable = async () => {
 
@@ -31,6 +33,7 @@ export const AdminVerifyAlgorithmsTable = async () => {
                     <TableHead>Cube</TableHead>
                     <TableHead>Method</TableHead>
                     <TableHead>Case</TableHead>
+                    <TableHead>Alg. Image</TableHead>
                     <TableHead>Algorithm</TableHead>
                     <TableHead>Date</TableHead>
                     <TableHead>Actions</TableHead>
@@ -43,6 +46,13 @@ export const AdminVerifyAlgorithmsTable = async () => {
                             <TableCell>{algorithm.case.method.cube.name}</TableCell>
                             <TableCell>{algorithm.case.method.name}</TableCell>
                             <TableCell>{algorithm.case.name}</TableCell>
+                            <TableCell>
+                                <CubeSvg
+                                    size={80}
+                                    background="transparent"
+                                    colors={algorithm.case.colors as Record<number, keyof typeof CUBE_COLORS>}
+                                />
+                            </TableCell>
                             <TableCell>{algorithm.algorithm}</TableCell>
                             <TableCell>{dateTimeFormatUS.format(algorithm.createdAt)}</TableCell>
                             <TableCell className="flex justify-start gap-2" >
@@ -54,7 +64,7 @@ export const AdminVerifyAlgorithmsTable = async () => {
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={6}>Total algorithms: {uploadedAlgorithms.length}</TableCell>
+                    <TableCell colSpan={7}>Total algorithms: {uploadedAlgorithms.length}</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>

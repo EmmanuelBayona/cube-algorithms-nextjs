@@ -13,13 +13,13 @@ export const DashNavbar = () => {
         <NavigationMenu className="mx-auto">
             <NavigationMenuList>
 
-                <NavigationMenuItem>
-                    <Link href="/dash/timer" legacyBehavior passHref>
-                        <NavigationMenuLink className={NavigationMenuTriggerStyle()}>
-                            Timer
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
+                {/* <NavigationMenuItem> */}
+                {/*     <Link href="/dash/timer" legacyBehavior passHref> */}
+                {/*         <NavigationMenuLink className={NavigationMenuTriggerStyle()}> */}
+                {/*             Timer */}
+                {/*         </NavigationMenuLink> */}
+                {/*     </Link> */}
+                {/* </NavigationMenuItem> */}
 
                 <NavigationMenuItem>
                     <Link href="/dash/puzzles" legacyBehavior passHref>
@@ -43,12 +43,12 @@ export const DashNavbar = () => {
                 <NavigationMenuItem>
                     <SignedIn>
                         <div className="mr-2">
-                            <UserButton afterSignOutUrl="/" />
+                            <UserButton afterSignOutUrl="/dash/puzzles" />
                         </div>
                     </SignedIn>
 
                     <SignedOut>
-                        <SignInButton mode="modal" afterSignInUrl="/dash/timer" afterSignUpUrl="/dash/timer">
+                        <SignInButton mode="modal" afterSignInUrl="/dash/puzzles" afterSignUpUrl="/dash/puzzles">
                             <Button variant='primary' className="h-10">
                                 Sign in
                             </Button>
