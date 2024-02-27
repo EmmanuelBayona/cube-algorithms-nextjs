@@ -1,3 +1,4 @@
+'use client';
 import { cn } from "@/lib/utils";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
@@ -10,10 +11,10 @@ export const NavigationMenu = forwardRef<
 >(({ className, children, ...props }, ref) => (
     <NavigationMenuPrimitive.Root
         ref={ref}
-        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-dark border border-dark-accent p-1', className)}
+        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-dark border border-white/5 p-1', className)}
         {...props}
     >
-        { children }
+        {children}
         <NavigationMenuViewport />
     </NavigationMenuPrimitive.Root>
 ))
@@ -25,7 +26,7 @@ export const NavigationMenuList = forwardRef<
 >(({ className, ...props }, ref) => (
     <NavigationMenuPrimitive.List
         ref={ref}
-        className={cn('group flex flex-1 list-none items-center justify-center space-x-1', className)}
+        className={cn('group flex flex-1 list-none items-center justify-center gap-1 md:gap-2', className)}
         {...props}
     />
 ))
@@ -34,7 +35,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 export const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
 export const NavigationMenuTriggerStyle = cva(
-    'group inline-flex h-10 w-max items-center justify-center rounded-lg bg-background px-4 py-2 text-sm font-medium hover:bg-dark-accent focus:bg-dark-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-dark-accent data-[state=open]:bg-dark-accent'
+    'group inline-flex h-10 w-max items-center justify-center rounded-lg px-4 py-2 text-sm font-medium hover:bg-white/5 focus:bg-white/5 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-white/5 data-[state=open]:bg-white/5'
 )
 
 export const NavigationMenuTrigger = forwardRef<
@@ -67,8 +68,8 @@ export const NavigationMenuContent = forwardRef<
             'left-0 top-0 w-full data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight md:absolute md:w-auto',
             className
         )}
-    {...props}
-  />
+        {...props}
+    />
 ))
 NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
 
@@ -81,7 +82,7 @@ export const NavigationMenuViewport = forwardRef<
     <div className={cn('absolute left-0 top-full flex justify-center')}>
         <NavigationMenuPrimitive.Viewport
             className={cn(
-                'origin-[top_center] relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-xl border border-dark-accent bg-dark data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut md:w-[var(--radix-navigation-menu-viewport-width)]',
+                'origin-[top_center] relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-xl border border-white/5 bg-dark data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut md:w-[var(--radix-navigation-menu-viewport-width)]',
                 className
             )}
             ref={ref}
@@ -98,12 +99,12 @@ export const NavigationMenuIndicator = forwardRef<
     <NavigationMenuPrimitive.Indicator
         ref={ref}
         className={cn(
-        'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in',
-        className
+            'top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in',
+            className
         )}
         {...props}
     >
-        <div className='relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-dark-accent' />
-  </NavigationMenuPrimitive.Indicator>
+        <div className='relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-white/5' />
+    </NavigationMenuPrimitive.Indicator>
 ))
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName

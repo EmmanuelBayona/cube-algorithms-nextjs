@@ -7,35 +7,30 @@ generator client {
     provider = "prisma-client-js"
 }
 
-model User {
-    id         Int         @id @default(autoincrement())
-    algorithms Algorithm[]
-    likes      Like[]
-
-    @@map("users")
-}
-
 model Cube {
-    id      Int      @id @default(autoincrement())
-    name    String
-    methods Method[]
+    id          Int      @id @default(autoincrement())
+    name        String   @unique
+    description String   @default("")
+    methods     Method[]
 
     @@map("cubes")
 }
 
 model Method {
-    id     Int    @id @default(autoincrement())
-    name   String
-    cube   Cube   @relation(fields: [cubeId], references: [id])
-    cubeId Int
-    cases  Case[]
+    id          Int    @id @default(autoincrement())
+    name        String @unique
+    description String @default("")
+    cube        Cube   @relation(fields: [cubeId], references: [id])
+    cubeId      Int
+    cases       Case[]
 
     @@map("methods")
 }
 
 model Case {
     id         Int         @id @default(autoincrement())
-    name       String
+    name       String      @unique
+    colors     Json        @default("{}")
     method     Method      @relation(fields: [methodId], references: [id])
     methodId   Int
     algorithms Algorithm[]
@@ -44,14 +39,14 @@ model Case {
 }
 
 model Algorithm {
-    id        Int      @id @default(autoincrement())
-    algorithm String
-    createdAt DateTime @default(now())
-    case      Case     @relation(fields: [caseId], references: [id])
-    caseId    Int
-    user      User     @relation(fields: [userId], references: [id])
-    userId    Int
-    likes     Like[]
+    id         Int      @id @default(autoincrement())
+    algorithm  String   @unique
+    createdAt  DateTime @default(now())
+    isApproved Boolean  @default(false)
+    case       Case     @relation(fields: [caseId], references: [id])
+    caseId     Int
+    userId     String
+    likes      Like[]
 
     @@map("algorithms")
 }
@@ -61,8 +56,7 @@ model Like {
     createdAt   DateTime  @default(now())
     algorithm   Algorithm @relation(fields: [algorithmId], references: [id])
     algorithmId Int
-    user        User      @relation(fields: [userId], references: [id])
-    userId      Int
+    userId      String    @unique
 
     @@map("likes")
 }

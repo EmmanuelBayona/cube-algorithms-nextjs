@@ -1,19 +1,23 @@
 import { cn } from "@/lib/utils"
 import { Cubes } from "@/types"
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import prisma from "@/lib/prisma";
+import Link from "next/link";
+import { CubeSvg } from "./ui/cube-svg";
+import { F2L1_CUBE_COLORS, OLL1_CUBE_COLORS } from "@/lib/cubes-constants";
 
-const CUBES_ID = {
-    '2x2': 2,
-    '3x3': 1,
+const CUBE_COVERS = {
+    'F2L': F2L1_CUBE_COLORS,
+    'OLL': OLL1_CUBE_COLORS,
 }
 
 export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?: string }) => {
 
-    const cubeId = CUBES_ID[cube as keyof typeof CUBES_ID];
     const methods = await prisma.method.findMany({
         where: {
-            cubeId
+            cube: {
+                name: cube,
+            }
         },
     })
 
@@ -24,13 +28,24 @@ export const MethodsGrid = async ({ cube, className }: { cube: Cubes, className?
         >
 
             {
-                methods.map((method, index) =>  (
-                    <Card key={method.id}>
-                        <CardHeader>
-                            <CardTitle>{method.name}</CardTitle>
-                            <CardDescription>Description</CardDescription> 
-                        </CardHeader>
-                    </Card>
+                methods.map((method) =>  (
+                    <Link key={method.id}
+                        href={`/dash/puzzles/${cube}/${method.name}`}
+                    >
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>{method.name}</CardTitle>
+                                <CardDescription>{ method.description }</CardDescription> 
+                                <CardContent className="flex justify-center">
+                                    <CubeSvg 
+                                        background="transparent" 
+                                        size={200}
+                                        colors={CUBE_COVERS[method.name as keyof typeof CUBE_COVERS]}
+                                    />
+                                </CardContent>
+                            </CardHeader>
+                        </Card>
+                    </Link>
                 ))
             }
 

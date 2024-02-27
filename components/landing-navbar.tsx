@@ -15,7 +15,7 @@ export const LandingNavbar = () => {
             </a>
 
             <a href="https://github.com/EmmanuelBayona/cube-algorithms-nextjs" target="_blank"
-                className={cn(buttonVariants({ variant: 'primary' }), 'rounded-full pl-1')}
+                className={cn(buttonVariants({ variant: 'default' }), 'rounded-full pl-2')}
             >
                 <GitHubLogoIcon width={24} height={24} />
                 View on GitHub

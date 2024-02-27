@@ -20,7 +20,7 @@ export const TimerClock = () => {
 
     return (
         <div className="w-full flex justify-center">
-            <span className="text-7xl md:text-9xl lg:text-[200px] drop-shadow-text">{formatTime(elapsedTime)}</span>
+            <span className="text-7xl md:text-9xl lg:text-[200px] drop-shadow-text tabular-nums">{formatTime(elapsedTime)}</span>
         </div>
     )
 
