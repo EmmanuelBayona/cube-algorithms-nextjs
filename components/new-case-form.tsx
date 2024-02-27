@@ -12,7 +12,6 @@ import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { useNewCase } from "@/hooks/use-new-case";
 
 
-
 export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
 
     const {

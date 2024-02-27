@@ -1,44 +1,23 @@
 'use client';
-import { FormEvent, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { useNewCube } from "@/hooks/use-new-cube"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
 import { CubeIcon } from "@radix-ui/react-icons"
+import { cn } from "@/lib/utils";
 import { Input } from "./ui/input"
-import { addNewCube } from "@/actions"
-import { showToastError, showToastSuccess } from "@/lib/toaster"
 import { DBCubes } from "@/types";
 
 export const NewCubeForm = ({ cubes }: { cubes: DBCubes[] }) => {
 
-    const [cube, setCube] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
-
-    const onAddNewCube = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!cube) return showToastError('Cube name is required');
-        if (!description) return showToastError('Cube description is required');
-
-        // if the cube already exists, return an error
-        if (cubes.find(c => c.name === cube)) return showToastError('Cube already exists')
-
-        setStatus('loading');
-
-        const { success } = await addNewCube(cube, description);
-
-        if (!success) {
-            showToastError('Something went wrong');
-            setStatus('error');
-            return;
-        }
-
-        setCube('');
-        setDescription('');
-        showToastSuccess('Cube added successfully');
-        setStatus('success');
-    }
+    const {
+        onAddNewCube,
+        cube,
+        setCube,
+        description,
+        setDescription,
+        status
+    } = useNewCube({ cubes })
 
     return (
         <Dialog>
@@ -87,11 +66,19 @@ export const NewCubeForm = ({ cubes }: { cubes: DBCubes[] }) => {
                         />
                     </div>
 
-                    <Button variant='primary' className="mt-5"
-                        disabled={status === 'loading'}
+                    <Button variant='primary'
+                        className={cn('mt-5 group',
+                            { 'opacity-50 cursor-not-allowed': status === 'loading' }
+                        )}
                         type="submit"
+                        aria-disabled={status === 'loading'}
                     >
-                        Add Algorithm
+                        {status === 'loading' ? 'Adding...' : 'Add Cube'}
+                        <CubeIcon
+                            className={cn('w-5 h-5 hidden',
+                                { 'animate-spin block': status === 'loading' }
+                            )}
+                        />
                     </Button>
 
                 </form>
