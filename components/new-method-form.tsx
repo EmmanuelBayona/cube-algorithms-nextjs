@@ -3,53 +3,27 @@ import { FormEvent, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
-import { StackIcon } from "@radix-ui/react-icons"
+import { CubeIcon, StackIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { DBCubes, DBMethods } from "@/types"
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { addNewMethod } from "@/actions";
+import { useNewMethod } from "@/hooks/use-new-method";
+import { cn } from "@/lib/utils";
 
 export const NewMethodForm = ({ cubes, methods }: { cubes: DBCubes[], methods: DBMethods[] }) => {
 
-    const [cube, setCube] = useState<string>('');
-    const [method, setMethod] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
-
-    const onAddNewMethod = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!cube) return showToastError('Cube is required');
-        if (!method) return showToastError('Method name is required');
-        if (!description) return showToastError('Method description is required');
-
-        // if the method already exists, return an error 
-        if (methods.find(m => m.name === method)) return showToastError('Method already exists');
-
-        setStatus('loading')
-
-        const cubeId = cubes.find(c => c.name === cube)?.id;
-        if (!cubeId) {
-            showToastError('Something went wrong');
-            setStatus('error');
-            return;
-        }
-
-        const { success } = await addNewMethod(method, description, cubeId);
-
-        if (!success) {
-            showToastError('Something went wrong');
-            setStatus('error');
-            return;
-        }
-
-        setCube('');
-        setMethod('');
-        setDescription('');
-        showToastSuccess('Cube added successfully');
-        setStatus('success');
-    }
+    const {
+        onAddNewMethod,
+        cube,
+        setCube,
+        description, 
+        setDescription,
+        method,
+        setMethod,
+        status 
+    } = useNewMethod({ cubes, methods });
 
 
     return (
@@ -119,11 +93,19 @@ export const NewMethodForm = ({ cubes, methods }: { cubes: DBCubes[], methods: D
                         />
                     </div>
 
-                    <Button variant='primary' className="mt-5"
-                        disabled={status === 'loading'}
+                    <Button variant='primary'
+                        className={cn('mt-5 group',
+                            { 'opacity-50 cursor-not-allowed': status === 'loading' }
+                        )}
                         type="submit"
+                        aria-disabled={status === 'loading'}
                     >
-                        Add Algorithm
+                        {status === 'loading' ? 'Adding...' : 'Add method'}
+                        <CubeIcon
+                            className={cn('w-5 h-5 hidden',
+                                { 'animate-spin block': status === 'loading' }
+                            )}
+                        />
                     </Button>
 
                 </form>
