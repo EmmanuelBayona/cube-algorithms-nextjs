@@ -1,29 +1,41 @@
-import { Table, TableCaption, TableHead, TableHeader, TableRow, TableCell, TableFooter, TableBody } from "./ui/table"
-import prisma from "@/lib/prisma"
+import {
+    Table,
+    TableCaption,
+    TableHead,
+    TableHeader,
+    TableRow,
+    TableCell,
+    TableFooter,
+    TableBody,
+} from "./ui/table";
+import prisma from "@/lib/prisma";
 import { AdminVerifyActions } from "./admin-verify-actions";
-import { CubeSvg } from "./ui/cube-svg";
+import { CubeFullView } from "./ui/cube-full-view";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
+import { CubeTopView } from "./ui/cube-top-view";
 
 export const AdminVerifyAlgorithmsTable = async () => {
-
     const uploadedAlgorithms = await prisma.algorithm.findMany({
         include: {
             case: {
                 include: {
                     method: {
                         include: {
-                            cube: true
-                        }
-                    }
-                }
-            }
+                            cube: true,
+                        },
+                    },
+                },
+            },
         },
-
-    })
+    });
 
     if (uploadedAlgorithms.length === 0) return null;
 
-    const dateTimeFormatUS = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    const dateTimeFormatUS = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
 
     return (
         <Table className="mt-20">
@@ -40,34 +52,56 @@ export const AdminVerifyAlgorithmsTable = async () => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {
-                    uploadedAlgorithms.map((algorithm) => (
-                        <TableRow key={algorithm.id}>
-                            <TableCell>{algorithm.case.method.cube.name}</TableCell>
-                            <TableCell>{algorithm.case.method.name}</TableCell>
-                            <TableCell>{algorithm.case.name}</TableCell>
-                            <TableCell>
-                                <CubeSvg
+                {uploadedAlgorithms.map((algorithm) => (
+                    <TableRow key={algorithm.id}>
+                        <TableCell>{algorithm.case.method.cube.name}</TableCell>
+                        <TableCell>{algorithm.case.method.name}</TableCell>
+                        <TableCell>{algorithm.case.name}</TableCell>
+                        <TableCell>
+                            {algorithm.case.method.svgView === "top-view" ? (
+                                <CubeTopView
                                     size={80}
                                     background="transparent"
-                                    colors={algorithm.case.colors as Record<number, keyof typeof CUBE_COLORS>}
+                                    colors={
+                                        algorithm.case.colors as Record<
+                                            number,
+                                            keyof typeof CUBE_COLORS
+                                        >
+                                    }
                                 />
-                            </TableCell>
-                            <TableCell>{algorithm.algorithm}</TableCell>
-                            <TableCell>{dateTimeFormatUS.format(algorithm.createdAt)}</TableCell>
-                            <TableCell className="flex justify-start gap-2" >
-                                <AdminVerifyActions algID={algorithm.id} isApproved={algorithm.isApproved} />
-                            </TableCell>
-                        </TableRow>
-                    ))
-                }
+                            ) : (
+                                <CubeFullView
+                                    size={80}
+                                    background="transparent"
+                                    colors={
+                                        algorithm.case.colors as Record<
+                                            number,
+                                            keyof typeof CUBE_COLORS
+                                        >
+                                    }
+                                />
+                            )}
+                        </TableCell>
+                        <TableCell>{algorithm.algorithm}</TableCell>
+                        <TableCell>
+                            {dateTimeFormatUS.format(algorithm.createdAt)}
+                        </TableCell>
+                        <TableCell className="flex justify-start gap-2">
+                            <AdminVerifyActions
+                                algID={algorithm.id}
+                                isApproved={algorithm.isApproved}
+                            />
+                        </TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
             <TableFooter>
                 <TableRow>
-                    <TableCell colSpan={7}>Total algorithms: {uploadedAlgorithms.length}</TableCell>
+                    <TableCell colSpan={7}>
+                        Total algorithms: {uploadedAlgorithms.length}
+                    </TableCell>
                 </TableRow>
             </TableFooter>
         </Table>
-    )
-
-}
+    );
+};

@@ -9,6 +9,7 @@ export const useNewMethod = ({ cubes, methods }: { cubes: DBCubes[], methods: DB
     const [cube, setCube] = useState<string>('');
     const [method, setMethod] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const [cubeView, setCubeView] = useState<string>('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
 
     const onAddNewMethod = async (e: FormEvent<HTMLFormElement>) => {
@@ -18,6 +19,7 @@ export const useNewMethod = ({ cubes, methods }: { cubes: DBCubes[], methods: DB
         if (!cube) return showToastError('Cube is required');
         if (!method) return showToastError('Method name is required');
         if (!description) return showToastError('Method description is required');
+        if (!cubeView) return showToastError('Cube view is required');
 
         // if the method already exists, return an error 
         if (methods.find(m => m.name === method)) return showToastError('Method already exists');
@@ -31,7 +33,7 @@ export const useNewMethod = ({ cubes, methods }: { cubes: DBCubes[], methods: DB
             return;
         }
 
-        const { success } = await addNewMethod(method, description, cubeId);
+        const { success } = await addNewMethod(method, description, cubeId, cubeView);
 
         if (!success) {
             showToastError('Something went wrong');
@@ -54,7 +56,9 @@ export const useNewMethod = ({ cubes, methods }: { cubes: DBCubes[], methods: DB
         description,
         setDescription,
         status,
-        onAddNewMethod
+        onAddNewMethod,
+        cubeView,
+        setCubeView
     }
 
 }

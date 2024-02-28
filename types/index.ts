@@ -21,6 +21,7 @@ export interface DBMethods {
     name: string;
     description: string;
     cubeId: number;
+    svgView: string;
 }[]
 
 export interface DBCases {

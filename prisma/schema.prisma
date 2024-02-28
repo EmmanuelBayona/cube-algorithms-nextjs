@@ -20,6 +20,7 @@ model Method {
     id          Int    @id @default(autoincrement())
     name        String @unique
     description String @default("")
+    svgView     String @default("full-view") // top-view, full-view,
     cube        Cube   @relation(fields: [cubeId], references: [id])
     cubeId      Int
     cases       Case[]
