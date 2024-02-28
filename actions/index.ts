@@ -21,13 +21,14 @@ export const addNewCube = async (cube: string, description: string) => {
     }
 }
 
-export const addNewMethod = async (method: string, description: string, cubeId: number) => {
+export const addNewMethod = async (method: string, description: string, cubeId: number, cubeView: string) => {
     try {
         const res = await prisma.method.create({
             data: {
                 name: method,
                 description: description,
-                cubeId: cubeId
+                cubeId: cubeId,
+                svgView: cubeView
             }
         })
 
@@ -41,6 +42,7 @@ export const addNewMethod = async (method: string, description: string, cubeId: 
 
 export const addNewCase = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
     try {
+        console.log(cubePattern)
         const res = await prisma.case.create({
             data: {
                 name: caseName,
@@ -50,7 +52,7 @@ export const addNewCase = async (caseName: string, methodId: number, cubePattern
         })
 
         revalidatePath('/dash/profile')
-        return { success: true, data: res }
+        return { success: true, data: []}
     } catch (error) {
         return { success: false, error }
     }

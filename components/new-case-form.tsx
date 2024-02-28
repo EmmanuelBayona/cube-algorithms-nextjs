@@ -1,19 +1,44 @@
-'use client';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
-import { Label } from "./ui/label"
-import { Button, buttonVariants } from "./ui/button"
-import { CubeIcon, EraserIcon, LayersIcon } from "@radix-ui/react-icons"
-import { Input } from "./ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import { DBCases, DBCubes, DBMethods } from "@/types"
-import { CubeSvg } from "./ui/cube-svg";
+"use client";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "./ui/dialog";
+import { Label } from "./ui/label";
+import { Button, buttonVariants } from "./ui/button";
+import { CubeIcon, EraserIcon, LayersIcon } from "@radix-ui/react-icons";
+import { Input } from "./ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select";
+import { DBCases, DBCubes, DBMethods } from "@/types";
+import { CubeFullView } from "./ui/cube-full-view";
 import { cn } from "@/lib/utils";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { useNewCase } from "@/hooks/use-new-case";
+import { CubeTopView } from "./ui/cube-top-view";
 
+const SVG_VIEWS = {
+    "top-view": CubeTopView,
+    "full-view": CubeFullView,
+};
 
-export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
-
+export const NewCaseForm = ({
+    cubes,
+    methods,
+    cases,
+}: {
+    cubes: DBCubes[];
+    methods: DBMethods[];
+    cases: DBCases[];
+}) => {
     const {
         cube,
         setCube,
@@ -27,8 +52,14 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
         colorsFaces,
         onAddNewCase,
         filteredMethods,
-        status
+        status,
     } = useNewCase({ cubes, methods, cases });
+
+    const selectedView = filteredMethods.find(
+        (m) => m.name === method
+    )?.svgView;
+
+    const CubeView = SVG_VIEWS[selectedView as keyof typeof SVG_VIEWS];
 
     return (
         <Dialog>
@@ -40,122 +71,148 @@ export const NewCaseForm = ({ cubes, methods, cases }: { cubes: DBCubes[], metho
             </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
-
                 <DialogHeader>
                     <DialogTitle>Add a new case</DialogTitle>
                     <DialogDescription>
-                        Select a cube, method, and enter a case to add a new one.
+                        Select a cube, method, and enter a case to add a new
+                        one.
                     </DialogDescription>
                 </DialogHeader>
 
                 <form className="grid gap-4 py-5" onSubmit={onAddNewCase}>
-
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label className="text-right">Cube</Label>
-                        <Select disabled={cubes.length === 0}
+                        <Select
+                            disabled={cubes.length === 0}
                             value={cube}
                             onValueChange={setCube}
                         >
                             <SelectTrigger className="col-span-3">
-                                <SelectValue placeholder='Select a cube' />
+                                <SelectValue placeholder="Select a cube" />
                             </SelectTrigger>
                             <SelectContent>
-                                {
-                                    cubes.map(cube => (
-                                        <SelectItem key={cube.id} value={cube.name}>
-                                            {cube.name}
-                                        </SelectItem>
-                                    ))
-                                }
+                                {cubes.map((cube) => (
+                                    <SelectItem key={cube.id} value={cube.name}>
+                                        {cube.name}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
 
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label className="text-right">Method</Label>
-                        <Select disabled={filteredMethods.length === 0}
+                        <Select
+                            disabled={filteredMethods.length === 0}
                             value={method}
                             onValueChange={setMethod}
                         >
                             <SelectTrigger className="col-span-3">
-                                <SelectValue placeholder='Select a method' />
+                                <SelectValue placeholder="Select a method" />
                             </SelectTrigger>
                             <SelectContent>
-                                {
-                                    filteredMethods.map(method => (
-                                        <SelectItem key={method.id} value={method.name}>
-                                            {method.name}
-                                        </SelectItem>
-                                    ))
-                                }
+                                {filteredMethods.map((method) => (
+                                    <SelectItem
+                                        key={method.id}
+                                        value={method.name}
+                                    >
+                                        {method.name}
+                                    </SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </div>
 
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="case" className="text-right">Case</Label>
+                        <Label htmlFor="case" className="text-right">
+                            Case
+                        </Label>
                         <Input
                             className="col-span-3"
                             id="case"
                             name="case"
-                            type='text'
-                            placeholder='Enter a cube'
+                            type="text"
+                            placeholder="Enter a cube"
                             value={caseName}
-                            onChange={e => setCaseName(e.target.value)}
+                            onChange={(e) => setCaseName(e.target.value)}
                         />
                     </div>
 
                     <div className="grid grid-cols-4 items-center justify-center gap-4">
-                        <div className="col-span-4 grid grid-cols-4 gap-4">
-                            <Label className="text-right">Color</Label>
+                        <div className="col-span-4 grid grid-cols-4 gap-4 items-center">
+                            <Label className="text-right">Colors</Label>
                             <div className="flex gap-2 col-span-3">
-                                {
-                                    Object.keys(CUBE_COLORS).map(color => (
-                                        <div key={color}
-                                            className={cn(buttonVariants({ variant: 'default', size: 'icon' }), 'w-7 h-7 cursor-pointer', {
-                                                'opacity-25': currentColor !== color,
-                                                'hidden': color === 'black' // hide black color button
+                                {Object.keys(CUBE_COLORS).map((color) => (
+                                    <div
+                                        key={color}
+                                        className={cn(
+                                            buttonVariants({
+                                                variant: "default",
+                                                size: "icon",
+                                            }),
+                                            "w-7 h-7 cursor-pointer",
+                                            {
+                                                "opacity-25":
+                                                    currentColor !== color,
+                                                hidden: color === "black", // hide black color button
+                                            },
+                                            {
+                                                "opacity-25 cursor-not-allowed":
+                                                    !selectedView,
+                                            }
+                                        )}
+                                        style={{
+                                            backgroundColor:
+                                                CUBE_COLORS[
+                                                    color as keyof typeof CUBE_COLORS
+                                                ],
+                                        }}
+                                        onClick={() =>
+                                            setCurrentColor(
+                                                color as keyof typeof CUBE_COLORS
+                                            )
+                                        }
+                                    >
+                                        <EraserIcon
+                                            className={cn({
+                                                hidden: color !== "default",
                                             })}
-                                            style={{ backgroundColor: CUBE_COLORS[color as keyof typeof CUBE_COLORS] }}
-                                            onClick={() => setCurrentColor(color as keyof typeof CUBE_COLORS)}
-                                        >
-                                            <EraserIcon className={cn({ 'hidden': color !== 'default' })} />
-                                        </div>
-                                    ))
-                                }
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="col-span-4 mx-auto">
-                            <CubeSvg
-                                size={200}
-                                background="transparent"
-                                clickableFaces={true}
-                                onClickFace={onSelectFace}
-                                colors={colorsFaces}
-                            />
+                        <div className="col-span-4 mx-auto h-[200px]">
+                            {selectedView && (
+                                <CubeView
+                                    size={200}
+                                    background="transparent"
+                                    clickableFaces={true}
+                                    onClickFace={onSelectFace}
+                                    colors={colorsFaces}
+                                />
+                            )}
                         </div>
                     </div>
 
-
-                    <Button variant='primary'
-                        className={cn('mt-5 group',
-                            { 'opacity-50 cursor-not-allowed': status === 'loading' }
-                        )}
+                    <Button
+                        variant="primary"
+                        className={cn("mt-5 group", {
+                            "opacity-50 cursor-not-allowed":
+                                status === "loading",
+                        })}
                         type="submit"
-                        aria-disabled={status === 'loading'}
+                        aria-disabled={status === "loading"}
                     >
-                        {status === 'loading' ? 'Adding...' : 'Add Algorithm'}
+                        {status === "loading" ? "Adding..." : "Add Algorithm"}
                         <CubeIcon
-                            className={cn('w-5 h-5 hidden',
-                                { 'animate-spin block': status === 'loading' }
-                            )}
+                            className={cn("w-5 h-5 hidden", {
+                                "animate-spin block": status === "loading",
+                            })}
                         />
                     </Button>
-
                 </form>
-
             </DialogContent>
         </Dialog>
-    )
-
-}
+    );
+};
