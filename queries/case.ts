@@ -1,6 +1,16 @@
 import prisma from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 
+export const getCases = unstable_cache(
+    async () => {
+        return prisma.case.findMany();
+    },
+    ["cases"],
+    {
+        tags: ["cases"],
+    }
+)
+
 export const getCasesWithFirstFourAlgorithmsByMethodName = unstable_cache(
     async (methodName: string) => {
         return prisma.case.findMany({

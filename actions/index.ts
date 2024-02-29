@@ -1,19 +1,15 @@
 'use server'
 import { CUBE_COLORS } from "@/lib/cubes-constants"
 import prisma from "@/lib/prisma"
+import { addCube } from "@/queries/cube"
 import { auth } from "@clerk/nextjs"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 
-export const addNewCube = async (cube: string, description: string) => {
+export const addNewCubeAction = async (cube: string, description: string) => {
     try {
-        const res = await prisma.cube.create({
-            data: {
-                name: cube,
-                description: description,
-            }
-        })
+        const res = await addCube(cube, description);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('cubes');
         return { success: true, data: res }
 
     } catch (error) {
@@ -52,7 +48,7 @@ export const addNewCase = async (caseName: string, methodId: number, cubePattern
         })
 
         revalidatePath('/dash/profile')
-        return { success: true, data: []}
+        return { success: true, data: [] }
     } catch (error) {
         return { success: false, error }
     }

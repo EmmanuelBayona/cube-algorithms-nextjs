@@ -3,8 +3,8 @@ import { Card, CardContent } from "./ui/card";
 import { CubeFullView } from "./ui/cube-full-view";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { CubeTopView } from "./ui/cube-top-view";
-import { getCasesWithFirstFourAlgorithmsByMethodName } from "@/queries/cases";
 import { getFirstMethodByName } from "@/queries/method";
+import { getCasesWithFirstFourAlgorithmsByMethodName } from "@/queries/case";
 
 export const CasesList = async ({
     className,

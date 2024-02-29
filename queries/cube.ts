@@ -9,4 +9,14 @@ export const getCubes = unstable_cache(
     {
         tags: ["cubes"],
     }
-) 
+)
+
+
+export const addCube = async (cube: string, description: string) => {
+    return prisma.cube.create({
+        data: {
+            name: cube,
+            description: description,
+        }
+    })
+}
