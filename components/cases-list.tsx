@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "./ui/card";
-import prisma from "@/lib/prisma";
 import { CubeFullView } from "./ui/cube-full-view";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { CubeTopView } from "./ui/cube-top-view";
+import { getCasesWithFirstFourAlgorithmsByMethodName } from "@/queries/cases";
+import { getFirstMethodByName } from "@/queries/method";
 
 export const CasesList = async ({
     className,
@@ -12,36 +13,11 @@ export const CasesList = async ({
     className?: string;
     method: string;
 }) => {
-    // get all the cases for a method and the first 4 algorithms for each case
-    const cases = await prisma.case.findMany({
-        where: {
-            method: {
-                name: method,
-            },
-        },
-        include: {
-            algorithms: {
-                take: 4,
-                select: {
-                    id: true,
-                    algorithm: true,
-                },
-                where: {
-                    isApproved: true,
-                },
-            },
-        },
-        orderBy: {
-            name: "asc",
-        },
-    });
+
+    const cases = await getCasesWithFirstFourAlgorithmsByMethodName(method);
 
     // get the method to know if it is a top view or a normal view
-    const methodData = await prisma.method.findFirst({
-        where: {
-            name: method,
-        },
-    });
+    const methodData = await getFirstMethodByName(method);
 
     /**
      * Sort the cases by the number at the end of the name, the prisma order function does not work quite well

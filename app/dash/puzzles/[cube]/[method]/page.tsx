@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 import { CasesList } from "@/components/cases-list";
 import { Suspense } from "react";
 import { SkeletonGrid } from "@/components/skeleton-grid";
-import prisma from "@/lib/prisma";
+import { getMethods } from "@/queries/method";
 
 export async function generateMetadata({
     params,
 }: {
     params: { cube: string; method: string };
 }): Promise<Metadata | undefined> {
-    const methods = await prisma.method.findMany();
+
+    const methods = await getMethods();
     const method = methods.find((method) => method.name === params.method);
 
     if (!method) return notFound();

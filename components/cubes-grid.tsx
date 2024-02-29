@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import prisma from "@/lib/prisma";
 import {
     Card,
     CardContent,
@@ -10,9 +9,11 @@ import {
 import Link from "next/link";
 import { CubeFullView } from "./ui/cube-full-view";
 import { SOLVE_CUBE_COLORS } from "@/lib/cubes-constants";
+import { getCubes } from "@/queries/cube";
 
 export const CubesGrid = async ({ className }: { className?: string }) => {
-    const cubes = await prisma.cube.findMany();
+
+    const cubes = await getCubes();
 
     return (
         <section
