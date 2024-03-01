@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { DBAlgs, DBCases, DBCubes, DBMethods } from "@/types";
 import { showToastError, showToastSuccess } from "@/lib/toaster";
-import { addNewAlg } from "@/actions";
+import { addNewAlgAction } from "@/actions";
 
 
 interface NewAlgorithmFormProps {
@@ -49,7 +49,7 @@ export const useNewAlgorithm = ({ cubes, methods, cases, algorithms }: NewAlgori
 
         setStatus('loading');
 
-        const { success } = await addNewAlg(algorithm, caseId);
+        const { success } = await addNewAlgAction(algorithm, caseId);
 
         if (!success) {
             showToastError('Something went wrong');

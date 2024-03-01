@@ -40,3 +40,16 @@ export const getFirstMethodByName = unstable_cache(
         tags: ["first-method-by-name"],
     }
 )
+
+export const addMethod = async (method: string, description: string, cubeId: number, cubeView: string) => {
+    return prisma.method.create({
+        data: {
+            name: method,
+            description: description,
+            cubeId: cubeId,
+            svgView: cubeView
+        }
+    })
+
+
+}

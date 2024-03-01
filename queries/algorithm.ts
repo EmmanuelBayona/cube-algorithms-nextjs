@@ -11,3 +11,14 @@ export const getAlgorithms = unstable_cache(
         tags: ["algorithms"],
     }
 )
+
+export const addAlgorithm = async (alg: string, caseId: number, userId: string) => {
+    return prisma.algorithm.create({
+        data: {
+            algorithm: alg,
+            caseId: caseId,
+            userId: userId,
+        }
+    })
+
+}

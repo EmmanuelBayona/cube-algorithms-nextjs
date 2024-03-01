@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { DBCubes, DBMethods } from "@/types"
 import { showToastError, showToastSuccess } from "@/lib/toaster";
-import { addNewMethod } from "@/actions";
+import { addNewMethodAction } from "@/actions";
 
 
 export const useNewMethod = ({ cubes, methods }: { cubes: DBCubes[], methods: DBMethods[] }) => {
@@ -33,7 +33,7 @@ export const useNewMethod = ({ cubes, methods }: { cubes: DBCubes[], methods: DB
             return;
         }
 
-        const { success } = await addNewMethod(method, description, cubeId, cubeView);
+        const { success } = await addNewMethodAction(method, description, cubeId, cubeView);
 
         if (!success) {
             showToastError('Something went wrong');

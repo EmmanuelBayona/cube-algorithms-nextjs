@@ -1,3 +1,4 @@
+import { CUBE_COLORS } from "@/lib/cubes-constants";
 import prisma from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 
@@ -41,3 +42,14 @@ export const getCasesWithFirstFourAlgorithmsByMethodName = unstable_cache(
         tags: ["cases-with-first-four-algorithms-by-method-name"],
     }
 )
+
+export const addCase = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
+    return prisma.case.create({
+        data: {
+            name: caseName,
+            methodId: methodId,
+            colors: cubePattern
+        }
+    })
+
+}

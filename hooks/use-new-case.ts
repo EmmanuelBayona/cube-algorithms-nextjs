@@ -1,4 +1,4 @@
-import { addNewCase } from "@/actions";
+import { addNewCaseAction } from "@/actions";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBCases, DBCubes, DBMethods } from "@/types";
@@ -43,7 +43,7 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
 
         setStatus('loading')
 
-        const { success } = await addNewCase(caseName, methodId, cubePattern);
+        const { success } = await addNewCaseAction(caseName, methodId, cubePattern);
 
         if (!success) {
             showToastError('Something went wrong');
