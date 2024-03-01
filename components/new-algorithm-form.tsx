@@ -1,14 +1,11 @@
 'use client';
-import { FormEvent, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
 import { CubeIcon, PlusIcon } from "@radix-ui/react-icons"
 import { Input } from "./ui/input"
-import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBAlgs, DBCases, DBCubes, DBMethods } from "@/types";
-import { addNewAlg } from "@/actions";
 import { useNewAlgorithm } from "@/hooks/use-new-algorithm";
 import { cn } from "@/lib/utils";
 

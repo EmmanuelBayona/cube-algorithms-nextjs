@@ -11,39 +11,35 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const handleApprove = async () => {
-        setStatus('loading')
-        const { success } = await approveAlg(algID)
-        if (!success) {
-            setStatus('error')
-            showToastError('Something went wrong')
-            return
-        }
-        setStatus('success')
-        showToastSuccess('Algorithm approved')
+        if (status === 'loading') return;
+        setStatus('loading');
+        const { success } = await approveAlg(algID);
+        showFeedback(success, 'Algorithm approved');
     }
 
     const handleReject = async () => {
-        setStatus('loading')
-        const { success } = await rejectAlg(algID)
-        if (!success) {
-            setStatus('error')
-            showToastError('Something went wrong')
-            return
-        }
-        setStatus('success')
-        showToastSuccess('Algorithm rejected')
+        if (status === 'loading') return;
+        setStatus('loading');
+        const { success } = await rejectAlg(algID);
+        showFeedback(success, 'Algorithm rejected');
     }
 
     const handleDelete = async () => {
-        setStatus('loading')
-        const { success } = await deleteAlg(algID)
+        if (status === 'loading') return;
+        setStatus('loading');
+        const { success } = await deleteAlg(algID);
+        showFeedback(success, 'Algorithm deleted');
+    }
+
+    const showFeedback = (success: boolean, successMsg: string) => {
         if (!success) {
-            setStatus('error')
-            showToastError('Something went wrong')
-            return
+            setStatus('error');
+            showToastError('Something went wrong');
+            return;
         }
-        setStatus('success')
-        showToastSuccess('Algorithm deleted')
+
+        setStatus('success');
+        showToastSuccess(successMsg);
     }
 
     return (
@@ -52,8 +48,8 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
                 !isApproved && (
                     <Button variant='success' size='icon'
                         onClick={handleApprove}
-                        disabled={status === 'loading'}
-                        className={cn({ 'opacity-35': status === 'loading'})}
+                        className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                        aria-disabled={status === 'loading'}
                     >
                         <CheckIcon />
                     </Button>
@@ -62,16 +58,17 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
 
             <Button variant='warning' size='icon'
                 onClick={handleReject}
-                disabled={status === 'loading'}
-                className={cn({ 'opacity-35': status === 'loading'})}
+                className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                aria-disabled={status === 'loading'}
+
             >
                 <CircleBackslashIcon />
             </Button>
 
             <Button variant='danger' size='icon'
                 onClick={handleDelete}
-                disabled={status === 'loading'}
-                className={cn({ 'opacity-35': status === 'loading'})}
+                className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                aria-disabled={status === 'loading'}
             >
                 <TrashIcon />
             </Button>
