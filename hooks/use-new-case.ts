@@ -21,7 +21,7 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
         if (status === 'loading') return;
 
         // delete all the default colors, as we use default color as eraser
-        const cubePattern = Object.fromEntries(Object.entries(colorsFaces).filter(([key, value]) => value !== 'default'));
+        const cubePattern = Object.fromEntries(Object.entries(colorsFaces).filter(([_, value]) => value !== 'default'));
         if (!cube) return showToastError('Cube is required');
         if (!method) return showToastError('Method is required');
         if (!caseName) return showToastError('Case is required');

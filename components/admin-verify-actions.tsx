@@ -56,14 +56,19 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
                 )
             }
 
-            <Button variant='warning' size='icon'
-                onClick={handleReject}
-                className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                aria-disabled={status === 'loading'}
+            {
+                isApproved && (
+                    <Button variant='warning' size='icon'
+                        onClick={handleReject}
+                        className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                        aria-disabled={status === 'loading'}
 
-            >
-                <CircleBackslashIcon />
-            </Button>
+                    >
+                        <CircleBackslashIcon />
+                    </Button>
+                )
+            }
+
 
             <Button variant='danger' size='icon'
                 onClick={handleDelete}
