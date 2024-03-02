@@ -9,32 +9,18 @@ import {
     TableFooter,
     TableBody,
 } from "./ui/table";
-import prisma from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import { CubeFullView } from "./ui/cube-full-view";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { CubeTopView } from "./ui/cube-top-view";
+import { getAlgorithmsWithCaseMethodCubeInfo } from "@/queries/algorithm";
 
 export const UserAlgorithmsTable = async () => {
     const { userId } = auth();
     if (!userId) return null;
 
-    const uploadedAlgorithms = await prisma.algorithm.findMany({
-        where: {
-            userId: userId,
-        },
-        include: {
-            case: {
-                include: {
-                    method: {
-                        include: {
-                            cube: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
+    const uploadedAlgorithms = await getAlgorithmsWithCaseMethodCubeInfo(userId);
+    console.log(uploadedAlgorithms[0])
 
     if (uploadedAlgorithms.length === 0) return null;
 
@@ -92,7 +78,7 @@ export const UserAlgorithmsTable = async () => {
                         </TableCell>
                         <TableCell>{algorithm.algorithm}</TableCell>
                         <TableCell>
-                            {dateTimeFormatUS.format(algorithm.createdAt)}
+                            {dateTimeFormatUS.format(new Date(algorithm.createdAt))}
                         </TableCell>
                         <TableCell
                             className={cn({

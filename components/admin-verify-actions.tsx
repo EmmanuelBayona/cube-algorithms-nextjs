@@ -2,9 +2,9 @@
 import { useState } from "react"
 import { CheckIcon, CircleBackslashIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Button } from "./ui/button"
-import { approveAlg, deleteAlg, rejectAlg } from "@/actions"
 import { cn } from "@/lib/utils"
 import { showToastError, showToastSuccess } from "@/lib/toaster"
+import { approveAlgAction, deleteAlgAction, rejectAlgAction } from "@/actions"
 
 export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApproved: boolean }) => {
 
@@ -13,21 +13,21 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
     const handleApprove = async () => {
         if (status === 'loading') return;
         setStatus('loading');
-        const { success } = await approveAlg(algID);
+        const { success } = await approveAlgAction(algID);
         showFeedback(success, 'Algorithm approved');
     }
 
     const handleReject = async () => {
         if (status === 'loading') return;
         setStatus('loading');
-        const { success } = await rejectAlg(algID);
+        const { success } = await rejectAlgAction(algID);
         showFeedback(success, 'Algorithm rejected');
     }
 
     const handleDelete = async () => {
         if (status === 'loading') return;
         setStatus('loading');
-        const { success } = await deleteAlg(algID);
+        const { success } = await deleteAlgAction(algID);
         showFeedback(success, 'Algorithm deleted');
     }
 

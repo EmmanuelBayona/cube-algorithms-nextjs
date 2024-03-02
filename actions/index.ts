@@ -1,12 +1,11 @@
 'use server'
 import { CUBE_COLORS } from "@/lib/cubes-constants"
-import prisma from "@/lib/prisma"
-import { addAlgorithm } from "@/queries/algorithm"
+import { addAlgorithm, approveAlg, deleteAlg, rejectAlg } from "@/queries/algorithm"
 import { addCase } from "@/queries/case"
 import { addCube } from "@/queries/cube"
 import { addMethod } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
-import { revalidatePath, revalidateTag } from "next/cache"
+import { revalidateTag } from "next/cache"
 
 export const addNewCubeAction = async (cube: string, description: string) => {
     try {
@@ -52,63 +51,52 @@ export const addNewAlgAction = async (alg: string, caseId: number) => {
         const res = await addAlgorithm(alg, caseId, userId);
 
         revalidateTag('algorithms');
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const approveAlg = async (algId: number) => {
+export const approveAlgAction = async (algId: number) => {
     try {
         const { has } = auth();
         if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
-        const res = await prisma.algorithm.update({
-            where: { id: algId },
-            data: {
-                isApproved: true
-            }
-        })
+        const res = await approveAlg(algId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo')
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const rejectAlg = async (algId: number) => {
+export const rejectAlgAction = async (algId: number) => {
     try {
         const { has } = auth();
         if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
-        const res = await prisma.algorithm.update({
-            where: { id: algId },
-            data: {
-                isApproved: false
-            }
-        })
+        const res = await rejectAlg(algId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const deleteAlg = async (algId: number) => {
+export const deleteAlgAction = async (algId: number) => {
     try {
         const { has } = auth();
         if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
-        const res = await prisma.algorithm.delete({
-            where: { id: algId }
-        })
+        const res = await deleteAlg(algId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
