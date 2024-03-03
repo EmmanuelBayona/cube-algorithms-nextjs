@@ -23,14 +23,14 @@ export const UserActionsList = async () => {
                     <NewCubeForm cubes={cubes} />
                 </Protect>
 
-                <Protect permission="org:method:create">
+                <Protect permission="org:methods:manage">
                     <NewMethodForm
                         cubes={cubes}
                         methods={methods}
                     />
                 </Protect>
 
-                <Protect permission="org:case:create">
+                <Protect permission="org:cases:manage">
                     <NewCaseForm
                         cubes={cubes}
                         methods={methods}
