@@ -22,7 +22,7 @@ export default async function ProfilePage() {
                 <AdminVerifyAlgorithmsTable />
             </Protect>
 
-            <div className="flex gap-4 mt-20">
+            <div className="lg:flex lg:gap-4 mt-20">
                 <Protect permission="org:methods:manage">
                     <AdminMethodsTable />
                 </Protect>

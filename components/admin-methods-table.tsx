@@ -9,7 +9,7 @@ export const AdminMethodsTable = async () => {
     const methods = await getMethods();
 
     return (
-        <ScrollArea className="w-1/2 h-96">
+        <ScrollArea className="lg:w-1/2 h-96">
             <Table>
                 <TableCaption>Uploaded Methods</TableCaption>
                 <TableHeader>

@@ -8,7 +8,7 @@ export const AdminCasesTable = async () => {
     const cases = await getCases();
 
     return (
-        <ScrollArea className="w-1/2 h-96">
+        <ScrollArea className="lg:w-1/2 h-96">
             <Table className="rounded-3xl">
                 <TableCaption>Uploaded Cases</TableCaption>
                 <TableHeader>
