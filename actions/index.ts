@@ -1,7 +1,7 @@
 'use server'
 import { CUBE_COLORS } from "@/lib/cubes-constants"
 import { addAlgorithm, approveAlg, deleteAlg, rejectAlg } from "@/queries/algorithm"
-import { addCase } from "@/queries/case"
+import { addCase, deleteCase } from "@/queries/case"
 import { addCube } from "@/queries/cube"
 import { addMethod } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
@@ -97,6 +97,22 @@ export const deleteAlgAction = async (algId: number) => {
         const res = await deleteAlg(algId);
 
         revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const deleteCaseAction = async (caseId: number) => {
+    try {
+        const { has } = auth();
+        if (!caseId) return { success: false, error: 'No case id' }
+        if (!has({ permission: "org:cases:manage" })) return { success: false, error: 'Not enough permissions' }
+
+        const res = await deleteCase(caseId);
+
+        revalidateTag('cases');
+        revalidateTag('cases-with-first-four-algorithms-by-method-name');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }

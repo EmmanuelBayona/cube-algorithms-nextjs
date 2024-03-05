@@ -58,6 +58,7 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
 
             {
                 isApproved && (
+
                     <Button variant='warning' size='icon'
                         onClick={handleReject}
                         className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}

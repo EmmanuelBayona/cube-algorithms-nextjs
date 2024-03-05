@@ -1,6 +1,7 @@
 import { getCases } from "@/queries/case"
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table"
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import { AdminCasesActions } from "./admin-cases-actions";
 
 
 export const AdminCasesTable = async () => {
@@ -25,7 +26,9 @@ export const AdminCasesTable = async () => {
                             <TableRow key={c.id}>
                                 <TableCell>{c.name}</TableCell>
                                 <TableCell>image</TableCell>
-                                <TableCell>Actions</TableCell>
+                                <TableCell className="flex justify-start gap-2">
+                                    <AdminCasesActions caseId={c.id} />
+                                </TableCell>
                             </TableRow>
                         ))
                     }

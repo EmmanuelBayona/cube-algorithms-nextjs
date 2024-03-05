@@ -53,3 +53,9 @@ export const addCase = async (caseName: string, methodId: number, cubePattern: R
     })
 
 }
+
+export const deleteCase = async (caseId: number) => {
+    return prisma.case.delete({
+        where: { id: caseId }
+    })
+}
