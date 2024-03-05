@@ -7,7 +7,6 @@ import {
     CardHeader,
     CardTitle,
 } from "./ui/card";
-import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { CubeFullView } from "./ui/cube-full-view";
 import {
@@ -16,6 +15,7 @@ import {
     PLLAa_CUBE_COLORS,
 } from "@/lib/cubes-constants";
 import { CubeTopView } from "./ui/cube-top-view";
+import { getMethodsByCubeName } from "@/queries/method";
 
 const CUBE_COVERS = {
     F2L: F2L1_CUBE_COLORS,
@@ -30,13 +30,8 @@ export const MethodsGrid = async ({
     cube: Cubes;
     className?: string;
 }) => {
-    const methods = await prisma.method.findMany({
-        where: {
-            cube: {
-                name: cube,
-            },
-        },
-    });
+
+    const methods = await getMethodsByCubeName(cube);
 
     return (
         <section
@@ -63,7 +58,7 @@ export const MethodsGrid = async ({
                                         size={200}
                                         colors={
                                             CUBE_COVERS[
-                                                method.name as keyof typeof CUBE_COVERS
+                                            method.name as keyof typeof CUBE_COVERS
                                             ]
                                         }
                                     />
@@ -73,7 +68,7 @@ export const MethodsGrid = async ({
                                         size={200}
                                         colors={
                                             CUBE_COVERS[
-                                                method.name as keyof typeof CUBE_COVERS
+                                            method.name as keyof typeof CUBE_COVERS
                                             ]
                                         }
                                     />

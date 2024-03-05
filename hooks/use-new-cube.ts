@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { DBCubes } from "@/types";
-import { addNewCube } from "@/actions"
 import { showToastError, showToastSuccess } from "@/lib/toaster"
+import { addNewCubeAction } from "@/actions";
 
 export const useNewCube = ({ cubes }: { cubes: DBCubes[] }) => {
 
@@ -21,7 +21,7 @@ export const useNewCube = ({ cubes }: { cubes: DBCubes[] }) => {
 
         setStatus('loading');
 
-        const { success } = await addNewCube(cube, description);
+        const { success } = await addNewCubeAction(cube, description);
 
         if (!success) {
             showToastError('Something went wrong');

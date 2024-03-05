@@ -1,19 +1,17 @@
 'use server'
 import { CUBE_COLORS } from "@/lib/cubes-constants"
-import prisma from "@/lib/prisma"
+import { addAlgorithm, approveAlg, deleteAlg, rejectAlg } from "@/queries/algorithm"
+import { addCase, deleteCase } from "@/queries/case"
+import { addCube } from "@/queries/cube"
+import { addMethod } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
-import { revalidatePath } from "next/cache"
+import { revalidateTag } from "next/cache"
 
-export const addNewCube = async (cube: string, description: string) => {
+export const addNewCubeAction = async (cube: string, description: string) => {
     try {
-        const res = await prisma.cube.create({
-            data: {
-                name: cube,
-                description: description,
-            }
-        })
+        const res = await addCube(cube, description);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('cubes');
         return { success: true, data: res }
 
     } catch (error) {
@@ -21,18 +19,11 @@ export const addNewCube = async (cube: string, description: string) => {
     }
 }
 
-export const addNewMethod = async (method: string, description: string, cubeId: number, cubeView: string) => {
+export const addNewMethodAction = async (method: string, description: string, cubeId: number, cubeView: string) => {
     try {
-        const res = await prisma.method.create({
-            data: {
-                name: method,
-                description: description,
-                cubeId: cubeId,
-                svgView: cubeView
-            }
-        })
+        const res = await addMethod(method, description, cubeId, cubeView);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('methods');
         return { success: true, data: res }
 
     } catch (error) {
@@ -40,95 +31,88 @@ export const addNewMethod = async (method: string, description: string, cubeId: 
     }
 }
 
-export const addNewCase = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
+export const addNewCaseAction = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
     try {
-        console.log(cubePattern)
-        const res = await prisma.case.create({
-            data: {
-                name: caseName,
-                methodId: methodId,
-                colors: cubePattern
-            }
-        })
+        const res = await addCase(caseName, methodId, cubePattern);
 
-        revalidatePath('/dash/profile')
-        return { success: true, data: []}
+        revalidateTag('cases');
+        revalidateTag('cases-with-first-four-algorithms-by-method-name');
+        return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const addNewAlg = async (alg: string, caseId: number) => {
+export const addNewAlgAction = async (alg: string, caseId: number) => {
     try {
         const { userId } = auth();
         if (!userId) return { success: false, error: 'Not logged in' }
 
-        const res = await prisma.algorithm.create({
-            data: {
-                algorithm: alg,
-                caseId: caseId,
-                userId: userId,
-            }
-        })
+        const res = await addAlgorithm(alg, caseId, userId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('algorithms');
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const approveAlg = async (algId: number) => {
+export const approveAlgAction = async (algId: number) => {
     try {
         const { has } = auth();
         if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
-        const res = await prisma.algorithm.update({
-            where: { id: algId },
-            data: {
-                isApproved: true
-            }
-        })
+        const res = await approveAlg(algId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo')
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const rejectAlg = async (algId: number) => {
+export const rejectAlgAction = async (algId: number) => {
     try {
         const { has } = auth();
         if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
-        const res = await prisma.algorithm.update({
-            where: { id: algId },
-            data: {
-                isApproved: false
-            }
-        })
+        const res = await rejectAlg(algId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
     }
 }
 
-export const deleteAlg = async (algId: number) => {
+export const deleteAlgAction = async (algId: number) => {
     try {
         const { has } = auth();
         if (!algId) return { success: false, error: 'No algorithm id' }
         if (!has({ permission: "org:algorithms:verify" })) return { success: false, error: 'Not enough permissions' }
 
-        const res = await prisma.algorithm.delete({
-            where: { id: algId }
-        })
+        const res = await deleteAlg(algId);
 
-        revalidatePath('/dash/profile')
+        revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const deleteCaseAction = async (caseId: number) => {
+    try {
+        const { has } = auth();
+        if (!caseId) return { success: false, error: 'No case id' }
+        if (!has({ permission: "org:cases:manage" })) return { success: false, error: 'Not enough permissions' }
+
+        const res = await deleteCase(caseId);
+
+        revalidateTag('cases');
+        revalidateTag('cases-with-first-four-algorithms-by-method-name');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }

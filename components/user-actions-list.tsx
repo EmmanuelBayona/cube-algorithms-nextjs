@@ -1,16 +1,19 @@
-import prisma from "@/lib/prisma"
 import { NewAlgorithmForm } from "./new-algorithm-form"
 import { NewCaseForm } from "./new-case-form"
 import { NewCubeForm } from "./new-cube-form"
 import { NewMethodForm } from "./new-method-form"
 import { Protect } from "@clerk/nextjs"
+import { getCubes } from "@/queries/cube"
+import { getMethods } from "@/queries/method"
+import { getAlgorithms } from "@/queries/algorithm"
+import { getCases } from "@/queries/case"
 
 export const UserActionsList = async () => {
 
-    const cubes = await prisma.cube.findMany();
-    const methods = await prisma.method.findMany();
-    const cases = await prisma.case.findMany();
-    const algorithms = await prisma.algorithm.findMany();
+    const cubes = await getCubes();
+    const methods = await getMethods();
+    const cases = await getCases();
+    const algorithms = await getAlgorithms();
 
     return (
         <div className="overflow-hidden mt-5 md:mt-10 w-full">
@@ -20,14 +23,14 @@ export const UserActionsList = async () => {
                     <NewCubeForm cubes={cubes} />
                 </Protect>
 
-                <Protect permission="org:method:create">
+                <Protect permission="org:methods:manage">
                     <NewMethodForm
                         cubes={cubes}
                         methods={methods}
                     />
                 </Protect>
 
-                <Protect permission="org:case:create">
+                <Protect permission="org:cases:manage">
                     <NewCaseForm
                         cubes={cubes}
                         methods={methods}
@@ -41,7 +44,7 @@ export const UserActionsList = async () => {
                     cases={cases}
                     algorithms={algorithms}
                 />
-                
+
             </div>
         </div>
     )

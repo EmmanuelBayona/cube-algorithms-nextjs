@@ -1,4 +1,4 @@
-import { addNewCase } from "@/actions";
+import { addNewCaseAction } from "@/actions";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBCases, DBCubes, DBMethods } from "@/types";
@@ -21,7 +21,7 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
         if (status === 'loading') return;
 
         // delete all the default colors, as we use default color as eraser
-        const cubePattern = Object.fromEntries(Object.entries(colorsFaces).filter(([key, value]) => value !== 'default'));
+        const cubePattern = Object.fromEntries(Object.entries(colorsFaces).filter(([_, value]) => value !== 'default'));
         if (!cube) return showToastError('Cube is required');
         if (!method) return showToastError('Method is required');
         if (!caseName) return showToastError('Case is required');
@@ -43,7 +43,7 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
 
         setStatus('loading')
 
-        const { success } = await addNewCase(caseName, methodId, cubePattern);
+        const { success } = await addNewCaseAction(caseName, methodId, cubePattern);
 
         if (!success) {
             showToastError('Something went wrong');
