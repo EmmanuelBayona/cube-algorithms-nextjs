@@ -38,7 +38,7 @@ export const AdminVerifyAlgorithmsTable = async () => {
     });
 
     return (
-        <Table className="mt-20">
+        <Table>
             <TableCaption>Algorithms to verify</TableCaption>
             <TableHeader>
                 <TableRow>

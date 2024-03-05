@@ -20,7 +20,6 @@ export const UserAlgorithmsTable = async () => {
     if (!userId) return null;
 
     const uploadedAlgorithms = await getAlgorithmsWithCaseMethodCubeInfo(userId);
-    console.log(uploadedAlgorithms[0])
 
     if (uploadedAlgorithms.length === 0) return null;
 

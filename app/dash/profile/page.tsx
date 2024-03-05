@@ -1,14 +1,13 @@
-import { AdminCasesTable } from "@/components/admin-cases-table";
-import { AdminMethodsTable } from "@/components/admin-methods-table";
-import { AdminVerifyAlgorithmsTable } from "@/components/admin-verify-algorithms-table";
+import { AdminTabsViews } from "@/components/admin-tabs-views";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserActionsList } from "@/components/user-actions-list";
 import { UserAlgorithmsTable } from "@/components/user-algorithms-table";
-import { Protect, currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 
 export default async function ProfilePage() {
 
     const user = await currentUser();
+    const { orgSlug } = auth();
 
     return (
         <MaxWidthWrapper className="py-5">
@@ -18,19 +17,10 @@ export default async function ProfilePage() {
             <hr className="border-white/5 border-opacity-50 mt-3 mb-7 md:mb-10" />
             <UserAlgorithmsTable />
 
-            <Protect permission="org:algorithms:verify">
-                <AdminVerifyAlgorithmsTable />
-            </Protect>
-
-            <div className="lg:flex lg:gap-4 mt-20">
-                <Protect permission="org:methods:manage">
-                    <AdminMethodsTable />
-                </Protect>
-
-                <Protect permission="org:cases:manage">
-                    <AdminCasesTable />
-                </Protect>
-            </div>
+            {
+                // admin view just for user that are in the admin organization
+                orgSlug === "admin" && <AdminTabsViews />
+            }
 
         </MaxWidthWrapper>
     )
