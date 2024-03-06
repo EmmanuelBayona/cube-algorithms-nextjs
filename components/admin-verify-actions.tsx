@@ -5,6 +5,7 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { showToastError, showToastSuccess } from "@/lib/toaster"
 import { approveAlgAction, deleteAlgAction, rejectAlgAction } from "@/actions"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
 export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApproved: boolean }) => {
 
@@ -46,38 +47,63 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
         <>
             {
                 !isApproved && (
-                    <Button variant='success' size='icon'
-                        onClick={handleApprove}
-                        className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                        aria-disabled={status === 'loading'}
-                    >
-                        <CheckIcon />
-                    </Button>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant='success' size='icon'
+                                    onClick={handleApprove}
+                                    className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                                    aria-disabled={status === 'loading'}
+                                >
+                                    <CheckIcon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                Approve algorithm
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 )
             }
 
             {
                 isApproved && (
-
-                    <Button variant='warning' size='icon'
-                        onClick={handleReject}
-                        className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                        aria-disabled={status === 'loading'}
-
-                    >
-                        <CircleBackslashIcon />
-                    </Button>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant='warning' size='icon'
+                                    onClick={handleReject}
+                                    className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                                    aria-disabled={status === 'loading'}
+                                >
+                                    <CircleBackslashIcon />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                Reject algorithm
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 )
             }
 
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button variant='danger' size='icon'
+                            onClick={handleDelete}
+                            className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                            aria-disabled={status === 'loading'}
+                        >
+                            <TrashIcon />
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        Delete algorithm
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
 
-            <Button variant='danger' size='icon'
-                onClick={handleDelete}
-                className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                aria-disabled={status === 'loading'}
-            >
-                <TrashIcon />
-            </Button>
         </>
     )
 
