@@ -43,6 +43,24 @@ export const getCasesWithFirstFourAlgorithmsByMethodName = unstable_cache(
     }
 )
 
+export const getCasesWithMethodAndCube = unstable_cache(
+    async () => {
+        return prisma.case.findMany({
+            include: {
+                method: {
+                    include: {
+                        cube: true
+                    }
+                }
+            }
+        })
+    },
+    ["cases-with-method-and-cube"],
+    {
+        tags: ["cases-with-method-and-cube"],
+    }
+)
+
 export const addCase = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
     return prisma.case.create({
         data: {
@@ -52,6 +70,17 @@ export const addCase = async (caseName: string, methodId: number, cubePattern: R
         }
     })
 
+}
+
+export const updateCase = async (caseId: number, caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
+    return prisma.case.update({
+        where: { id: caseId },
+        data: {
+            name: caseName,
+            methodId: methodId,
+            colors: cubePattern
+        }
+    })
 }
 
 export const deleteCase = async (caseId: number) => {

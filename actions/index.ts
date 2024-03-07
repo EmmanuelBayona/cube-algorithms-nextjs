@@ -1,7 +1,7 @@
 'use server'
 import { CUBE_COLORS } from "@/lib/cubes-constants"
 import { addAlgorithm, approveAlg, deleteAlg, rejectAlg } from "@/queries/algorithm"
-import { addCase, deleteCase } from "@/queries/case"
+import { addCase, deleteCase, updateCase } from "@/queries/case"
 import { addCube } from "@/queries/cube"
 import { addMethod } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
@@ -37,6 +37,20 @@ export const addNewCaseAction = async (caseName: string, methodId: number, cubeP
 
         revalidateTag('cases');
         revalidateTag('cases-with-first-four-algorithms-by-method-name');
+        revalidateTag('cases-with-method-and-cube')
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const updateCaseAction = async (caseId: number, caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
+    try {
+        const res = await updateCase(caseId, caseName, methodId, cubePattern);
+
+        revalidateTag('cases');
+        revalidateTag('cases-with-first-four-algorithms-by-method-name');
+        revalidateTag('cases-with-method-and-cube')
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
@@ -113,6 +127,7 @@ export const deleteCaseAction = async (caseId: number) => {
 
         revalidateTag('cases');
         revalidateTag('cases-with-first-four-algorithms-by-method-name');
+        revalidateTag('cases-with-method-and-cube')
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }

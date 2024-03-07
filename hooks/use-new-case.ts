@@ -1,10 +1,16 @@
-import { addNewCaseAction } from "@/actions";
+import { FormEvent, useState } from "react";
+import { addNewCaseAction, updateCaseAction } from "@/actions";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { DBCases, DBCubes, DBMethods } from "@/types";
-import { FormEvent, useState } from "react";
 
-export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], methods: DBMethods[], cases: DBCases[] }) => {
+interface useNewCaseProps {
+    cubes: DBCubes[];
+    methods: DBMethods[];
+    cases: DBCases[];
+}
+
+export const useNewCase = ({ cubes, methods, cases }: useNewCaseProps) => {
 
     const [cube, setCube] = useState<string>('');
     const [method, setMethod] = useState<string>('');
@@ -20,21 +26,16 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
         e.preventDefault();
         if (status === 'loading') return;
 
-        // delete all the default colors, as we use default color as eraser
-        const cubePattern = Object.fromEntries(Object.entries(colorsFaces).filter(([_, value]) => value !== 'default'));
-        if (!cube) return showToastError('Cube is required');
-        if (!method) return showToastError('Method is required');
-        if (!caseName) return showToastError('Case is required');
-        if (Object.keys(cubePattern).length === 0) return showToastError('You need to provide the cube pattern to add a new case');
+        const { isNewCaseValid, newCaseError } = validateCase();
 
-        // if the case already exists, return an error
-        if (cases.find(c => c.name === caseName)) return showToastError('Case already exists');
+        if (!isNewCaseValid) {
+            showToastError(newCaseError || 'Something went wrong');
+            return;
+        }
 
-        // bug: if you select a cube, then select a method, then change the cube, the method is shown empty, but
-        // you can still submit the form, even when the method is not valid for the cube
-        if (!filteredMethods.find(m => m.name === method)) return showToastError('Method is not valid for this cube');
+        const cubePattern = getCubePattern(colorsFaces);
 
-        const methodId = method ? methods.find(m => m.name === method)?.id : null;
+        const methodId = getMethodId(method);
         if (!methodId) {
             showToastError('Something went wrong');
             setStatus('error');
@@ -51,13 +52,82 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
             return;
         }
 
+        resetForm();
+        showToastSuccess('Case added successfully');
+    }
+
+    const onUpdateCase = async (e: FormEvent<HTMLFormElement>, initialCaseId: number | undefined) => {
+        e.preventDefault();
+        if (status === 'loading') return;
+
+        if (!initialCaseId) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        const { isNewCaseValid, newCaseError } = validateCase(false);
+
+        if (!isNewCaseValid) {
+            showToastError(newCaseError || 'Something went wrong');
+            return;
+        }
+
+        const cubePattern = getCubePattern(colorsFaces);
+
+        const methodId = getMethodId(method);
+        if (!methodId) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        setStatus('loading')
+
+        const { success } = await updateCaseAction(initialCaseId, caseName, methodId, cubePattern);
+
+        if (!success) {
+            showToastError('Something went wrong');
+            setStatus('error');
+            return;
+        }
+
+        showToastSuccess('Case updated successfully');
+        setStatus('idle');
+    }
+
+    const validateCase = (isNewCase = true) => {
+        if (!cube) return { isNewCaseValid: false, newCaseError: 'Cube is required' }
+        if (!method) return { success: false, error: 'Method is required' }
+        if (!caseName) return { isNewCaseValid: false, newCaseError: 'Case is required' }
+        if (Object.keys(colorsFaces).length === 0) return { isNewCaseValid: false, newCaseError: 'You need to provide the cube pattern to add a new case' }
+
+        // this validation is only for new cases, for updating cases, the case can be the same
+        if (isNewCase) {
+            // if the case already exists, return an error 
+            if (cases.find(c => c.name === caseName)) return { isNewCaseValid: false, newCaseError: 'Case already exists' }
+        }
+
+        // bug: if you select a cube, then select a method, then change the cube, the method is shown empty, but
+        // you can still submit the form, even when the method is not valid for the cubes
+        if (!filteredMethods.find(m => m.name === method)) return { isNewCaseValid: false, newCaseError: 'Method is not valid for this cube' }
+
+        return { isNewCaseValid: true }
+    }
+
+    const getCubePattern = (cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
+        // delete all the default colors, as we use default color as eraser
+        return Object.fromEntries(Object.entries(cubePattern).filter(([_, value]) => value !== 'default'));
+    }
+    const getMethodId = (methodName: string) => methods.find(m => m.name === methodName)?.id;
+
+    const resetForm = () => {
         setCube('');
         setMethod('');
         setCaseName('');
-        showToastSuccess('Case added successfully');
-        setStatus('success');
         setCurrentColor('default');
         setColorsFaces({});
+        setStatus('idle');
     }
 
     const onSelectFace = (face: number) => setColorsFaces(prev => ({ ...prev, [face]: currentColor }));
@@ -71,11 +141,13 @@ export const useNewCase = ({ cubes, methods, cases }: { cubes: DBCubes[], method
         setCaseName,
         status,
         colorsFaces,
+        setColorsFaces,
         currentColor,
         setCurrentColor,
         onAddNewCase,
         onSelectFace,
-        filteredMethods
+        filteredMethods,
+        onUpdateCase
     }
 
 }

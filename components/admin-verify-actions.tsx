@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 import { cn } from "@/lib/utils"
 import { showToastError, showToastSuccess } from "@/lib/toaster"
 import { approveAlgAction, deleteAlgAction, rejectAlgAction } from "@/actions"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { TooltipMessage } from "./tooltip-message"
 
 export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApproved: boolean }) => {
 
@@ -47,63 +47,41 @@ export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApp
         <>
             {
                 !isApproved && (
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button variant='success' size='icon'
-                                    onClick={handleApprove}
-                                    className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                                    aria-disabled={status === 'loading'}
-                                >
-                                    <CheckIcon />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                Approve algorithm
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                    <TooltipMessage message="Approve algorithms">
+                        <Button variant='success' size='icon'
+                            onClick={handleApprove}
+                            className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                            aria-disabled={status === 'loading'}
+                        >
+                            <CheckIcon />
+                        </Button>
+                    </TooltipMessage>
                 )
             }
 
             {
                 isApproved && (
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button variant='warning' size='icon'
-                                    onClick={handleReject}
-                                    className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                                    aria-disabled={status === 'loading'}
-                                >
-                                    <CircleBackslashIcon />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                Reject algorithm
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                )
-            }
-
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant='danger' size='icon'
-                            onClick={handleDelete}
+                    <TooltipMessage message="Reject algorithms">
+                        <Button variant='warning' size='icon'
+                            onClick={handleReject}
                             className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
                             aria-disabled={status === 'loading'}
                         >
-                            <TrashIcon />
+                            <CircleBackslashIcon />
                         </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        Delete algorithm
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+                    </TooltipMessage>
+                )
+            }
 
+            <TooltipMessage message="Delete algorithm">
+                <Button variant='danger' size='icon'
+                    onClick={handleDelete}
+                    className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                    aria-disabled={status === 'loading'}
+                >
+                    <TrashIcon />
+                </Button>
+            </TooltipMessage>
         </>
     )
 
