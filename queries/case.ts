@@ -13,12 +13,47 @@ export const getCases = unstable_cache(
 )
 
 export const getCasesWithFirstFourAlgorithmsByMethodName = unstable_cache(
-    async (methodName: string) => {
+    async (methodName: string, valueToFilter: string) => {
+        // If there is no value to filter, return all cases with method cases with first four algorithms 
+        // If there is a value to filter, return all cases with method cases with first four algorithms but just the ones that match the filter
+        // if (!valueToFilter) {
+        //     return prisma.case.findMany({
+        //         where: {
+        //             method: {
+        //                 name: methodName,
+        //             }
+        //         },
+        //         include: {
+        //             algorithms: {
+        //                 take: 4,
+        //                 select: {
+        //                     id: true,
+        //                     algorithm: true,
+        //                 },
+        //                 where: {
+        //                     isApproved: true,
+        //                 },
+        //             },
+        //         },
+        //     });
+        // }
+
         return prisma.case.findMany({
             where: {
                 method: {
                     name: methodName,
                 },
+                OR: [
+                    { name: { contains: valueToFilter } },
+                    {
+                        algorithms: {
+                            some: {
+                                isApproved: true,
+                                algorithm: { contains: valueToFilter }
+                            }
+                        }
+                    }
+                ]
             },
             include: {
                 algorithms: {
