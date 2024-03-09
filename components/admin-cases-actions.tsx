@@ -1,12 +1,27 @@
 "use client"
 import { useState } from "react";
-import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons"
+import { TrashIcon } from "@radix-ui/react-icons"
 import { Button } from "./ui/button"
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { cn } from "@/lib/utils";
 import { deleteCaseAction } from "@/actions";
+import { TooltipMessage } from "./tooltip-message";
+import { NewCaseForm } from "./new-case-form";
+import { DBCases, DBCubes, DBMethods } from "@/types";
+import { CUBE_COLORS } from "@/lib/cubes-constants";
 
-export const AdminCasesActions = ({ caseId }: { caseId: number }) => {
+interface AdminCasesActionsProps {
+    caseId: number;
+    caseName: string;
+    cubeName: string;
+    methodName: string;
+    colorFaces: Record<number, keyof typeof CUBE_COLORS>;
+    cubes: DBCubes[];
+    methods: DBMethods[];
+    cases: DBCases[];
+}
+
+export const AdminCasesActions = ({ caseId, caseName, cubes, methods, cases, cubeName, colorFaces, methodName }: AdminCasesActionsProps) => {
 
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -29,25 +44,31 @@ export const AdminCasesActions = ({ caseId }: { caseId: number }) => {
         showToastSuccess(successMsg);
     }
 
+    if (!cubes || !methods || !cases || !caseName || !colorFaces || !cubeName || !methodName) return null;
+
 
     return (
         <>
-            <Button variant="success" size='icon'
-            // onClick={handleApprove}
-            // className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-            // aria-disabled={status === 'loading'}
-            >
-                <Pencil1Icon />
-            </Button>
+            <NewCaseForm
+                cubes={cubes}
+                methods={methods}
+                cases={cases}
+                editForm={true}
+                initialCaseName={caseName}
+                initialColorsFaces={colorFaces}
+                initialCube={cubeName}
+                initialMethod={methodName}
+            />
 
-
-            <Button variant="danger" size='icon'
-                onClick={handleDelete}
-                className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
-                aria-disabled={status === 'loading'}
-            >
-                <TrashIcon />
-            </Button>
+            <TooltipMessage message="Delete case">
+                <Button variant="danger" size='icon'
+                    onClick={handleDelete}
+                    className={cn({ 'opacity-50 cursor-not-allowed ': status === 'loading' })}
+                    aria-disabled={status === 'loading'}
+                >
+                    <TrashIcon />
+                </Button>
+            </TooltipMessage>
         </>
     )
 

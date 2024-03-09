@@ -1,12 +1,19 @@
-import { getCases } from "@/queries/case"
+// import { getCases } from "@/queries/case"
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table"
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { AdminCasesActions } from "./admin-cases-actions";
+import { getMethods } from "@/queries/method";
+import { getCubes } from "@/queries/cube";
+import { getCases, getCasesWithMethodAndCube } from "@/queries/case";
+import { CUBE_COLORS } from "@/lib/cubes-constants";
 
 
 export const AdminCasesTable = async () => {
 
-    const cases = await getCases();
+    const cubes = await getCubes();
+    const methods = await getMethods();
+    const cases = await getCasesWithMethodAndCube();
+    const allCases = await getCases();
 
     return (
         <ScrollArea className="h-[500px]">
@@ -27,7 +34,16 @@ export const AdminCasesTable = async () => {
                                 <TableCell>{c.name}</TableCell>
                                 <TableCell>image</TableCell>
                                 <TableCell className="flex justify-start gap-2">
-                                    <AdminCasesActions caseId={c.id} />
+                                    <AdminCasesActions
+                                        caseId={c.id}
+                                        caseName={c.name}
+                                        cubeName={c.method.cube.name}
+                                        methodName={c.method.name}
+                                        colorFaces={c.colors as Record<number, keyof typeof CUBE_COLORS>}
+                                        cubes={cubes}
+                                        methods={methods}
+                                        cases={allCases}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))

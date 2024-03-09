@@ -1,4 +1,4 @@
-import { CUBE_COLORS } from "@/lib/cubes-constants";
+import { Prisma } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 
 export type Cubes = '2x2' | '3x3' | '4x4' | 'square-1';
@@ -38,3 +38,14 @@ export interface DBAlgs {
     caseId: number;
     userId: string;
 }[]
+
+// export type CasesDB = Prisma.CaseGetPayload<{}>
+export type DBCasesWithMethodAndCube = Prisma.CaseGetPayload<{
+    include: {
+        method: {
+            include: {
+                cube: true
+            }
+        }
+    }
+}>

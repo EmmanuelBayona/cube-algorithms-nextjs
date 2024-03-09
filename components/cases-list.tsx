@@ -9,12 +9,14 @@ import { getCasesWithFirstFourAlgorithmsByMethodName } from "@/queries/case";
 export const CasesList = async ({
     className,
     method,
+    valueToFiler,
 }: {
     className?: string;
     method: string;
+    valueToFiler?: string;
 }) => {
 
-    const cases = await getCasesWithFirstFourAlgorithmsByMethodName(method);
+    const cases = await getCasesWithFirstFourAlgorithmsByMethodName(method, valueToFiler || "");
 
     // get the method to know if it is a top view or a normal view
     const methodData = await getFirstMethodByName(method);

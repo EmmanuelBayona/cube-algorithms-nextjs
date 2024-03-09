@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import {
     Dialog,
     DialogContent,
@@ -9,7 +10,7 @@ import {
 } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Button, buttonVariants } from "./ui/button";
-import { CubeIcon, EraserIcon, LayersIcon } from "@radix-ui/react-icons";
+import { CubeIcon, EraserIcon, LayersIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import { Input } from "./ui/input";
 import {
     Select,
@@ -25,6 +26,18 @@ import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { useNewCase } from "@/hooks/use-new-case";
 import { CubeTopView } from "./ui/cube-top-view";
 
+interface NewCaseFormProps {
+    cubes: DBCubes[];
+    methods: DBMethods[];
+    cases: DBCases[];
+    editForm?: boolean;
+    initialCube?: string;
+    initialMethod?: string;
+    initialCaseName?: string;
+    initialColorsFaces?: Record<number, keyof typeof CUBE_COLORS>;
+
+}
+
 const SVG_VIEWS = {
     "top-view": CubeTopView,
     "full-view": CubeFullView,
@@ -34,11 +47,13 @@ export const NewCaseForm = ({
     cubes,
     methods,
     cases,
-}: {
-    cubes: DBCubes[];
-    methods: DBMethods[];
-    cases: DBCases[];
-}) => {
+    editForm = false,
+    initialCube = "",
+    initialMethod = "",
+    initialCaseName = "",
+    initialColorsFaces = {},
+}: NewCaseFormProps) => {
+
     const {
         cube,
         setCube,
@@ -50,10 +65,26 @@ export const NewCaseForm = ({
         setCurrentColor,
         onSelectFace,
         colorsFaces,
+        setColorsFaces,
         onAddNewCase,
         filteredMethods,
         status,
+        onUpdateCase
     } = useNewCase({ cubes, methods, cases });
+
+    useEffect(() => {
+        // when the hook is used to edit and not to add a new case,
+        // set the initial values for the form
+        const setFormForEdit = () => {
+            setCube(initialCube);
+            setMethod(initialMethod);
+            setCaseName(initialCaseName);
+            setColorsFaces(initialColorsFaces);
+        }
+
+        if (editForm) return setFormForEdit();
+    }, [editForm, initialCube, initialMethod, initialCaseName, initialColorsFaces]);
+
 
     const selectedView = filteredMethods.find(
         (m) => m.name === method
@@ -61,12 +92,16 @@ export const NewCaseForm = ({
 
     const CubeView = SVG_VIEWS[selectedView as keyof typeof SVG_VIEWS];
 
+    const initialCaseId = cases.find(c => c.name === initialCaseName)?.id;
+
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="flex-shrink-0">
-                    New Case
-                    <LayersIcon className="h-4 w-4" />
+                <Button variant={editForm ? 'success' : 'default'}
+                    size={editForm ? 'icon' : 'default'}
+                >
+                    {!editForm && "New Case"}
+                    {editForm ? <Pencil1Icon /> : <LayersIcon />}
                 </Button>
             </DialogTrigger>
 
@@ -79,7 +114,7 @@ export const NewCaseForm = ({
                     </DialogDescription>
                 </DialogHeader>
 
-                <form className="grid gap-4 py-5" onSubmit={onAddNewCase}>
+                <form className="grid gap-4 py-5" onSubmit={(e) => { !editForm ? onAddNewCase(e) : onUpdateCase(e, initialCaseId) }}>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label className="text-right">Cube</Label>
                         <Select
@@ -164,7 +199,7 @@ export const NewCaseForm = ({
                                         style={{
                                             backgroundColor:
                                                 CUBE_COLORS[
-                                                    color as keyof typeof CUBE_COLORS
+                                                color as keyof typeof CUBE_COLORS
                                                 ],
                                         }}
                                         onClick={() =>
@@ -213,6 +248,6 @@ export const NewCaseForm = ({
                     </Button>
                 </form>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 };
