@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { HTMLAttributes, forwardRef } from "react";
+import { cn } from "@/lib/utils";
 
 /**
  * @example
@@ -22,7 +22,7 @@ export const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         <div
             ref={ref}
             className={cn(
-                'rounded-3xl text-violet-100 bg-dark shadow-dark-button',
+                'rounded-3xl text-white bg-dark shadow-dark-button',
                 className
             )}
             {...props}
@@ -57,7 +57,7 @@ export const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<H
     ({ className, ...props }, ref) => (
         <p
             ref={ref}
-            className={cn('text-sm text-violet-100/80', className)}
+            className={cn('text-sm text-white/80', className)}
             {...props}
         />
     )

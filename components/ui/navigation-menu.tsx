@@ -11,7 +11,7 @@ export const NavigationMenu = forwardRef<
 >(({ className, children, ...props }, ref) => (
     <NavigationMenuPrimitive.Root
         ref={ref}
-        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-violet-100 rounded-xl bg-dark border border-white/5 p-1', className)}
+        className={cn('relative z-10 max-w-max flex-1 items-center justify-center text-white rounded-xl bg-dark border border-white/5 p-1', className)}
         {...props}
     >
         {children}
