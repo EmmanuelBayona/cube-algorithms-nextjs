@@ -1,6 +1,7 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Scramble } from "@/components/scramble";
-import { TimerClock } from "@/components/timer-clock";
+import { Scramble } from "@/components/timer/scramble";
+import { TimerClock } from "@/components/timer/timer-clock";
+import { Times } from "@/components/timer/times";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const CARDS_DATA = [
@@ -9,11 +10,12 @@ const CARDS_DATA = [
     { title: 'Total solves', value: '120' },
 ]
 
-export default function Timer() {
+export default function Timer({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+
     return (
         <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
 
-            <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 pb-5">
+            <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
                 {
                     CARDS_DATA.map((item, index) => (
                         <Card key={index}>
@@ -31,6 +33,10 @@ export default function Timer() {
 
             <Scramble />
             <TimerClock />
+
+            <section className="flex justify-center mt-5">
+                <Times times={searchParams.times} />
+            </section>
 
         </MaxWidthWrapper>
     )
