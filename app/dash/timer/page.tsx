@@ -30,7 +30,6 @@ export default function Timer() {
             </section>
 
             <Scramble />
-
             <TimerClock />
 
         </MaxWidthWrapper>
