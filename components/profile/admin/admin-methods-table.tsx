@@ -1,6 +1,6 @@
 
 import { getMethods } from "@/queries/method"
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table"
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../../ui/table"
 
 
 export const AdminMethodsTable = async () => {

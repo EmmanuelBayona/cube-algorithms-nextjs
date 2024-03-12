@@ -1,14 +1,14 @@
 "use client"
 import { useState } from "react";
 import { TrashIcon } from "@radix-ui/react-icons"
-import { Button } from "./ui/button"
 import { showToastError, showToastSuccess } from "@/lib/toaster";
 import { cn } from "@/lib/utils";
 import { deleteCaseAction } from "@/actions";
-import { TooltipMessage } from "./tooltip-message";
-import { NewCaseForm } from "./new-case-form";
+import { TooltipMessage } from "../../tooltip-message";
+import { NewCaseForm } from "../../new-case-form";
 import { DBCases, DBCubes, DBMethods } from "@/types";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
+import { Button } from "@/components/ui/button";
 
 interface AdminCasesActionsProps {
     caseId: number;
