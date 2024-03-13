@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 
-export const Times = ({ times }: { times: string[] | undefined }) => {
+export const Times = ({ times }: { times: string[] }) => {
 
     // reverse the list of times to show the most recent times first
-    const reversedTimes = times?.slice().reverse();
+    const reversedTimes = times?.slice()?.reverse();
 
     return (
         <Card className="w-80">
