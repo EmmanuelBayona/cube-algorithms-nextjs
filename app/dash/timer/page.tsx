@@ -10,7 +10,7 @@ const CARDS_DATA = [
     { title: 'Total solves', value: '120' },
 ]
 
-export default function Timer({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export default function Timer({ searchParams }: { searchParams: { [key: string]: string[] | undefined } }) {
 
     return (
         <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
