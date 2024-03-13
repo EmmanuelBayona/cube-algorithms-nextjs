@@ -11,7 +11,7 @@ export const BestTime = ({ times }: { times: string[] }) => {
             </CardHeader>
             <CardContent>
                 <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">
-                    {best}
+                    {best && 0}
                 </span>
             </CardContent>
         </Card>
