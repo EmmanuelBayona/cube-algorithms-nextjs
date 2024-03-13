@@ -11,7 +11,7 @@ export const AverageTimes = ({ times }: { times: string[] }) => {
             </CardHeader>
             <CardContent>
                 <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">
-                    {Number.isSafeInteger(average) ? average.toFixed(2) : 0}
+                    {isNaN(average) ? 0 : average.toFixed(2)}
                 </span>
             </CardContent>
         </Card>
