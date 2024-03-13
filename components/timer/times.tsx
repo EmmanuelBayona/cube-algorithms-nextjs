@@ -17,7 +17,7 @@ export const Times = ({ times }: { times: string[] }) => {
                         {
                             reversedTimes?.map((time, index) => (
                                 <li key={index} className="space-x-4 py-2">
-                                    <span className="text-white/80">{index + 1}.</span>
+                                    <span className="text-white/80">{reversedTimes.length - index}.</span>
                                     <span>{time}</span>
                                 </li>
                             ))
