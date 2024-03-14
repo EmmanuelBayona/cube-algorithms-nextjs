@@ -7,14 +7,7 @@ import { Times } from "@/components/timer/times";
 import { TotalSolves } from "@/components/timer/total-solves";
 
 
-export default function Timer({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-
-    const times = Array.isArray(searchParams.times)
-        ? searchParams.times
-        : searchParams.times
-            ? [searchParams.times]
-            : []
-
+export default function Timer() {
 
     return (
         <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
