@@ -1,7 +1,10 @@
+"use client";
+import { useTimerContext } from "@/context/timer-context";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
-export const AverageTimes = ({ times }: { times: string[] }) => {
+export const AverageTimes = () => {
 
+    const { times } = useTimerContext();
     const average = times.reduce((acc, time) => acc + Number(time), 0) / times.length;
 
     return (

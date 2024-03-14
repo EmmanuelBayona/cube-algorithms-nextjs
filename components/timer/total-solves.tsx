@@ -1,6 +1,10 @@
+"use client";
+import { useTimerContext } from "@/context/timer-context"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
-export const TotalSolves = ({ times }: { times: string[] }) => {
+export const TotalSolves = () => {
+
+    const { times } = useTimerContext()
 
     return (
         <Card>

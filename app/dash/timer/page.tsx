@@ -20,16 +20,16 @@ export default function Timer({ searchParams }: { searchParams: { [key: string]:
         <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
 
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
-                <BestTime times={times} />
-                <AverageTimes times={times} />
-                <TotalSolves times={times} />
+                <BestTime />
+                <AverageTimes />
+                <TotalSolves />
             </section>
 
             <Scramble />
             <TimerClock />
 
             <section className="flex justify-center mt-5">
-                <Times times={times} />
+                <Times />
             </section>
 
         </MaxWidthWrapper>

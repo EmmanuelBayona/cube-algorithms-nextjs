@@ -1,7 +1,10 @@
+"use client";
+import { useTimerContext } from "@/context/timer-context";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
-export const BestTime = ({ times }: { times: string[] }) => {
+export const BestTime = () => {
 
+    const { times } = useTimerContext()
     const best = Math.min(...times.map(time => Number(time)));
 
     return (

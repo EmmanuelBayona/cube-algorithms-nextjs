@@ -1,10 +1,14 @@
+"use client";
+import { useTimerContext } from "@/context/timer-context";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 
-export const Times = ({ times }: { times: string[] }) => {
+export const Times = () => {
 
+    const { times } = useTimerContext()
     // reverse the list of times to show the most recent times first
-    const reversedTimes = times?.slice()?.reverse();
+    // the slice is to avoid mutating the original array
+    const reversedTimes = times.slice().reverse();
 
     return (
         <Card className="w-80">

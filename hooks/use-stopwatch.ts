@@ -1,10 +1,9 @@
-import { useRouter, useSearchParams } from "next/navigation";
+import { useTimerContext } from "@/context/timer-context";
 import { useCallback, useEffect, useState } from "react";
 
 export const useStopwatch = () => {
 
-    const router = useRouter(); // for saving times in the url
-    const searchParams = useSearchParams(); // for getting times from the url
+    const { setTimes } = useTimerContext()
 
     const [startTime, setStartTime] = useState(0);
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -28,7 +27,7 @@ export const useStopwatch = () => {
 
     const stopStopwatch = () => {
         setIsRunning(false);
-        saveCurrentTime();
+        setTimes(prev => [...prev, formatTime(elapsedTime)]);
     }
 
     const resetStopwatch = () => {
@@ -52,14 +51,6 @@ export const useStopwatch = () => {
         return value < 10 ? `0${value}` : value.toString();
     };
 
-    const saveCurrentTime = () => {
-        const prevTimes = searchParams.getAll('times');
-        const newTimes = [...prevTimes, formatTime(elapsedTime)];
-        const newParams = new URLSearchParams(
-            newTimes.map((time) => ['times', time])
-        );
-        router.push(`?${newParams}`);
-    }
 
     return {
         startTime,
