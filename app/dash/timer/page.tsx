@@ -4,6 +4,7 @@ import { BestTime } from "@/components/timer/best-time";
 import { Scramble } from "@/components/timer/scramble";
 import { TimerClock } from "@/components/timer/timer-clock";
 import { Times } from "@/components/timer/times";
+import { TimesPlot } from "@/components/timer/times-plot";
 import { TotalSolves } from "@/components/timer/total-solves";
 
 
@@ -21,8 +22,9 @@ export default function Timer() {
             <Scramble />
             <TimerClock />
 
-            <section className="flex justify-center mt-5">
+            <section className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
                 <Times />
+                <TimesPlot />
             </section>
 
         </MaxWidthWrapper>

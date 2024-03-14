@@ -11,7 +11,7 @@ export const Times = () => {
     const reversedTimes = times.slice().reverse();
 
     return (
-        <Card className="w-80">
+        <Card>
             <CardHeader>
                 <CardTitle>Times</CardTitle>
             </CardHeader>
