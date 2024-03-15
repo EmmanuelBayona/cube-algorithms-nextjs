@@ -27,7 +27,10 @@ export const useStopwatch = () => {
 
     const stopStopwatch = () => {
         setIsRunning(false);
-        setTimes(prev => [...prev, formatTime(elapsedTime)]);
+        // generate a new time object to add to the context, with a unique id and the formatted time
+        // the id is generated because we need to perform updates like deleting a time, and we need a unique identifier for each time
+        const newTime = { id: crypto.randomUUID(), time: formatTime(elapsedTime) }
+        setTimes(prev => [...prev, newTime]);
     }
 
     const resetStopwatch = () => {

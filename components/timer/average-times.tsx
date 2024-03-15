@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
 export const AverageTimes = () => {
 
-    const { times } = useTimerContext();
-    const average = times.reduce((acc, time) => acc + Number(time), 0) / times.length;
+    const { averageTime } = useTimerContext();
 
     return (
         <Card>
@@ -14,7 +13,7 @@ export const AverageTimes = () => {
             </CardHeader>
             <CardContent>
                 <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">
-                    {isNaN(average) ? 0 : average.toFixed(2)}
+                    {isNaN(averageTime) ? 0 : averageTime.toFixed(2)}
                 </span>
             </CardContent>
         </Card>
