@@ -2,10 +2,12 @@
 import { useTimerContext } from "@/context/timer-context";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
+import { Button } from "../ui/button";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 export const Times = () => {
 
-    const { reversedTimes } = useTimerContext()
+    const { reversedTimes, deleteTime } = useTimerContext()
 
     return (
         <Card>
@@ -17,9 +19,16 @@ export const Times = () => {
                     <ul className="divide-y divide-white/5">
                         {
                             reversedTimes?.map((data, index) => (
-                                <li key={data.id} className="space-x-4 py-2">
-                                    <span className="text-white/80">{reversedTimes.length - index}.</span>
-                                    <span>{data.time}</span>
+                                <li key={data.id} className="flex justify-between items-center py-2">
+                                    <div className="space-x-4">
+                                        <span className="text-white/80">{reversedTimes.length - index}.</span>
+                                        <span>{data.time}</span>
+                                    </div>
+                                    <Button size='icon' variant='danger'
+                                        onClick={() => deleteTime(data.id)}
+                                    >
+                                        <TrashIcon />
+                                    </Button>
                                 </li>
                             ))
                         }

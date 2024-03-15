@@ -10,6 +10,7 @@ interface TimerContextType {
     bestTime: number;
     averageTime: number;
     reversedTimes: Time[];
+    deleteTime: (id: string) => void;
 }
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined);
@@ -43,6 +44,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
         setTimesToLocalStorage()
     }, [times])
 
+    const deleteTime = (id: string) => {
+        const newTimes = times.filter(time => time.id !== id)
+        setTimes(newTimes)
+    }
 
 
     return (
@@ -53,7 +58,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
                 onlyTimes, // just return the times and not the object with the id
                 bestTime,
                 averageTime,
-                reversedTimes
+                reversedTimes,
+                deleteTime
             }}
         >
             {children}
