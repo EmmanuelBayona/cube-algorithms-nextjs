@@ -49,8 +49,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
     }
 
     useEffect(() => {
-        const formattedTimes = getTimesFromLocalStorage()
-        const times = getFormattedTimesFromLocalStorage()
+        const formattedTimes = getFormattedTimesFromLocalStorage()
+        const times = getTimesFromLocalStorage()
         if (formattedTimes.length > 0) setFormattedTimes(formattedTimes)
         if (times.length > 0) setTimes(times)
     }, [])
