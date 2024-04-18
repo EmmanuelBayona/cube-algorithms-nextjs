@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export const useStopwatch = () => {
 
-    const { setTimes } = useTimerContext()
+    const { setTimes, setFormattedTimes } = useTimerContext()
 
     const [startTime, setStartTime] = useState(0);
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -29,8 +29,11 @@ export const useStopwatch = () => {
         setIsRunning(false);
         // generate a new time object to add to the context, with a unique id and the formatted time
         // the id is generated because we need to perform updates like deleting a time, and we need a unique identifier for each time
-        const newTime = { id: crypto.randomUUID(), time: formatTime(elapsedTime) }
-        setTimes(prev => [...prev, newTime]);
+        const newFormattedTimes = { id: crypto.randomUUID(), time: formatTime(elapsedTime) }
+        const newTimes = { id: crypto.randomUUID(), time: elapsedTime }
+        setFormattedTimes(prev => [...prev, newFormattedTimes]);
+        setTimes(prev => [...prev, newTimes]);
+
     }
 
     const resetStopwatch = () => {
