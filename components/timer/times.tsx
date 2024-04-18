@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 import { Button } from "../ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { TooltipMessage } from "../tooltip-message";
 
 export const Times = () => {
 
@@ -24,11 +25,14 @@ export const Times = () => {
                                         <span className="text-white/80">{reversedTimes.length - index}.</span>
                                         <span>{data.time}</span>
                                     </div>
-                                    <Button size='icon' variant='danger'
-                                        onClick={() => deleteTime(data.id)}
-                                    >
-                                        <TrashIcon />
-                                    </Button>
+
+                                    <TooltipMessage message="delete time">
+                                        <Button size='icon' variant='danger'
+                                            onClick={() => deleteTime(data.id)}
+                                        >
+                                            <TrashIcon />
+                                        </Button>
+                                    </TooltipMessage>
                                 </li>
                             ))
                         }
