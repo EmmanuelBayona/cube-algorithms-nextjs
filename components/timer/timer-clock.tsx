@@ -1,6 +1,7 @@
 'use client'
 import { useKeyboardShortcut } from "@/hooks/use-keyboard-shortcut";
 import { useStopwatch } from "@/hooks/use-stopwatch";
+import { formatTime } from "@/lib/utils";
 
 export const TimerClock = () => {
 
@@ -9,7 +10,6 @@ export const TimerClock = () => {
         stopStopwatch,
         startStopwatch,
         elapsedTime,
-        formatTime,
     } = useStopwatch();
 
     useKeyboardShortcut('Space', () => {

@@ -7,9 +7,8 @@ type RawTime = { id: string, time: number };
 interface TimerContextType {
     times: RawTime[];
     setTimes: Dispatch<SetStateAction<RawTime[]>>;
-    formattedTimes: RawTime[];
+    formattedTimes: Time[];
     setFormattedTimes: Dispatch<SetStateAction<Time[]>>;
-    onlyTimes: string[];
     bestTime: number;
     averageTime: number;
     reversedTimes: Time[];
@@ -23,9 +22,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
     const [formattedTimes, setFormattedTimes] = useState<Time[]>([])
     const [times, setTimes] = useState<RawTime[]>([])
 
-    const onlyTimes = useMemo(() => formattedTimes.map(time => time.time), [formattedTimes])
-    const bestTime = useMemo(() => Math.min(...onlyTimes.map(time => Number(time))), [onlyTimes])
-    const averageTime = formattedTimes.reduce((acc, time) => acc + Number(time.time), 0) / formattedTimes.length
+    const bestTime = useMemo(() => Math.min(...times.map(time => time.time)), [times])
+    const averageTime = useMemo(() => times.reduce((acc, time) => acc + time.time, 0) / times.length, [times])
     const reversedTimes = useMemo(() => formattedTimes.slice().reverse(), [formattedTimes])
 
     const getFormattedTimesFromLocalStorage = () => {
@@ -76,7 +74,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
                 setTimes,
                 formattedTimes,
                 setFormattedTimes,
-                onlyTimes, // just return the times and not the object with the id
                 bestTime,
                 averageTime,
                 reversedTimes,

@@ -1,6 +1,7 @@
 "use client";
 import { useTimerContext } from "@/context/timer-context";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { formatTime } from "@/lib/utils";
 
 export const AverageTimes = () => {
 
@@ -13,7 +14,12 @@ export const AverageTimes = () => {
             </CardHeader>
             <CardContent>
                 <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">
-                    {isNaN(averageTime) ? 0 : averageTime.toFixed(2)}
+                    {
+                        !isNaN(averageTime) && averageTime !== Infinity
+                            ? formatTime(averageTime)
+                            : 0
+                    }
+
                 </span>
             </CardContent>
         </Card>
