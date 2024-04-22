@@ -1,11 +1,11 @@
 "use client"
 import { useState } from "react"
 import { CheckIcon, CircleBackslashIcon, TrashIcon } from "@radix-ui/react-icons"
-import { Button } from "./ui/button"
+import { Button } from "../../ui/button"
 import { cn } from "@/lib/utils"
 import { showToastError, showToastSuccess } from "@/lib/toaster"
 import { approveAlgAction, deleteAlgAction, rejectAlgAction } from "@/actions"
-import { TooltipMessage } from "./tooltip-message"
+import { TooltipMessage } from "../../tooltip-message"
 
 export const AdminVerifyActions = ({ algID, isApproved }: { algID: number, isApproved: boolean }) => {
 

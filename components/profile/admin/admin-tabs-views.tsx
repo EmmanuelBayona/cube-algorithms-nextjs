@@ -1,5 +1,5 @@
 import { Protect } from "@clerk/nextjs"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import { AdminVerifyAlgorithmsTable } from "./admin-verify-algorithms-table"
 import { AdminMethodsTable } from "./admin-methods-table"
 import { AdminCasesTable } from "./admin-cases-table"

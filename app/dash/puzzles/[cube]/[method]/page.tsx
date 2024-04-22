@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { notFound } from "next/navigation";
-import { CasesList } from "@/components/cases-list";
+import { CasesList } from "@/components/puzzles/cases-list";
 import { Suspense } from "react";
 import { SkeletonGrid } from "@/components/skeleton-grid";
 import { getMethods } from "@/queries/method";

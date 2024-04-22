@@ -8,11 +8,11 @@ import {
     TableCell,
     TableFooter,
     TableBody,
-} from "./ui/table";
+} from "../ui/table";
 import { cn } from "@/lib/utils";
-import { CubeFullView } from "./ui/cube-full-view";
+import { CubeFullView } from "../ui/cube-full-view";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
-import { CubeTopView } from "./ui/cube-top-view";
+import { CubeTopView } from "../ui/cube-top-view";
 import { getAlgorithmsWithCaseMethodCubeInfo } from "@/queries/algorithm";
 
 export const UserAlgorithmsTable = async () => {

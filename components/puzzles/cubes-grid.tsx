@@ -5,9 +5,9 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 import Link from "next/link";
-import { CubeFullView } from "./ui/cube-full-view";
+import { CubeFullView } from "../ui/cube-full-view";
 import { SOLVE_CUBE_COLORS } from "@/lib/cubes-constants";
 import { getCubes } from "@/queries/cube";
 

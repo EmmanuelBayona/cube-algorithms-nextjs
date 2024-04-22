@@ -6,15 +6,15 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-} from "./ui/card";
+} from "../ui/card";
 import Link from "next/link";
-import { CubeFullView } from "./ui/cube-full-view";
+import { CubeFullView } from "../ui/cube-full-view";
 import {
     F2L1_CUBE_COLORS,
     OLL1_CUBE_COLORS,
     PLLAa_CUBE_COLORS,
 } from "@/lib/cubes-constants";
-import { CubeTopView } from "./ui/cube-top-view";
+import { CubeTopView } from "../ui/cube-top-view";
 import { getMethodsByCubeName } from "@/queries/method";
 
 const CUBE_COVERS = {

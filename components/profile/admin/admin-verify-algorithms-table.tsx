@@ -7,12 +7,12 @@ import {
     TableCell,
     TableFooter,
     TableBody,
-} from "./ui/table";
+} from "../../ui/table";
 import prisma from "@/lib/prisma";
-import { AdminVerifyActions } from "./admin-verify-actions";
-import { CubeFullView } from "./ui/cube-full-view";
+import { CubeFullView } from "../../ui/cube-full-view";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
-import { CubeTopView } from "./ui/cube-top-view";
+import { CubeTopView } from "../../ui/cube-top-view";
+import { AdminVerifyActions } from "./admin-verify-actions";
 
 export const AdminVerifyAlgorithmsTable = async () => {
     const uploadedAlgorithms = await prisma.algorithm.findMany({

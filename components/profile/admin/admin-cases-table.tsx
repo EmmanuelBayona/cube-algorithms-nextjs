@@ -1,11 +1,10 @@
-// import { getCases } from "@/queries/case"
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "./ui/table"
-import { ScrollArea, ScrollBar } from "./ui/scroll-area";
-import { AdminCasesActions } from "./admin-cases-actions";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../../ui/table"
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
 import { getMethods } from "@/queries/method";
 import { getCubes } from "@/queries/cube";
 import { getCases, getCasesWithMethodAndCube } from "@/queries/case";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
+import { AdminCasesActions } from "./admin-cases-actions";
 
 
 export const AdminCasesTable = async () => {
