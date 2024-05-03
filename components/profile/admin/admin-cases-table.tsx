@@ -59,6 +59,7 @@ export const AdminCasesTable = async () => {
             </Table>
 
             <ScrollBar orientation="vertical" />
+            <ScrollBar orientation="horizontal" />
         </ScrollArea>
     )
 
