@@ -1,4 +1,5 @@
 "use client";
+import { generateScramble } from "@/helpers/scramble";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type Time = { id: string, time: string };
@@ -13,6 +14,8 @@ interface TimerContextType {
     averageTime: number;
     reversedTimes: Time[];
     deleteTime: (id: string) => void;
+    scramble: string;
+    setScramble: Dispatch<SetStateAction<string>>;
 }
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined);
@@ -21,6 +24,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
     const [formattedTimes, setFormattedTimes] = useState<Time[]>([])
     const [times, setTimes] = useState<RawTime[]>([])
+    const [scramble, setScramble] = useState("scramble");
 
     const bestTime = useMemo(() => Math.min(...times.map(time => time.time)), [times])
     const averageTime = useMemo(() => times.reduce((acc, time) => acc + time.time, 0) / times.length, [times])
@@ -59,6 +63,11 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
         setTimesToLocalStorage()
     }, [formattedTimes, times])
 
+    useEffect(() => {
+        // avoid "content does not match server-rendered HTML"
+        setScramble(generateScramble().join(" "))
+    }, [])
+
     const deleteTime = (id: string) => {
         const newFormattedTimes = formattedTimes.filter(time => time.id !== id)
         const newTimes = times.filter(time => time.id !== id)
@@ -77,7 +86,9 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
                 bestTime,
                 averageTime,
                 reversedTimes,
-                deleteTime
+                deleteTime,
+                scramble,
+                setScramble
             }}
         >
             {children}
