@@ -5,6 +5,7 @@ import { getCubes } from "@/queries/cube";
 import { getCases, getCasesWithMethodAndCube } from "@/queries/case";
 import { CUBE_COLORS } from "@/lib/cubes-constants";
 import { AdminCasesActions } from "./admin-cases-actions";
+import { CaseTableBody } from "./case-table-body";
 
 
 export const AdminCasesTable = async () => {
@@ -26,28 +27,32 @@ export const AdminCasesTable = async () => {
                     </TableRow>
                 </TableHeader>
 
-                <TableBody>
-                    {
-                        cases.map(c => (
-                            <TableRow key={c.id}>
-                                <TableCell>{c.name}</TableCell>
-                                <TableCell>image</TableCell>
-                                <TableCell className="flex justify-start gap-2">
-                                    <AdminCasesActions
-                                        caseId={c.id}
-                                        caseName={c.name}
-                                        cubeName={c.method.cube.name}
-                                        methodName={c.method.name}
-                                        colorFaces={c.colors as Record<number, keyof typeof CUBE_COLORS>}
-                                        cubes={cubes}
-                                        methods={methods}
-                                        cases={allCases}
-                                    />
-                                </TableCell>
-                            </TableRow>
-                        ))
-                    }
-                </TableBody>
+                {/* <TableBody> */}
+                {/*     { */}
+                {/*         cases.map(c => ( */}
+                {/*             <TableRow key={c.id}> */}
+                {/*                 <TableCell>{c.name}</TableCell> */}
+                {/*                 <TableCell>image</TableCell> */}
+                {/*                 <TableCell className="flex justify-start gap-2"> */}
+                {/*                     <AdminCasesActions */}
+                {/*                         caseId={c.id} */}
+                {/*                         caseName={c.name} */}
+                {/*                         cubeName={c.method.cube.name} */}
+                {/*                         methodName={c.method.name} */}
+                {/*                         colorFaces={c.colors as Record<number, keyof typeof CUBE_COLORS>} */}
+                {/*                         cubes={cubes} */}
+                {/*                         methods={methods} */}
+                {/*                         cases={allCases} */}
+                {/*                     /> */}
+                {/*                 </TableCell> */}
+                {/*             </TableRow> */}
+                {/*         )) */}
+                {/*     } */}
+                {/* </TableBody> */}
+
+                <CaseTableBody
+                    cases={cases}
+                />
 
                 <TableFooter>
                     <TableRow>
@@ -57,6 +62,7 @@ export const AdminCasesTable = async () => {
                     </TableRow>
                 </TableFooter>
             </Table>
+
 
             <ScrollBar orientation="vertical" />
             <ScrollBar orientation="horizontal" />

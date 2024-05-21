@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client";
 import type { JsonValue } from "@prisma/client/runtime/library";
 
+export type Status = 'success' | 'error' | 'loading' | 'idle';
+
 export type Cubes = '2x2' | '3x3' | '4x4' | 'square-1';
 export type Methods = 'F2L' | 'OLL' | 'PLL';
 
