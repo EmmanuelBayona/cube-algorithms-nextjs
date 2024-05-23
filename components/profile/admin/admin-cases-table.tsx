@@ -12,8 +12,8 @@ export const AdminCasesTable = async () => {
 
     const cubes = await getCubes();
     const methods = await getMethods();
-    const cases = await getCasesWithMethodAndCube();
-    const allCases = await getCases();
+    const casesWithMethodAndCube = await getCasesWithMethodAndCube();
+    const cases = await getCases();
 
     return (
         <ScrollArea className="h-[500px]">
@@ -51,7 +51,7 @@ export const AdminCasesTable = async () => {
                 {/* </TableBody> */}
 
                 <CaseTableBody
-                    cases={cases}
+                    casesWithMethodAndCube={casesWithMethodAndCube}
                 />
 
                 <TableFooter>
@@ -63,9 +63,9 @@ export const AdminCasesTable = async () => {
                 </TableFooter>
             </Table>
 
-
             <ScrollBar orientation="vertical" />
             <ScrollBar orientation="horizontal" />
+
         </ScrollArea>
     )
 

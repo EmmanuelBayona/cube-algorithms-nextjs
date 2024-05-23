@@ -12,19 +12,19 @@ export interface Method {
     description: string;
 }
 
-export interface DBCubes {
-    id: number;
-    name: string;
-    description: string;
-}[]
+// export interface DBCubes {
+//     id: number;
+//     name: string;
+//     description: string;
+// }[]
 
-export interface DBMethods {
-    id: number;
-    name: string;
-    description: string;
-    cubeId: number;
-    svgView: string;
-}[]
+// export interface DBMethods {
+//     id: number;
+//     name: string;
+//     description: string;
+//     cubeId: number;
+//     svgView: string;
+// }[]
 
 export interface DBCases {
     id: number;
@@ -41,6 +41,8 @@ export interface DBAlgs {
     userId: string;
 }[]
 
+export type DBCubes = Prisma.CubeGetPayload<{}>
+
 // export type CasesDB = Prisma.CaseGetPayload<{}>
 export type DBCasesWithMethodAndCube = Prisma.CaseGetPayload<{
     include: {
@@ -51,3 +53,5 @@ export type DBCasesWithMethodAndCube = Prisma.CaseGetPayload<{
         }
     }
 }>
+
+export type DBMethods = Prisma.MethodGetPayload<{}>

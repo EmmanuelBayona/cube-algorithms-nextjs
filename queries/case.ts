@@ -14,30 +14,6 @@ export const getCases = unstable_cache(
 
 export const getCasesWithFirstFourAlgorithmsByMethodName = unstable_cache(
     async (methodName: string, valueToFilter: string) => {
-        // If there is no value to filter, return all cases with method cases with first four algorithms 
-        // If there is a value to filter, return all cases with method cases with first four algorithms but just the ones that match the filter
-        // if (!valueToFilter) {
-        //     return prisma.case.findMany({
-        //         where: {
-        //             method: {
-        //                 name: methodName,
-        //             }
-        //         },
-        //         include: {
-        //             algorithms: {
-        //                 take: 4,
-        //                 select: {
-        //                     id: true,
-        //                     algorithm: true,
-        //                 },
-        //                 where: {
-        //                     isApproved: true,
-        //                 },
-        //             },
-        //         },
-        //     });
-        // }
-
         return prisma.case.findMany({
             where: {
                 method: {
@@ -95,6 +71,24 @@ export const getCasesWithMethodAndCube = unstable_cache(
         tags: ["cases-with-method-and-cube"],
     }
 )
+
+// export const getCaseById = async (caseId: number) => {
+//     return prisma.case.findUnique({
+//         where: { id: caseId }
+//     })
+// }
+export const getCaseWithMethodAndCubeById = async (caseId: number) => {
+    return prisma.case.findUnique({
+        where: { id: caseId },
+        include: {
+            method: {
+                include: {
+                    cube: true
+                }
+            }
+        }
+    })
+}
 
 export const addCase = async (caseName: string, methodId: number, cubePattern: Record<number, keyof typeof CUBE_COLORS>) => {
     return prisma.case.create({

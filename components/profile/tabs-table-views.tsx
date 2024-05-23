@@ -8,7 +8,7 @@ import { UserAlgorithmsTable } from "./user-algorithms-table"
 export const TabsTableViews = () => {
 
     return (
-        <Tabs defaultValue="algorithms" className="mt-0" >
+        <Tabs defaultValue="your-algorithms" className="mt-0" >
             <div className="w-full overflow-x-auto">
                 <TabsList>
 
