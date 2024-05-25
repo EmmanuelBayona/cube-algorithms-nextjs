@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react"
-import { DBCubes, DBMethods } from "@/types";
-import { useSearchParams } from "next/navigation";
+import { DBCubes, DBMethods, Status } from "@/types";
 import { fetchCaseByIdAction, fetchCubesAction, fetchMethodsAction } from "@/actions";
+import { CUBE_COLORS } from "@/lib/cubes-constants";
 
 
-export const useCaseForm = () => {
-
-    const searchParams = useSearchParams();
-    const caseId = searchParams.get("case");
+export const useCaseForm = ({ caseIdToEdit }: { caseIdToEdit?: number }) => {
 
     const [cubeType, setCubeType] = useState("");
     const [cubes, setCubes] = useState<DBCubes[]>([]);
@@ -17,20 +14,28 @@ export const useCaseForm = () => {
 
     const [caseName, setCaseName] = useState("");
 
+    const [currentColor, setCurrentColor] = useState<keyof typeof CUBE_COLORS>('default');
+    const [colorsFaces, setColorsFaces] = useState<Record<number, keyof typeof CUBE_COLORS>>({});
+
+    const [status, setStatus] = useState<Status>('idle');
+
     useEffect(() => {
-        if (!caseId) return;
+        if (!caseIdToEdit) return;
 
         const getCaseWithMethodAndCube = async () => {
-            const response = await fetchCaseByIdAction(Number(caseId));
+            setStatus('loading');
+            const response = await fetchCaseByIdAction(caseIdToEdit);
             if (response.success && response.data) {
                 setCubeType(response.data.method.cube.name)
                 setMethodName(response.data.method.name)
                 setCaseName(response.data.name)
+                setColorsFaces(response.data.colors as Record<number, keyof typeof CUBE_COLORS>);
+                setStatus('success');
             }
         }
 
         getCaseWithMethodAndCube();
-    }, [caseId]);
+    }, [caseIdToEdit]);
 
     useEffect(() => {
         const getCubes = async () => {
@@ -40,10 +45,6 @@ export const useCaseForm = () => {
             }
         }
 
-        getCubes();
-    }, []);
-
-    useEffect(() => {
         const getMethods = async () => {
             const response = await fetchMethodsAction();
             if (response.success && response.data) {
@@ -51,8 +52,11 @@ export const useCaseForm = () => {
             }
         }
 
+        getCubes();
         getMethods();
     }, []);
+
+    const onSelectCubeFace = (face: number) => setColorsFaces(prev => ({ ...prev, [face]: currentColor }));
 
     return {
         cubeType,
@@ -62,7 +66,12 @@ export const useCaseForm = () => {
         setMethodName,
         methods,
         caseName,
-        setCaseName
+        setCaseName,
+        currentColor,
+        setCurrentColor,
+        colorsFaces,
+        onSelectCubeFace,
+        status,
     }
 
 }

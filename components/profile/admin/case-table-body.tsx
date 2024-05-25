@@ -1,6 +1,5 @@
 'use client';
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { CaseFormModal } from "@/components/case-form-modal";
 import { Button } from "@/components/ui/button";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
@@ -11,16 +10,11 @@ interface CaseTableBodyProps {
     casesWithMethodAndCube: DBCasesWithMethodAndCube[];
 }
 
-
 export const CaseTableBody = ({ casesWithMethodAndCube }: CaseTableBodyProps) => {
 
-    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCase, setSelectedCase] = useState<number>();
 
-    const editCase = (id: number) => {
-        router.push(`?case=${id}`);
-        setIsModalOpen(true);
-    };
 
     return (
         <>
@@ -34,7 +28,10 @@ export const CaseTableBody = ({ casesWithMethodAndCube }: CaseTableBodyProps) =>
                                 <Button
                                     size="icon"
                                     variant="success"
-                                    onClick={() => editCase(c.id)}
+                                    onClick={() => {
+                                        setSelectedCase(c.id);
+                                        setIsModalOpen(true);
+                                    }}
                                 >
                                     <Pencil1Icon />
                                 </Button>
@@ -52,6 +49,7 @@ export const CaseTableBody = ({ casesWithMethodAndCube }: CaseTableBodyProps) =>
 
 
             <CaseFormModal
+                caseIdToEdit={selectedCase}
                 open={isModalOpen}
                 onOpenChange={setIsModalOpen}
             />

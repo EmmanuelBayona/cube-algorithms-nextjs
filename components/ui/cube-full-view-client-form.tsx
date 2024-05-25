@@ -1,4 +1,3 @@
-"use client";
 import { CUBE_COLORS, CUBE_FACES_3X3 } from "@/lib/cubes-constants";
 import { cn } from "@/lib/utils";
 
@@ -6,9 +5,8 @@ interface CubeSvgProps {
     size?: number;
     background?: string;
     className?: string;
-    colors?: Record<number, keyof typeof CUBE_COLORS>;
-    clickableFaces?: boolean;
-    onClickFace?: (face: number) => void;
+    colors: Record<number, keyof typeof CUBE_COLORS>;
+    onClickFace: (face: number) => void;
 }
 
 export const CubeFullViewClientForm = ({
@@ -18,6 +16,7 @@ export const CubeFullViewClientForm = ({
     colors = {},
     onClickFace,
 }: CubeSvgProps) => {
+
     return (
         <svg
             version="1.1"
@@ -26,6 +25,8 @@ export const CubeFullViewClientForm = ({
             height={`${size}`}
             viewBox="-0.9 -0.9 1.8 1.8"
             className={cn(className)}
+            role="img"
+            aria-labelledby="3D cube representation"
         >
             <rect
                 fill={`${background}`}
@@ -77,8 +78,9 @@ export const CubeFullViewClientForm = ({
                         points={face.points}
                         className={"cursor-pointer"}
                         onClick={
-                            () => onClickFace?.(i + 1)
+                            () => onClickFace(i + 1)
                         }
+                        aria-label={`Face ${i + 1}`}
                     />
                 ))}
             </g>
