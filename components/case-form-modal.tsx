@@ -1,3 +1,4 @@
+"use client"
 import { EraserIcon, LayersIcon } from "@radix-ui/react-icons"
 import { Button } from "./ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
@@ -35,7 +36,10 @@ export const CaseFormModal = ({
         setCurrentColor,
         colorsFaces,
         onSelectCubeFace,
-        status
+        status,
+        addNewCase,
+        updateCase,
+        actionStatus
     } = useCaseForm({ caseIdToEdit });
 
     const cubeId = cubes.find(c => c.name === cubeType)?.id;
@@ -82,9 +86,11 @@ export const CaseFormModal = ({
                 }
 
                 {
-                    status === "success" && (
+                    // if we have a caseToEdit, show just if status === 'loading', if not, show the form
+                    (caseIdToEdit && status === 'success' || !caseIdToEdit) && (
                         <form
                             className="grid gap-4 py-5"
+                            onSubmit={(e) => (caseIdToEdit ? updateCase(e, caseIdToEdit) : addNewCase(e))}
                         >
                             <div
                                 className="grid grid-cols-4 items-center gap-4"
@@ -191,6 +197,20 @@ export const CaseFormModal = ({
                                 }
                             </div>
 
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                className={cn({
+                                    'opacity-50 cursor-not-allowed': actionStatus === 'loading'
+                                })}
+                            >
+                                {
+                                    actionStatus === 'idle' && caseIdToEdit ? "Update Case" : "Add Case"
+                                }
+                                {
+                                    actionStatus === 'loading' && "Loading..."
+                                }
+                            </Button>
 
                         </form>
 

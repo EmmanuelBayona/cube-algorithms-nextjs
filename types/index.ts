@@ -1,5 +1,4 @@
 import { Prisma } from "@prisma/client";
-import type { JsonValue } from "@prisma/client/runtime/library";
 
 export type Status = 'success' | 'error' | 'loading' | 'idle';
 
@@ -26,12 +25,12 @@ export interface Method {
 //     svgView: string;
 // }[]
 
-export interface DBCases {
-    id: number;
-    name: string;
-    colors: JsonValue;
-    methodId: number;
-}[]
+// export interface DBCases {
+//     id: number;
+//     name: string;
+//     colors: JsonValue;
+//     methodId: number;
+// }[]
 
 export interface DBAlgs {
     id: number;
@@ -42,8 +41,8 @@ export interface DBAlgs {
 }[]
 
 export type DBCubes = Prisma.CubeGetPayload<{}>
-
-// export type CasesDB = Prisma.CaseGetPayload<{}>
+export type DBMethods = Prisma.MethodGetPayload<{}>
+export type DBCases = Prisma.CaseGetPayload<{}>
 export type DBCasesWithMethodAndCube = Prisma.CaseGetPayload<{
     include: {
         method: {
@@ -53,5 +52,3 @@ export type DBCasesWithMethodAndCube = Prisma.CaseGetPayload<{
         }
     }
 }>
-
-export type DBMethods = Prisma.MethodGetPayload<{}>
