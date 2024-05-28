@@ -1,5 +1,4 @@
 import { NewAlgorithmForm } from "../new-algorithm-form"
-import { NewCaseForm } from "../new-case-form"
 import { NewCubeForm } from "../new-cube-form"
 import { NewMethodForm } from "../new-method-form"
 import { Protect } from "@clerk/nextjs"
@@ -7,6 +6,7 @@ import { getCubes } from "@/queries/cube"
 import { getMethods } from "@/queries/method"
 import { getAlgorithms } from "@/queries/algorithm"
 import { getCases } from "@/queries/case"
+import { CaseFormModal } from "../case-form-modal"
 
 export const UserActionsList = async () => {
 
@@ -31,11 +31,12 @@ export const UserActionsList = async () => {
                 </Protect>
 
                 <Protect permission="org:cases:manage">
-                    <NewCaseForm
-                        cubes={cubes}
-                        methods={methods}
-                        cases={cases}
-                    />
+                    {/* <NewCaseForm */}
+                    {/*     cubes={cubes} */}
+                    {/*     methods={methods} */}
+                    {/*     cases={cases} */}
+                    {/* /> */}
+                    <CaseFormModal />
                 </Protect>
 
                 <NewAlgorithmForm

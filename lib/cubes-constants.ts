@@ -1,3 +1,10 @@
+import { CubeFullViewClientForm } from "@/components/ui/cube-full-view-client-form";
+import { CubeTopViewClientForm } from "@/components/ui/cube-top-view-client-form";
+
+export const SVG_FORM_CUBE_VIEWS = {
+    "full-view": CubeFullViewClientForm,
+    "top-view": CubeTopViewClientForm
+}
 
 export const CUBE_COLORS = {
     black: '#000000',
@@ -50,7 +57,7 @@ export const CUBES_FACES_3X3_TOP_VIEW = {
         { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '0.21296296296296,-0.15740740740741 0.52777777777778,-0.15740740740741 0.52777777777778,0.15740740740741 0.21296296296296,0.15740740740741' },
         { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '-0.52777777777778,0.21296296296296 -0.21296296296296,0.21296296296296 -0.21296296296296,0.52777777777778 -0.52777777777778,0.52777777777778' },
         { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '-0.15740740740741,0.21296296296296 0.15740740740741,0.21296296296296 0.15740740740741,0.52777777777778 -0.15740740740741,0.52777777777778' },
-        { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '0.21296296296296,0.21296296296296 0.52777777777778,0.21296296296296 0.52777777777778,0.52777777777778 0.21296296296296,0.52777777777778'}
+        { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '0.21296296296296,0.21296296296296 0.52777777777778,0.21296296296296 0.52777777777778,0.52777777777778 0.21296296296296,0.52777777777778' }
     ],
     OUTER: [
         { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '-0.54406130268199,0.5544061302682 -0.19591315453384,0.5544061302682 -0.18390804597701,0.7183908045977 -0.50804597701149,0.7183908045977' },
@@ -174,7 +181,7 @@ export const F2L1_CUBE_COLORS: Record<number, keyof typeof CUBE_COLORS> = {
     25: "blue",
     26: "blue"
 }
-  
+
 export const OLL1_CUBE_COLORS: Record<number, keyof typeof CUBE_COLORS> = {
     5: "yellow",
     11: "yellow",
@@ -206,4 +213,4 @@ export const PLLAa_CUBE_COLORS: Record<number, keyof typeof CUBE_COLORS> = {
     20: "red",
     21: "blue"
 }
-  
+

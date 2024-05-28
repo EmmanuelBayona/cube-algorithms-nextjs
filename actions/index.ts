@@ -1,9 +1,9 @@
 'use server'
 import { CUBE_COLORS } from "@/lib/cubes-constants"
 import { addAlgorithm, approveAlg, deleteAlg, rejectAlg } from "@/queries/algorithm"
-import { addCase, deleteCase, updateCase } from "@/queries/case"
-import { addCube } from "@/queries/cube"
-import { addMethod } from "@/queries/method"
+import { addCase, deleteCase, getCaseWithMethodAndCubeById, getCases, updateCase } from "@/queries/case"
+import { addCube, getCubes } from "@/queries/cube"
+import { addMethod, getMethods } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
 import { revalidateTag } from "next/cache"
 
@@ -128,6 +128,43 @@ export const deleteCaseAction = async (caseId: number) => {
         revalidateTag('cases');
         revalidateTag('cases-with-first-four-algorithms-by-method-name');
         revalidateTag('cases-with-method-and-cube')
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const fetchCasesAction = async () => {
+    try {
+        const res = await getCases();
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const fetchCaseByIdAction = async (caseId: number) => {
+    try {
+        if (!caseId) return { success: false, error: 'No case id' }
+        const res = await getCaseWithMethodAndCubeById(caseId);
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const fetchCubesAction = async () => {
+    try {
+        const res = await getCubes();
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const fetchMethodsAction = async () => {
+    try {
+        const res = await getMethods();
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
