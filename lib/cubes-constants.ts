@@ -1,14 +1,9 @@
-import { CubeFullView } from "@/components/ui/cube-full-view";
 import { CubeFullViewClientForm } from "@/components/ui/cube-full-view-client-form";
-import { CubeTopView } from "@/components/ui/cube-top-view";
-
-// export const SVG_CUBE_VIEWS = {
-//     "top-view": CubeTopView,
-//     "full-view": CubeFullView,
-// };
+import { CubeTopViewClientForm } from "@/components/ui/cube-top-view-client-form";
 
 export const SVG_FORM_CUBE_VIEWS = {
-    "full-view": CubeFullViewClientForm
+    "full-view": CubeFullViewClientForm,
+    "top-view": CubeTopViewClientForm
 }
 
 export const CUBE_COLORS = {
