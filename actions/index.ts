@@ -81,6 +81,7 @@ export const approveAlgAction = async (algId: number) => {
         const res = await approveAlg(algId);
 
         revalidateTag('getAlgorithmsWithCaseMethodCubeInfo')
+        revalidateTag('cases-with-first-four-algorithms-by-method-name');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
@@ -96,6 +97,7 @@ export const rejectAlgAction = async (algId: number) => {
         const res = await rejectAlg(algId);
 
         revalidateTag('getAlgorithmsWithCaseMethodCubeInfo');
+        revalidateTag('cases-with-first-four-algorithms-by-method-name');
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }
