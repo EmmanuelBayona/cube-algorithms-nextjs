@@ -2,6 +2,7 @@ import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { AverageTimes } from "@/components/timer/average-times";
 import { BestTime } from "@/components/timer/best-time";
 import { Scramble } from "@/components/timer/scramble";
+import { ScrambleDraw } from "@/components/timer/scramble-draw";
 import { TimerClock } from "@/components/timer/timer-clock";
 import { Times } from "@/components/timer/times";
 import { TotalSolves } from "@/components/timer/total-solves";
@@ -23,6 +24,7 @@ export default function Timer() {
 
             <section className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
                 <Times />
+                <ScrambleDraw />
                 {/* <TimesPlot /> */}
             </section>
 
