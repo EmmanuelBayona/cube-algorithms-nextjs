@@ -75,6 +75,33 @@ export const drawScramble = (scramble: string) => {
                     cube_yellow_face
                 });
                 break;
+            case 'L':
+                L_move({
+                    cube_green_face,
+                    cube_white_face,
+                    cube_yellow_face,
+                    cube_blue_face,
+                    cube_orange_face
+                });
+                break;
+            case 'L2':
+                L_move({
+                    cube_green_face,
+                    cube_white_face,
+                    cube_yellow_face,
+                    cube_blue_face,
+                    cube_orange_face
+                });
+                L_move({
+                    cube_green_face,
+                    cube_white_face,
+                    cube_yellow_face,
+                    cube_blue_face,
+                    cube_orange_face
+                });
+                break;
+            default:
+                break;
         }
     })
 
@@ -129,3 +156,41 @@ const R_move = ({
 
 }
 
+const L_move = ({
+    cube_green_face,
+    cube_white_face,
+    cube_yellow_face,
+    cube_blue_face,
+    cube_orange_face
+}: CubeFaces) => {
+    if (!cube_green_face || !cube_white_face || !cube_yellow_face || !cube_blue_face || !cube_orange_face) {
+        throw new Error('Missing required faces for L move');
+    }
+
+    const greenColumn = [cube_green_face[0][0], cube_green_face[1][0], cube_green_face[2][0]];
+    const newGreenColumn = [cube_white_face[0][0], cube_white_face[1][0], cube_white_face[2][0]]; 
+    [cube_green_face[0][0], cube_green_face[1][0], cube_green_face[2][0]] = newGreenColumn;
+
+    const yellowColumn = [cube_yellow_face[0][0], cube_yellow_face[1][0], cube_yellow_face[2][0]];
+    [cube_yellow_face[0][0], cube_yellow_face[1][0], cube_yellow_face[2][0]] = greenColumn;
+
+    const blueColumn = [cube_blue_face[0][2], cube_blue_face[1][2], cube_blue_face[2][2]];
+    [cube_blue_face[0][2], cube_blue_face[1][2], cube_blue_face[2][2]] = yellowColumn;
+
+    [cube_white_face[0][0], cube_white_face[1][0], cube_white_face[2][0]] = blueColumn;
+
+    const firstOrangeFaceRow = [cube_orange_face[0][0], cube_orange_face[0][1], cube_orange_face[0][2]];
+    const secondOrangeFaceRow = [cube_orange_face[1][0], cube_orange_face[1][1], cube_orange_face[1][2]];
+    const thirdOrangeFaceRow = [cube_orange_face[2][0], cube_orange_face[2][1], cube_orange_face[2][2]];
+
+    cube_orange_face[0][0] = thirdOrangeFaceRow[0];
+    cube_orange_face[0][1] = secondOrangeFaceRow[0];
+    cube_orange_face[0][2] = firstOrangeFaceRow[0];
+    cube_orange_face[1][0] = thirdOrangeFaceRow[1];
+    cube_orange_face[1][1] = secondOrangeFaceRow[1];
+    cube_orange_face[1][2] = firstOrangeFaceRow[1];
+    cube_orange_face[2][0] = thirdOrangeFaceRow[2];
+    cube_orange_face[2][1] = secondOrangeFaceRow[2];
+    cube_orange_face[2][2] = firstOrangeFaceRow[2];
+    
+}
