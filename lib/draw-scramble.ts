@@ -42,13 +42,13 @@ const R_move = ({
     const temp = [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]];
 
     [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]] = 
-        [cube_yellow_face[2][0], cube_yellow_face[1][0], cube_yellow_face[0][0]];
+        [cube_yellow_face[0][2], cube_yellow_face[1][2], cube_yellow_face[2][2]];
 
     [cube_yellow_face[0][2], cube_yellow_face[1][2], cube_yellow_face[2][2]] =
         [cube_blue_face[0][0], cube_blue_face[1][0], cube_blue_face[2][0]];
 
     [cube_blue_face[0][0], cube_blue_face[1][0], cube_blue_face[2][0]] =
-        [cube_white_face[2][0], cube_white_face[1][2], cube_white_face[0][2]];
+        [cube_white_face[2][2], cube_white_face[1][2], cube_white_face[0][2]];
 
     [cube_white_face[0][2], cube_white_face[1][2], cube_white_face[2][2]] = temp;
 
