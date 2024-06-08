@@ -41,7 +41,7 @@ const R_move = ({
 
     const temp = [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]];
 
-    [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]] = 
+    [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]] =
         [cube_yellow_face[0][2], cube_yellow_face[1][2], cube_yellow_face[2][2]];
 
     [cube_yellow_face[0][2], cube_yellow_face[1][2], cube_yellow_face[2][2]] =
@@ -72,7 +72,7 @@ const R_move_prime = ({
 
     const temp = [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]];
 
-    [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]] = 
+    [cube_green_face[0][2], cube_green_face[1][2], cube_green_face[2][2]] =
         [cube_white_face[0][2], cube_white_face[1][2], cube_white_face[2][2]];
 
     [cube_white_face[0][2], cube_white_face[1][2], cube_white_face[2][2]] =
@@ -97,6 +97,28 @@ const L_move = ({
     cube_orange_face
 }: CubeFaces) => {
 
+    if (!cube_green_face || !cube_orange_face || !cube_blue_face || !cube_yellow_face || !cube_white_face) {
+        return;
+    }
+
+    const temp = [cube_green_face[0][0], cube_green_face[1][0], cube_green_face[2][0]];
+
+    [cube_green_face[0][0], cube_green_face[1][0], cube_green_face[2][0]] =
+        [cube_white_face[0][0], cube_white_face[1][0], cube_white_face[2][0]];
+
+    [cube_white_face[0][0], cube_white_face[1][0], cube_white_face[2][0]] =
+        [cube_blue_face[2][2], cube_blue_face[1][2], cube_blue_face[0][2]];
+
+    [cube_blue_face[0][2], cube_blue_face[1][2], cube_blue_face[2][2]] =
+        [cube_yellow_face[2][0], cube_yellow_face[1][0], cube_yellow_face[0][0]];
+
+    [cube_yellow_face[0][0], cube_yellow_face[1][0], cube_yellow_face[2][0]] = temp;
+
+    const newOrangeFace = rotateFaceClockwise(cube_orange_face);
+    cube_orange_face[0] = newOrangeFace[0];
+    cube_orange_face[1] = newOrangeFace[1];
+    cube_orange_face[2] = newOrangeFace[2];
+
 }
 
 const L_move_prime = ({
@@ -106,6 +128,28 @@ const L_move_prime = ({
     cube_blue_face,
     cube_orange_face
 }: CubeFaces) => {
+
+    if (!cube_green_face || !cube_orange_face || !cube_blue_face || !cube_yellow_face || !cube_white_face) {
+        return;
+    }
+
+    const temp = [cube_green_face[0][0], cube_green_face[1][0], cube_green_face[2][0]];
+
+    [cube_green_face[0][0], cube_green_face[1][0], cube_green_face[2][0]] =
+        [cube_yellow_face[0][0], cube_yellow_face[1][0], cube_yellow_face[2][0]];
+
+    [cube_yellow_face[0][0], cube_yellow_face[1][0], cube_yellow_face[2][0]] =
+        [cube_blue_face[2][2], cube_blue_face[1][2], cube_blue_face[0][2]];
+
+    [cube_blue_face[0][2], cube_blue_face[1][2], cube_blue_face[2][2]] =
+        [cube_white_face[2][0], cube_white_face[1][0], cube_white_face[0][0]];
+
+    [cube_white_face[0][0], cube_white_face[1][0], cube_white_face[2][0]] = temp;
+
+    const newOrangeFace = rotateFaceCounterClockwise(cube_orange_face);
+    cube_orange_face[0] = newOrangeFace[0];
+    cube_orange_face[1] = newOrangeFace[1];
+    cube_orange_face[2] = newOrangeFace[2];
 
 }
 
@@ -117,6 +161,22 @@ const U_move = ({
     cube_blue_face
 }: CubeFaces) => {
 
+    if (!cube_white_face || !cube_orange_face || !cube_green_face || !cube_red_face || !cube_blue_face) {
+        return;
+    }
+
+    const temp = [cube_green_face[0][0], cube_green_face[0][1], cube_green_face[0][2]];
+
+    cube_green_face[0] = cube_red_face[0];
+    cube_red_face[0] = cube_blue_face[0];
+    cube_blue_face[0] = cube_orange_face[0];
+    cube_orange_face[0] = temp;
+
+    const newWhiteFace = rotateFaceClockwise(cube_white_face);
+    cube_white_face[0] = newWhiteFace[0];
+    cube_white_face[1] = newWhiteFace[1];
+    cube_white_face[2] = newWhiteFace[2];
+
 };
 
 const U_move_prime = ({
@@ -126,6 +186,22 @@ const U_move_prime = ({
     cube_red_face,
     cube_blue_face
 }: CubeFaces) => {
+
+    if (!cube_white_face || !cube_orange_face || !cube_green_face || !cube_red_face || !cube_blue_face) {
+        return;
+    }
+
+    const temp = [cube_green_face[0][0], cube_green_face[0][1], cube_green_face[0][2]];
+
+    cube_green_face[0] = cube_orange_face[0];
+    cube_orange_face[0] = cube_blue_face[0];
+    cube_blue_face[0] = cube_red_face[0];
+    cube_red_face[0] = temp;
+
+    const newWhiteFace = rotateFaceCounterClockwise(cube_white_face);
+    cube_white_face[0] = newWhiteFace[0];
+    cube_white_face[1] = newWhiteFace[1];
+    cube_white_face[2] = newWhiteFace[2];
 
 }
 
@@ -137,15 +213,60 @@ const F_move = ({
     cube_green_face
 }: CubeFaces) => {
 
+    if (!cube_white_face || !cube_orange_face || !cube_yellow_face || !cube_red_face || !cube_green_face) {
+        return;
+    }
+
+    const temp = [cube_white_face[2][0], cube_white_face[2][1], cube_white_face[2][2]];
+
+    [cube_white_face[2][0], cube_white_face[2][1], cube_white_face[2][2]] =
+        [cube_orange_face[2][2], cube_orange_face[1][2], cube_orange_face[0][2]];
+
+    [cube_orange_face[0][2], cube_orange_face[1][2], cube_orange_face[2][2]] =
+        [cube_yellow_face[0][0], cube_yellow_face[0][1], cube_yellow_face[0][2]];
+
+    [cube_yellow_face[0][0], cube_yellow_face[0][1], cube_yellow_face[0][2]] =
+        [cube_red_face[2][0], cube_red_face[1][0], cube_red_face[0][0]];
+
+    [cube_red_face[0][0], cube_red_face[1][0], cube_red_face[2][0]] = temp;
+
+    const newGreenFace = rotateFaceClockwise(cube_green_face);
+    cube_green_face[0] = newGreenFace[0];
+    cube_green_face[1] = newGreenFace[1];
+    cube_green_face[2] = newGreenFace[2];
+
 }
 
 const F_move_prime = ({
     cube_white_face,
-    cube_green_face,
-    cube_red_face,
+    cube_orange_face,
     cube_yellow_face,
-    cube_blue_face
+    cube_red_face,
+    cube_green_face
+
 }: CubeFaces) => {
+
+    if (!cube_white_face || !cube_orange_face || !cube_yellow_face || !cube_red_face || !cube_green_face) {
+        return;
+    }
+
+    const temp = [cube_white_face[2][0], cube_white_face[2][1], cube_white_face[2][2]];
+
+    [cube_white_face[2][0], cube_white_face[2][1], cube_white_face[2][2]] =
+        [cube_red_face[0][0], cube_red_face[1][0], cube_red_face[2][0]];
+
+    [cube_red_face[0][0], cube_red_face[1][0], cube_red_face[2][0]] =
+        [cube_yellow_face[0][2], cube_yellow_face[0][1], cube_yellow_face[0][0]];
+
+    [cube_yellow_face[0][0], cube_yellow_face[0][1], cube_yellow_face[0][2]] =
+        [cube_orange_face[0][2], cube_orange_face[1][2], cube_orange_face[2][2]];
+
+    [cube_orange_face[2][2], cube_orange_face[1][2], cube_orange_face[0][2]] = temp;
+
+    const newGreenFace = rotateFaceCounterClockwise(cube_green_face);
+    cube_green_face[0] = newGreenFace[0];
+    cube_green_face[1] = newGreenFace[1];
+    cube_green_face[2] = newGreenFace[2];
 
 }
 
@@ -157,6 +278,7 @@ const D_move = ({
     cube_blue_face
 }: CubeFaces) => {
 
+
 }
 
 const D_move_prime = ({
@@ -167,13 +289,14 @@ const D_move_prime = ({
     cube_blue_face
 }: CubeFaces) => {
 
+
 }
 
 const B_move = ({
     cube_white_face,
-    cube_orange_face,
-    cube_green_face,
+    cube_red_face,
     cube_yellow_face,
+    cube_orange_face,
     cube_blue_face
 }: CubeFaces) => {
 
@@ -181,9 +304,9 @@ const B_move = ({
 
 const B_move_prime = ({
     cube_white_face,
-    cube_orange_face,
-    cube_green_face,
+    cube_red_face,
     cube_yellow_face,
+    cube_orange_face,
     cube_blue_face
 }: CubeFaces) => {
 
@@ -229,209 +352,45 @@ export const drawScramble = (scramble: string) => {
 
     scramble.split(' ').forEach(move => {
         switch (move) {
-            case 'R':
-                R_move({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face,
-                    cube_yellow_face
-                });
+            case "R":
+                R_move({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_red_face });
                 break;
-            case 'R2':
-                R_move({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face,
-                    cube_yellow_face
-                });
-                R_move({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face,
-                    cube_yellow_face
-                });
+            case "R'":
+                R_move_prime({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_red_face });
                 break;
-            case 'R\'':
-                R_move_prime({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face,
-                    cube_yellow_face
-                });
+            case "R2":
+                R_move({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_red_face });
+                R_move({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_red_face });
                 break;
-            case 'L':
-                L_move({
-                    cube_green_face,
-                    cube_white_face,
-                    cube_yellow_face,
-                    cube_blue_face,
-                    cube_orange_face
-                });
+            case "L":
+                L_move({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_orange_face });
                 break;
-            case 'L2':
-                L_move({
-                    cube_green_face,
-                    cube_white_face,
-                    cube_yellow_face,
-                    cube_blue_face,
-                    cube_orange_face
-                });
-                L_move({
-                    cube_green_face,
-                    cube_white_face,
-                    cube_yellow_face,
-                    cube_blue_face,
-                    cube_orange_face
-                });
+            case "L'":
+                L_move_prime({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_orange_face });
                 break;
-            case 'L\'':
-                L_move_prime({
-                    cube_green_face,
-                    cube_white_face,
-                    cube_yellow_face,
-                    cube_blue_face,
-                    cube_orange_face
-                });
+            case "L2":
+                L_move({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_orange_face });
+                L_move({ cube_green_face, cube_white_face, cube_yellow_face, cube_blue_face, cube_orange_face });
                 break;
-            case 'U':
-                U_move({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
+            case "U":
+                U_move({ cube_white_face, cube_orange_face, cube_green_face, cube_red_face, cube_blue_face });
                 break;
-            case 'U2':
-                U_move({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
-                U_move({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
+            case "U'":
+                U_move_prime({ cube_white_face, cube_orange_face, cube_green_face, cube_red_face, cube_blue_face });
                 break;
-            case 'U\'':
-                U_move_prime({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
+            case "U2":
+                U_move({ cube_white_face, cube_orange_face, cube_green_face, cube_red_face, cube_blue_face });
+                U_move({ cube_white_face, cube_orange_face, cube_green_face, cube_red_face, cube_blue_face });
                 break;
-            case 'F':
-                F_move({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
+            case "F":
+                F_move({ cube_white_face, cube_orange_face, cube_yellow_face, cube_red_face, cube_green_face });
                 break;
-            case 'F2':
-                F_move({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
-                F_move({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
+            case "F'":
+                F_move_prime({ cube_white_face, cube_orange_face, cube_yellow_face, cube_red_face, cube_green_face });
                 break;
-            case 'F\'':
-                F_move_prime({
-                    cube_white_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
-                break;
-            case 'D':
-                D_move({
-                    cube_yellow_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
-                break;
-            case 'D2':
-                D_move({
-                    cube_yellow_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
-                D_move({
-                    cube_yellow_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
-                break
-            case 'D\'':
-                D_move_prime({
-                    cube_yellow_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_red_face,
-                    cube_blue_face
-                });
-                break;
-            case 'B':
-                B_move({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
-                break;
-            case 'B2':
-                B_move({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
-                B_move({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
-                break;
-            case 'B\'':
-                B_move_prime({
-                    cube_white_face,
-                    cube_orange_face,
-                    cube_green_face,
-                    cube_yellow_face,
-                    cube_blue_face
-                });
+            case "F2":
+                F_move({ cube_white_face, cube_orange_face, cube_yellow_face, cube_red_face, cube_green_face });
+                F_move({ cube_white_face, cube_orange_face, cube_yellow_face, cube_red_face, cube_green_face });
                 break;
             default:
                 break;
