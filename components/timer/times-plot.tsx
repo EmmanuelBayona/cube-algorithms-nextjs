@@ -1,20 +1,9 @@
 "use client";
-import { useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useTimerContext } from "@/context/timer-context";
 
 export const TimesPlot = () => {
     const { reversedTimes } = useTimerContext();
-    const svgRef = useRef<SVGSVGElement | null>(null);
 
-    return (
-        <Card className="lg:col-span-2">
-            <CardHeader>
-                <CardTitle>Times</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <svg ref={svgRef}></svg>
-            </CardContent>
-        </Card>
-    );
+    return <Card className="w-full lg:w-72 h-[320px]"></Card>;
 };
