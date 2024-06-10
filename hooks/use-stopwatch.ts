@@ -1,10 +1,11 @@
 import { useTimerContext } from "@/context/timer-context";
+import { generateScramble } from "@/helpers/scramble";
 import { formatTime } from "@/lib/utils";
 import { useCallback, useEffect, useState } from "react";
 
 export const useStopwatch = () => {
 
-    const { setTimes, setFormattedTimes } = useTimerContext()
+    const { setTimes, setFormattedTimes, setScramble } = useTimerContext()
 
     const [startTime, setStartTime] = useState(0);
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -33,7 +34,7 @@ export const useStopwatch = () => {
         const newTimeId = crypto.randomUUID();
         setFormattedTimes(prev => [...prev, { id: newTimeId, time: formatTime(elapsedTime) }]);
         setTimes(prev => [...prev, { id: newTimeId, time: elapsedTime }]);
-
+        setScramble(generateScramble().join(" "));
     }
 
     const resetStopwatch = () => {
