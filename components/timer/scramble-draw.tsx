@@ -19,7 +19,7 @@ export const ScrambleDraw = () => {
     };
 
     return (
-        <Card className="lg:col-span-2 p-5 text-black text-sm flex items-center">
+        <Card className="flex-1 p-5 text-black text-sm flex items-center justify-center">
             <div>
                 <div className="grid grid-cols-4 gap-1 w-fit">
                     <div className="bg-black col-start-2 grid grid-cols-3 gap-1 w-fit p-1">
