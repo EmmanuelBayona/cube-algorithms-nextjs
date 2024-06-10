@@ -7,8 +7,7 @@ import { useTimerContext } from "@/context/timer-context";
 
 export const ScrambleDraw = () => {
     const { scramble } = useTimerContext();
-    // const scrambleFaces = useMemo(() => drawScramble(scramble), [scramble]);
-    const scrambleFaces = useMemo(() => drawScramble("F R2 U' L' F"), []);
+    const scrambleFaces = useMemo(() => drawScramble(scramble), [scramble]);
 
     const getColor = (color: string) => {
         if (color.includes("G")) return CUBE_COLORS.green;
