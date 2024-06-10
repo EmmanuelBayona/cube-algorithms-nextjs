@@ -19,92 +19,82 @@ export const ScrambleDraw = () => {
     };
 
     return (
-        <Card className="lg:col-span-2 p-5 text-black text-sm">
-            <div className="grid grid-cols-4 gap-1 w-fit">
-                <div className="bg-black col-start-2 grid grid-cols-3 gap-1 w-fit p-1">
-                    {scrambleFaces?.whiteFace?.map((color, i) => (
-                        <div
-                            key={i}
-                            className="h-5 w-5"
-                            style={{
-                                backgroundColor: getColor(color),
-                            }}
-                        >
-                            {color}
-                        </div>
-                    ))}
+        <Card className="lg:col-span-2 p-5 text-black text-sm flex items-center">
+            <div>
+                <div className="grid grid-cols-4 gap-1 w-fit">
+                    <div className="bg-black col-start-2 grid grid-cols-3 gap-1 w-fit p-1">
+                        {scrambleFaces?.whiteFace?.map((color, i) => (
+                            <div
+                                key={i}
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                style={{
+                                    backgroundColor: getColor(color),
+                                }}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <div className="mt-1 grid grid-cols-4 gap-1 w-fit">
-                <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
-                    {scrambleFaces?.orangeFace?.map((color, i) => (
-                        <div
-                            key={i}
-                            className="h-5 w-5"
-                            style={{
-                                backgroundColor: getColor(color),
-                            }}
-                        >
-                            {color}
-                        </div>
-                    ))}
-                </div>
+                <div className="mt-1 grid grid-cols-4 gap-1 w-fit">
+                    <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
+                        {scrambleFaces?.orangeFace?.map((color, i) => (
+                            <div
+                                key={i}
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                style={{
+                                    backgroundColor: getColor(color),
+                                }}
+                            />
+                        ))}
+                    </div>
 
-                <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
-                    {scrambleFaces?.greenFace?.map((color, i) => (
-                        <div
-                            key={i}
-                            className="h-5 w-5"
-                            style={{
-                                backgroundColor: getColor(color),
-                            }}
-                        >
-                            {color}
-                        </div>
-                    ))}
-                </div>
+                    <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
+                        {scrambleFaces?.greenFace?.map((color, i) => (
+                            <div
+                                key={i}
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                style={{
+                                    backgroundColor: getColor(color),
+                                }}
+                            />
+                        ))}
+                    </div>
 
-                <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
-                    {scrambleFaces?.redFace?.map((color, i) => (
-                        <div
-                            key={i}
-                            className="h-5 w-5"
-                            style={{
-                                backgroundColor: getColor(color),
-                            }}
-                        >
-                            {color}
-                        </div>
-                    ))}
-                </div>
+                    <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
+                        {scrambleFaces?.redFace?.map((color, i) => (
+                            <div
+                                key={i}
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                style={{
+                                    backgroundColor: getColor(color),
+                                }}
+                            />
+                        ))}
+                    </div>
 
-                <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
-                    {scrambleFaces?.blueFace?.map((color, i) => (
-                        <div
-                            key={i}
-                            className="h-5 w-5"
-                            style={{
-                                backgroundColor: getColor(color),
-                            }}
-                        >
-                            {color}
-                        </div>
-                    ))}
+                    <div className="bg-black grid grid-cols-3 gap-1 w-fit p-1">
+                        {scrambleFaces?.blueFace?.map((color, i) => (
+                            <div
+                                key={i}
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                style={{
+                                    backgroundColor: getColor(color),
+                                }}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
-            <div className="mt-1 grid grid-cols-4 gap-1 w-fit">
-                <div className="bg-black col-start-2 grid grid-cols-3 gap-1 w-fit p-1">
-                    {scrambleFaces?.yellowFace?.map((color, i) => (
-                        <div
-                            key={i}
-                            className="h-5 w-5"
-                            style={{
-                                backgroundColor: getColor(color),
-                            }}
-                        >
-                            {color}
-                        </div>
-                    ))}
+                <div className="mt-1 grid grid-cols-4 gap-1 w-fit">
+                    <div className="bg-black col-start-2 grid grid-cols-3 gap-1 w-fit p-1">
+                        {scrambleFaces?.yellowFace?.map((color, i) => (
+                            <div
+                                key={i}
+                                className="h-4 w-4 md:h-6 md:w-6"
+                                style={{
+                                    backgroundColor: getColor(color),
+                                }}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </Card>

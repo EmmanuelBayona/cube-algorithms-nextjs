@@ -7,12 +7,9 @@ import { TimerClock } from "@/components/timer/timer-clock";
 import { Times } from "@/components/timer/times";
 import { TotalSolves } from "@/components/timer/total-solves";
 
-
 export default function Timer() {
-
     return (
         <MaxWidthWrapper className="flex flex-col gap-10 pt-10">
-
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-5">
                 <BestTime />
                 <AverageTimes />
@@ -27,7 +24,6 @@ export default function Timer() {
                 <ScrambleDraw />
                 {/* <TimesPlot /> */}
             </section>
-
         </MaxWidthWrapper>
-    )
+    );
 }
