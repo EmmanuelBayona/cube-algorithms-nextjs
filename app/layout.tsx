@@ -6,6 +6,7 @@ import { ClerkProvider, auth } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Toaster } from 'sonner';
 import { SyncActiveOrganization } from './SyncActiveOrganization'
+import type {ReactNode} from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children,
 }: {
-	children: React.ReactNode
+	children: ReactNode
 }) {
 
 	const { sessionClaims } = auth()

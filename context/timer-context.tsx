@@ -11,6 +11,7 @@ import {
     useMemo,
     useState,
 } from "react";
+import {useAuth} from "@clerk/nextjs";
 
 type Time = { id: string; time: string };
 type RawTime = { id: string; time: number };
@@ -31,6 +32,9 @@ interface TimerContextType {
 const TimerContext = createContext<TimerContextType | undefined>(undefined);
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
+
+    const { userId } = useAuth();
+
     const [formattedTimes, setFormattedTimes] = useState<Time[]>([]);
     const [times, setTimes] = useState<RawTime[]>([]);
     const [scramble, setScramble] = useState("scramble");
@@ -68,6 +72,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("times", JSON.stringify(times));
     }, [times]);
 
+    const saveTimeOnDB = useCallback(() => {
+        if (!userId) return;
+    }, [userId])
+
     useEffect(() => {
         const formattedTimes = getFormattedTimesFromLocalStorage();
         const times = getTimesFromLocalStorage();
@@ -79,11 +87,13 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         setFormattedTimesToLocalStorage();
         setTimesToLocalStorage();
+        saveTimeOnDB();
     }, [
         formattedTimes,
         times,
         setFormattedTimesToLocalStorage,
         setTimesToLocalStorage,
+        saveTimeOnDB
     ]);
 
     useEffect(() => {
