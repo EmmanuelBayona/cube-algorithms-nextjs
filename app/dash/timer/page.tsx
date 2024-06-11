@@ -23,7 +23,7 @@ export default function Timer() {
             <section className="mt-5 flex flex-col lg:flex-row lg:items-center gap-5 w-full">
                 <Times />
                 <ScrambleDraw />
-                {/* <TimesPlot /> */}
+                <TimesPlot />
             </section>
         </MaxWidthWrapper>
     );
