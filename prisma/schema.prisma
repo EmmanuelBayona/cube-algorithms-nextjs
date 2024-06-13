@@ -61,3 +61,13 @@ model Like {
 
     @@map("likes")
 }
+
+model Time {
+    id       Int @id @default(autoincrement())
+    timeInMs Int
+    userId   String
+    date     DateTime
+    scramble String
+    
+    @@map("times")
+}

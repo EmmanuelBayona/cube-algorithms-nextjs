@@ -6,6 +6,7 @@ import { addCube, getCubes } from "@/queries/cube"
 import { addMethod, getMethods } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
 import { revalidateTag } from "next/cache"
+import {addNewTime} from "@/queries/time";
 
 export const addNewCubeAction = async (cube: string, description: string) => {
     try {
@@ -167,6 +168,17 @@ export const fetchCubesAction = async () => {
 export const fetchMethodsAction = async () => {
     try {
         const res = await getMethods();
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+}
+
+export const addNewTimeAction = async(time: number, date: Date, scramble: string) => {
+    try {
+        const { userId } = auth();
+        if (!userId) return { success: false, error: 'Not logged in' }
+        const res = await addNewTime(time, userId, date, scramble);
         return { success: true, data: res }
     } catch (error) {
         return { success: false, error }

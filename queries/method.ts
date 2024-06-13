@@ -50,6 +50,4 @@ export const addMethod = async (method: string, description: string, cubeId: num
             svgView: cubeView
         }
     })
-
-
 }

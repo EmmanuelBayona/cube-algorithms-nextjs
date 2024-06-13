@@ -12,6 +12,8 @@ import {
     useState,
 } from "react";
 import {useAuth} from "@clerk/nextjs";
+import {addNewTimeAction} from "@/actions";
+import {showToastError} from "@/lib/toaster";
 
 type Time = { id: string; time: string };
 type RawTime = { id: string; time: number };
@@ -27,6 +29,7 @@ interface TimerContextType {
     deleteTime: (id: string) => void;
     scramble: string;
     setScramble: Dispatch<SetStateAction<string>>;
+    saveTimeOnDB: (time: number, date: Date) => void;
 }
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined);
@@ -72,9 +75,11 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("times", JSON.stringify(times));
     }, [times]);
 
-    const saveTimeOnDB = useCallback(() => {
+    const saveTimeOnDB = useCallback(async (time: number, date: Date) => {
         if (!userId) return;
-    }, [userId])
+        const { success } = await addNewTimeAction(time, date, scramble)
+        if (!success) showToastError('Something went wrong');
+    }, [userId, scramble])
 
     useEffect(() => {
         const formattedTimes = getFormattedTimesFromLocalStorage();
@@ -87,13 +92,11 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         setFormattedTimesToLocalStorage();
         setTimesToLocalStorage();
-        saveTimeOnDB();
     }, [
         formattedTimes,
         times,
         setFormattedTimesToLocalStorage,
         setTimesToLocalStorage,
-        saveTimeOnDB
     ]);
 
     useEffect(() => {
@@ -123,6 +126,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
                 deleteTime,
                 scramble,
                 setScramble,
+                saveTimeOnDB
             }}
         >
             {children}
