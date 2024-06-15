@@ -5,31 +5,22 @@ import {
     ReactNode,
     SetStateAction,
     createContext,
-    useCallback,
     useContext,
     useEffect,
-    useMemo,
     useState,
 } from "react";
-import {useAuth} from "@clerk/nextjs";
-import {addNewTimeAction} from "@/actions";
-import {showToastError} from "@/lib/toaster";
+import { useAuth } from "@clerk/nextjs";
+import { addNewTimeAction, fetchTimesByUserIdAction } from "@/actions";
+import { showToastError } from "@/lib/toaster";
+import { DBTimes } from "@/types";
 
-type Time = { id: string; time: string };
-type RawTime = { id: string; time: number };
+type RawTime = Omit<DBTimes, "userId" | "id"> & { id: number | string };
 
 interface TimerContextType {
     times: RawTime[];
-    setTimes: Dispatch<SetStateAction<RawTime[]>>;
-    formattedTimes: Time[];
-    setFormattedTimes: Dispatch<SetStateAction<Time[]>>;
-    bestTime: number;
-    averageTime: number;
-    reversedTimes: Time[];
-    deleteTime: (id: string) => void;
     scramble: string;
     setScramble: Dispatch<SetStateAction<string>>;
-    saveTimeOnDB: (time: number, date: Date) => void;
+    saveNewTime: (time: number, date: Date) => void;
 }
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined);
@@ -38,95 +29,77 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
     const { userId } = useAuth();
 
-    const [formattedTimes, setFormattedTimes] = useState<Time[]>([]);
     const [times, setTimes] = useState<RawTime[]>([]);
     const [scramble, setScramble] = useState("scramble");
 
-    const bestTime = useMemo(
-        () => Math.min(...times.map((time) => time.time)),
-        [times]
-    );
-    const averageTime = useMemo(
-        () => times.reduce((acc, time) => acc + time.time, 0) / times.length,
-        [times]
-    );
-    const reversedTimes = useMemo(
-        () => formattedTimes.slice().reverse(),
-        [formattedTimes]
-    );
+    useEffect(() => {
+        const getTimes = async () => {
+            const { success, data } = await fetchTimesByUserIdAction();
+            if (!success) {
+                showToastError('Failed to fetch your times');
+                return;
+            }
 
-    const getFormattedTimesFromLocalStorage = () => {
-        const times = localStorage.getItem("formattedTimes");
-        if (!times) return [];
-        return JSON.parse(times);
-    };
+            if (data) setTimes(data);
+        };
 
-    const setFormattedTimesToLocalStorage = useCallback(() => {
-        localStorage.setItem("formattedTimes", JSON.stringify(formattedTimes));
-    }, [formattedTimes]);
+        if (userId) {
+            getTimes();
+        }
 
-    const getTimesFromLocalStorage = () => {
-        const times = localStorage.getItem("times");
-        if (!times) return [];
-        return JSON.parse(times);
-    };
+        if (!userId) {
+            const times = localStorage.getItem("times");
+            if (times) setTimes(JSON.parse(times));
+        }
+    }, [userId, setTimes]);
 
-    const setTimesToLocalStorage = useCallback(() => {
-        localStorage.setItem("times", JSON.stringify(times));
-    }, [times]);
-
-    const saveTimeOnDB = useCallback(async (time: number, date: Date) => {
+    const saveTimeOnDB = async (time: number, date: Date) => {
         if (!userId) return;
-        const { success } = await addNewTimeAction(time, date, scramble)
-        if (!success) showToastError('Something went wrong');
-    }, [userId, scramble])
+        const savedTime = { id: crypto.randomUUID(), timeInMs: time, date, scramble };
+        setTimes([...times, savedTime]);
+        const { success } = await addNewTimeAction(time, date, scramble);
+        if (!success) {
+            showToastError("Something went wrong with saving your time");
+            setTimes(times.filter((t) => t.id !== savedTime.id));
+        }
+    };
 
-    useEffect(() => {
-        const formattedTimes = getFormattedTimesFromLocalStorage();
-        const times = getTimesFromLocalStorage();
-        if (formattedTimes.length > 0) setFormattedTimes(formattedTimes);
-        if (times.length > 0) setTimes(times);
-    }, []);
+    const saveTimeOnLocalStorage = (time: number, date: Date) => {
+        const newTime: RawTime = {
+            id: crypto.randomUUID(),
+            timeInMs: time,
+            date,
+            scramble,
+        }
+        const newTimes = [...times, newTime];
+        setTimes(newTimes);
+        localStorage.setItem("times", JSON.stringify(newTimes));
+    };
 
-    // save times to local storage whenever the times state changes
-    useEffect(() => {
-        setFormattedTimesToLocalStorage();
-        setTimesToLocalStorage();
-    }, [
-        formattedTimes,
-        times,
-        setFormattedTimesToLocalStorage,
-        setTimesToLocalStorage,
-    ]);
+    const saveNewTime = (time: number, date: Date) => {
+        if (userId) {
+            saveTimeOnDB(time, date);
+            setScramble(generateScramble().join(" "));
+            return;
+        }
+
+        saveTimeOnLocalStorage(time, date);
+        setScramble(generateScramble().join(" "));
+    }
 
     useEffect(() => {
         // avoid "content does not match server-rendered HTML"
         setScramble(generateScramble().join(" "));
     }, []);
 
-    const deleteTime = (id: string) => {
-        const newFormattedTimes = formattedTimes.filter(
-            (time) => time.id !== id
-        );
-        const newTimes = times.filter((time) => time.id !== id);
-        setFormattedTimes(newFormattedTimes);
-        setTimes(newTimes);
-    };
 
     return (
         <TimerContext.Provider
             value={{
                 times,
-                setTimes,
-                formattedTimes,
-                setFormattedTimes,
-                bestTime,
-                averageTime,
-                reversedTimes,
-                deleteTime,
+                saveNewTime,
                 scramble,
                 setScramble,
-                saveTimeOnDB
             }}
         >
             {children}

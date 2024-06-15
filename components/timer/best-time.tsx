@@ -5,7 +5,11 @@ import { formatTime } from "@/lib/utils";
 
 export const BestTime = () => {
 
-    const { bestTime } = useTimerContext()
+    const { times } = useTimerContext()
+
+    const bestTime = times.length > 0
+        ? Math.min(...times.map((time) => time.timeInMs))
+        : 0;
 
     return (
         <Card>
@@ -15,7 +19,7 @@ export const BestTime = () => {
             <CardContent>
                 <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">
                     {
-                        !isNaN(bestTime) && bestTime !== Infinity
+                        times.length > 0
                             ? formatTime(bestTime)
                             : 0
                     }
