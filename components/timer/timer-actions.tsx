@@ -5,7 +5,6 @@ import { useTimerContext } from "@/context/timer-context";
 import { generateScramble } from "@/helpers/scramble";
 import { memo } from "react";
 
-
 export const TimerActions = memo(() => {
     const { setScramble } = useTimerContext();
 
@@ -22,3 +21,4 @@ export const TimerActions = memo(() => {
         </TooltipMessage>
     )
 })
+TimerActions.displayName = 'TimerActions';

@@ -76,9 +76,9 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("times", JSON.stringify(newTimes));
     };
 
-    const saveNewTime = (time: number, date: Date) => {
+    const saveNewTime = async (time: number, date: Date) => {
         if (userId) {
-            saveTimeOnDB(time, date);
+            await saveTimeOnDB(time, date);
             setScramble(generateScramble().join(" "));
             return;
         }
