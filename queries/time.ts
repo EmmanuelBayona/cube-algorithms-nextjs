@@ -18,3 +18,11 @@ export const addNewTime = async (time: number, userId: string, date: Date, scram
         }
     })
 }
+
+export const deleteTime = async (timeId: number) => {
+    return prisma.time.delete({
+        where: {
+            id: timeId
+        }
+    })
+}

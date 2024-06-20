@@ -6,7 +6,7 @@ import { addCube, getCubes } from "@/queries/cube"
 import { addMethod, getMethods } from "@/queries/method"
 import { auth } from "@clerk/nextjs"
 import { revalidateTag } from "next/cache"
-import { addNewTime, getTimesByUserId } from "@/queries/time";
+import { addNewTime, deleteTime, getTimesByUserId } from "@/queries/time";
 
 export const addNewCubeAction = async (cube: string, description: string) => {
     try {
@@ -198,3 +198,14 @@ export const fetchTimesByUserIdAction = async () => {
         return { success: false, error }
     }
 }
+
+export const deleteTimeAction = async (timeId: number) => {
+    try {
+        const { userId } = auth();
+        if (!userId) return { success: false, error: 'Not logged in' }
+        const res = await deleteTime(timeId);
+        return { success: true, data: res }
+    } catch (error) {
+        return { success: false, error }
+    }
+};
