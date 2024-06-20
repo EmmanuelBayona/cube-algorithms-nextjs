@@ -5,7 +5,11 @@ import { formatTime } from "@/lib/utils";
 
 export const AverageTimes = () => {
 
-    const { averageTime } = useTimerContext();
+    const { times } = useTimerContext();
+
+    const averageTime = times.length > 0
+        ? times.reduce((acc, time) => acc + time.timeInMs, 0) / times.length
+        : 0;
 
     return (
         <Card>
@@ -15,7 +19,7 @@ export const AverageTimes = () => {
             <CardContent>
                 <span className="text-4xl font-semibold leading-none tracking-tight drop-shadow-text">
                     {
-                        !isNaN(averageTime) && averageTime !== Infinity
+                        times.length > 0
                             ? formatTime(averageTime)
                             : 0
                     }

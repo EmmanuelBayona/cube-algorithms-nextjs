@@ -83,7 +83,7 @@ export const NewCaseForm = ({
         }
 
         if (editForm) return setFormForEdit();
-    }, [editForm, initialCube, initialMethod, initialCaseName, initialColorsFaces]);
+    }, [editForm, initialCube, initialMethod, initialCaseName, initialColorsFaces, setCaseName, setColorsFaces, setCube, setMethod]);
 
 
     const selectedView = filteredMethods.find(

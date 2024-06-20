@@ -3,9 +3,9 @@ import { Button } from "../ui/button"
 import { TooltipMessage } from "../tooltip-message"
 import { useTimerContext } from "@/context/timer-context";
 import { generateScramble } from "@/helpers/scramble";
+import { memo } from "react";
 
-export const TimerActions = () => {
-
+export const TimerActions = memo(() => {
     const { setScramble } = useTimerContext();
 
     return (
@@ -20,5 +20,5 @@ export const TimerActions = () => {
             </Button>
         </TooltipMessage>
     )
-
-}
+})
+TimerActions.displayName = 'TimerActions';

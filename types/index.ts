@@ -52,3 +52,4 @@ export type DBCasesWithMethodAndCube = Prisma.CaseGetPayload<{
         }
     }
 }>
+export type DBTimes = Prisma.TimeGetPayload<{}>

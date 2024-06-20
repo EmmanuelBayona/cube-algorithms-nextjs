@@ -5,9 +5,12 @@ import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { Button } from "../ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { TooltipMessage } from "../tooltip-message";
+import { formatTime } from "@/lib/utils";
 
 export const Times = () => {
-    const { reversedTimes, deleteTime } = useTimerContext();
+    const { times, deleteTime } = useTimerContext();
+
+    const reversedTimes = times.slice().reverse();
 
     return (
         <Card className="w-full lg:w-72">
@@ -26,7 +29,7 @@ export const Times = () => {
                                     <span className="text-white/80">
                                         {reversedTimes.length - index}.
                                     </span>
-                                    <span>{data.time}</span>
+                                    <span>{formatTime(data.timeInMs)}</span>
                                 </div>
 
                                 <TooltipMessage message="delete time">
