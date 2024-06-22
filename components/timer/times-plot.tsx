@@ -16,13 +16,14 @@ export const TimesPlot = () => {
         times: 'bg-blue-500',
     };
 
+    console.log(timesWithNumeration)
 
     return (
         <Card className="w-full lg:w-72 h-[320px] flex items-center px-4">
             <AreaChart
                 data={timesWithNumeration}
                 index="num"
-                categories={['time']}
+                categories={['timeInMs']}
                 colors={['blue']}
                 valueFormatter={formatTime}
                 showLegend={false}
