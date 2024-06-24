@@ -1,4 +1,5 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { Scene } from "@/components/timer/3d/scene";
 import { AverageTimes } from "@/components/timer/average-times";
 import { BestTime } from "@/components/timer/best-time";
 import { Scramble } from "@/components/timer/scramble";
@@ -25,6 +26,8 @@ export default function Timer() {
                 <ScrambleDraw />
                 <TimesPlot />
             </section>
+
+            <Scene />
         </MaxWidthWrapper>
     );
 }

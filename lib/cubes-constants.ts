@@ -6,6 +6,7 @@ export const SVG_FORM_CUBE_VIEWS = {
     "top-view": CubeTopViewClientForm
 }
 
+
 export const CUBE_COLORS = {
     black: '#000000',
     yellow: '#FEFE00',
@@ -16,6 +17,15 @@ export const CUBE_COLORS = {
     orange: '#FFA100',
     default: '#232323'
 }
+
+export const CUBE_COLORS_3D = [
+    [0, 1, CUBE_COLORS.orange],
+    [0, -1, CUBE_COLORS.red],
+    [1, 1, CUBE_COLORS.white],
+    [1, -1, CUBE_COLORS.yellow],
+    [2, 1, CUBE_COLORS.green],
+    [2, -1, CUBE_COLORS.blue]
+]
 
 export const CUBE_FACES_3X3 = [
     { fill: CUBE_COLORS.default, stroke: CUBE_COLORS.black, points: '-4.9439549272153E-17,-0.74757064564692 0.19598754651203,-0.66277461469571 -1.6979580126642E-17,-0.57123720961754 -0.19598754651203,-0.66277461469571' },
