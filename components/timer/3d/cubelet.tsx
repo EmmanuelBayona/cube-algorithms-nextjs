@@ -1,18 +1,18 @@
 import { CUBE_COLORS, CUBE_COLORS_3D } from '@/lib/cubes-constants'
-import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry'
 
 interface CubeletProps {
-    position: [number, number, number]
+    position: [number, number, number];
+    geometry: any;
 }
 
 
-export const Cubelet = ({ position }: CubeletProps) => {
+export const Cubelet = ({ position, geometry }: CubeletProps) => {
 
     return (
         <mesh
             position={position}
             geometry={
-                new RoundedBoxGeometry(1, 1, 1, 3, 0.1)
+                geometry
             }
         >
             {
